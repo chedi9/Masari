@@ -1,0 +1,30 @@
+[
+  {
+    "resource_id": "cbe6f9ee-66d5-4b08-bfad-7bdd4b2f49ae",
+    "file": "C:\\Users\\awich\\OneDrive\\Bureau\\transport\\data\\downloaded\\geography\\cbe6f9ee-66d5-4b08-bfad-7bdd4b_Découpage_administratif_de_la_Tunisie_par_Délégation.csv",
+    "issues": [
+      "Could not determine delimiter"
+    ]
+  },
+  {
+    "resource_id": "779dae17-d682-476e-b63e-54c0ebae8665",
+    "file": "C:\\Users\\awich\\OneDrive\\Bureau\\transport\\data\\downloaded\\geography\\779dae17-d682-476e-b63e-54c0eb_TN-Découpage_de_la_Tunisie_par_Gouvernorats.csv",
+    "issues": [
+      "Could not determine delimiter"
+    ]
+  },
+  {
+    "resource_id": "fd1d28bb-38f0-486e-8a0c-54e4044242c7",
+    "file": "C:\\Users\\awich\\OneDrive\\Bureau\\transport\\data\\downloaded\\geography\\fd1d28bb-38f0-486e-8a0c-54e404_TN-Découpage_de_la_Tunisie_par_circonsciptions.csv",
+    "issues": [
+      "Could not determine delimiter"
+    ]
+  },
+  {
+    "resource_id": "b8af3af0-f229-4971-accb-966ab4f03b14",
+    "file": "C:\\Users\\awich\\OneDrive\\Bureau\\transport\\data\\downloaded\\geography\\b8af3af0-f229-4971-accb-966ab4_barrages_collinaires_beja.csv",
+    "issues": [
+      "Could not determine delimiter"
+    ]
+  }
+]

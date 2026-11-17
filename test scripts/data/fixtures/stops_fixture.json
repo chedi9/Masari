@@ -1,0 +1,122 @@
+[
+  {
+    "id": "stop_tunis_marine",
+    "name_ar": "محطة تونس البحرية",
+    "name_fr": "Tunis Marine Station",
+    "type": "METRO_STATION",
+    "governorate": "Tunis",
+    "lon": 10.1815,
+    "lat": 36.8065,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_habib_bourguiba",
+    "name_ar": "شارع الحبيب بورقيبة",
+    "name_fr": "Avenue Habib Bourguiba",
+    "type": "BUS_STOP",
+    "governorate": "Tunis",
+    "lon": 10.1865,
+    "lat": 36.7995,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_barcelone",
+    "name_ar": "محطة برشلونة",
+    "name_fr": "Barcelona Station",
+    "type": "TRAIN_STATION",
+    "governorate": "Tunis",
+    "lon": 10.179,
+    "lat": 36.7935,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_ariana_ville",
+    "name_ar": "أريانة المدينة",
+    "name_fr": "Ariana City",
+    "type": "BUS_STOP",
+    "governorate": "Ariana",
+    "lon": 10.1934,
+    "lat": 36.8625,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_ben_arous_centre",
+    "name_ar": "مركز بن عروس",
+    "name_fr": "Ben Arous Centre",
+    "type": "BUS_STOP",
+    "governorate": "Ben Arous",
+    "lon": 10.2189,
+    "lat": 36.7531,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_manouba_campus",
+    "name_ar": "مركب منوبة الجامعي",
+    "name_fr": "Manouba Campus",
+    "type": "BUS_STOP",
+    "governorate": "Manouba",
+    "lon": 10.0972,
+    "lat": 36.8081,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_sousse_bab_jedid",
+    "name_ar": "باب الجديد سوسة",
+    "name_fr": "Bab Jedid Sousse",
+    "type": "BUS_STOP",
+    "governorate": "Sousse",
+    "lon": 10.636,
+    "lat": 35.8256,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_sousse_gare",
+    "name_ar": "محطة سوسة المحطة",
+    "name_fr": "Sousse Railway Station",
+    "type": "TRAIN_STATION",
+    "governorate": "Sousse",
+    "lon": 10.6412,
+    "lat": 35.8241,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_monastir_univ",
+    "name_ar": "جامعة المنستير",
+    "name_fr": "Monastir University",
+    "type": "BUS_STOP",
+    "governorate": "Monastir",
+    "lon": 10.8113,
+    "lat": 35.7643,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_monastir_habib",
+    "name_ar": "مطار الحبيب بورقيبة الدولي",
+    "name_fr": "Habib Bourguiba Intl Airport",
+    "type": "AIRPORT_STOP",
+    "governorate": "Monastir",
+    "lon": 10.7573,
+    "lat": 35.7581,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_sfax_gare",
+    "name_ar": "محطة القطار صفاقس",
+    "name_fr": "Sfax Railway Station",
+    "type": "TRAIN_STATION",
+    "governorate": "Sfax",
+    "lon": 10.7603,
+    "lat": 34.7406,
+    "status": "VERIFIED"
+  },
+  {
+    "id": "stop_sfax_medina",
+    "name_ar": "مدينة صفاقس العتيقة",
+    "name_fr": "Sfax Medina",
+    "type": "BUS_STOP",
+    "governorate": "Sfax",
+    "lon": 10.762,
+    "lat": 34.739,
+    "status": "VERIFIED"
+  }
+]

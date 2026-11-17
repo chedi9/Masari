@@ -1,0 +1,50 @@
+[
+  {
+    "id": "route_metro_1",
+    "operator": "transtu_gtfs",
+    "mode": "METRO",
+    "short_name": "M1",
+    "long_name": "Ben Arous - Tunis Marine",
+    "governorate": "Tunis"
+  },
+  {
+    "id": "route_metro_2",
+    "operator": "transtu_gtfs",
+    "mode": "METRO",
+    "short_name": "M2",
+    "long_name": "Ariana - Tunis Marine",
+    "governorate": "Ariana"
+  },
+  {
+    "id": "route_bus_15",
+    "operator": "transtu_gtfs",
+    "mode": "BUS",
+    "short_name": "15",
+    "long_name": "Tunis Marine - Ariana Campus",
+    "governorate": "Tunis"
+  },
+  {
+    "id": "route_sntri_intercity",
+    "operator": "sntri_bus",
+    "mode": "BUS",
+    "short_name": "SNTRI-01",
+    "long_name": "Tunis - Sousse Intercity",
+    "governorate": "Sousse"
+  },
+  {
+    "id": "route_sahel_metro",
+    "operator": "transtu_gtfs",
+    "mode": "TRAIN",
+    "short_name": "MS",
+    "long_name": "Sousse - Monastir - Mahdia Rail",
+    "governorate": "Monastir"
+  },
+  {
+    "id": "route_sfax_urban",
+    "operator": "sntri_bus",
+    "mode": "BUS",
+    "short_name": "SFX-01",
+    "long_name": "Sfax Railway - Medina Loop",
+    "governorate": "Sfax"
+  }
+]

@@ -1,0 +1,171 @@
+{
+  "scope": "Nationwide Tunisia · all 24 governorates; not restricted to launch cities",
+  "governorates": {
+    "Tunis": {
+      "matched_resources": 174,
+      "transport_resources": 30,
+      "geographic_resources": 81,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Ariana": {
+      "matched_resources": 31,
+      "transport_resources": 1,
+      "geographic_resources": 27,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Ben Arous": {
+      "matched_resources": 55,
+      "transport_resources": 1,
+      "geographic_resources": 42,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Manouba": {
+      "matched_resources": 87,
+      "transport_resources": 3,
+      "geographic_resources": 38,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Nabeul": {
+      "matched_resources": 116,
+      "transport_resources": 1,
+      "geographic_resources": 41,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Zaghouan": {
+      "matched_resources": 21,
+      "transport_resources": 1,
+      "geographic_resources": 7,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Bizerte": {
+      "matched_resources": 45,
+      "transport_resources": 7,
+      "geographic_resources": 24,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Béja": {
+      "matched_resources": 61,
+      "transport_resources": 2,
+      "geographic_resources": 47,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Jendouba": {
+      "matched_resources": 75,
+      "transport_resources": 25,
+      "geographic_resources": 43,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Le Kef": {
+      "matched_resources": 52,
+      "transport_resources": 4,
+      "geographic_resources": 30,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Siliana": {
+      "matched_resources": 57,
+      "transport_resources": 1,
+      "geographic_resources": 41,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Sousse": {
+      "matched_resources": 94,
+      "transport_resources": 2,
+      "geographic_resources": 29,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Monastir": {
+      "matched_resources": 24,
+      "transport_resources": 1,
+      "geographic_resources": 15,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Mahdia": {
+      "matched_resources": 16,
+      "transport_resources": 1,
+      "geographic_resources": 8,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Sfax": {
+      "matched_resources": 50,
+      "transport_resources": 6,
+      "geographic_resources": 36,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Kairouan": {
+      "matched_resources": 41,
+      "transport_resources": 1,
+      "geographic_resources": 27,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Kasserine": {
+      "matched_resources": 33,
+      "transport_resources": 1,
+      "geographic_resources": 26,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Sidi Bouzid": {
+      "matched_resources": 33,
+      "transport_resources": 1,
+      "geographic_resources": 9,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Gabès": {
+      "matched_resources": 36,
+      "transport_resources": 0,
+      "geographic_resources": 27,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Médenine": {
+      "matched_resources": 37,
+      "transport_resources": 1,
+      "geographic_resources": 29,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Tataouine": {
+      "matched_resources": 25,
+      "transport_resources": 2,
+      "geographic_resources": 12,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Gafsa": {
+      "matched_resources": 28,
+      "transport_resources": 0,
+      "geographic_resources": 18,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Tozeur": {
+      "matched_resources": 28,
+      "transport_resources": 0,
+      "geographic_resources": 22,
+      "evidence": "Dataset/resource title or description match"
+    },
+    "Kébili": {
+      "matched_resources": 7,
+      "transport_resources": 0,
+      "geographic_resources": 3,
+      "evidence": "Dataset/resource title or description match"
+    }
+  },
+  "operator_name_matches": {
+    "TRANSTU": 25,
+    "SNCFT": 25,
+    "RFR": 1,
+    "SNTRI": 7,
+    "SORETRAS": 20,
+    "SORETRAK": 10,
+    "STS": 1,
+    "SRTJ": 18,
+    "SRT KEF": 3,
+    "SRTB": 8,
+    "SRTGN": 12,
+    "SRTM": 3,
+    "SRTG": 12,
+    "SRT Kairouan": 0,
+    "SRT Sousse": 0,
+    "SRT Monastir": 0,
+    "SRT Mahdia": 0,
+    "SRT Nabeul": 0,
+    "SRT Bizerte": 6
+  },
+  "warning": "Coverage is inferred from catalogue metadata text. A match does not prove service coverage; absence of a match does not prove no service exists."
+}

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	<title>
+		معتمديات ولايات الجمهورية	</title>
+	<link href="/favicon.png" type="image/x-icon" rel="icon" /><link href="/favicon.png" type="image/x-icon" rel="shortcut icon" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrapar.css" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrapar-responsive.css" />
+	<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="/css/metro-bootstrapar.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/layout2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery.rating.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="/css/magicsuggest-1.2.8.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery.share.css" />
+	<link rel="stylesheet" type="text/css" href="/css/slickmap/slickmap.css" />
+	<link rel="stylesheet" type="text/css" href="/css/cartographie/cartographie.css" />
+	<link rel="stylesheet" type="text/css" href="/css/fix.css" />
+
+			<link href="//fonts.googleapis.com/css?family=Oswald:300" media="screen" rel="stylesheet">
+			<style type="text/css">
+			@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+			
+			body, .btn, input, textarea,.bk-info button
+			 {
+			font-family:'Droid Arabic Naskh',serif;
+			}
+			.francais,.francais a{
+				font-family:Oswald, tahoma,verdana,serif;
+			}
+			</style>
+					<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrapar.js"></script><script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+	<!-- Leaflet -->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+	<!--[if lte IE 8]>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+	<![endif]-->
+	<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+	<script type="text/javascript" src="/js/gis/layers/tile/Bing.js"></script>	<script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+	<script type="text/javascript" src="/js/gis/layers/tile/Google.js"></script><script type="text/javascript" src="/js/gis/geodata.js"></script><script type="text/javascript" src="/js/gis/boundary.js"></script><script type="text/javascript" src="/js/gis/colorutil.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/leafletmi.css" />
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+		       
+        <meta name="author" content="République Tunisienne - Ministère de l'Intérieur - Cabinet - Cellule Informatique" />
+		<meta name="description" content="Le site officiel des données ouvertes du Ministère de l'Intérieur Tunisien, (République Tunisienne), Site de l'Opendata." />
+		<meta name="keywords" content="tunisie, opendata, données, transparence, opengov, egov, bonne gouvernance, statistiques, ministère de l'intérieur, république tunisienne, sécurité routière, formation, emploi, cartographie, datavisualisation, diagramme, outil" />
+		<meta name="geo.placename" content="Tunis, Tunisie" />
+		<meta name="geo.region" content="TN-11" />
+		<meta name="geo.position" content="36.80983445202395;10.259685516357422" />
+		<meta name="ICBM" content="36.80983445202395, 10.259685516357422" />
+        <meta property="og:site_name" content="interieur.gov.tn" />
+        <meta property="og:title" content="République Tunisienne - Ministère de l'Intérieur" />
+        <meta property="og:url" content="http://services.interieur.gov.tn/" />
+        <meta property="og:language" content="fr" />
+	   
+        <link rel="author" href="https://plus.google.com/108064712257129142167/posts" />
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+<style type="text/css">
+  div#map {
+    position: relative;
+  }
+
+  div#crosshair {
+    position: absolute;
+    top: 142px;
+    height: 19px;
+    width: 19px;
+    left: 50%;
+    margin-left: -8px;
+    display: block;
+    background: url('/images/crosshair.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+div#geocode{
+	position:absolute;
+	left:32px;
+	top:125px;
+	display:inline-block;
+	background-color:rgba(255,255,255,0.75);
+	padding:8px 12px;
+}
+div#geocode input{
+	padding:4px 6px;
+}
+body {
+    background-image: url("/images/pattern/46.png");
+</style>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&language=ar"></script>
+<script type="text/javascript">
+// https://developers.google.com/maps/documentation/javascript/basics
+
+
+/*
+var markers = [
+	['Tunis', 36.83292,10.184212]
+];
+*/
+
+
+ var map;
+  var geocoder;
+  var centerChangedLast;
+  var reverseGeocodedLast;
+  var currentReverseGeocodeResponse;
+  var activeWindow;
+
+  function initializeMaps() {
+    var latlng = new google.maps.LatLng(32.5468,-23.2031);
+    var myOptions = {
+      zoom: 2,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+	var maptnOptions = {
+				center: new google.maps.LatLng(36.83292,10.184212),
+				center: new google.maps.LatLng(36.800488,10.188789),
+
+				zoom: 9,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+
+				panControl: false,
+
+				streetViewControl: false,
+				zoomControlOptions: {
+					style: google.maps.ZoomControlStyle.SMALL
+				},
+
+				scaleControl: false,
+
+				mapTypeControl: true,
+				mapTypeControlOptions: {
+					style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+					position: google.maps.ControlPosition.BOTTOM_CENTER
+				},
+				zoomControl: true,
+				zoomControlOptions: {
+					style: google.maps.ZoomControlStyle.LARGE,
+					position: google.maps.ControlPosition.LEFT_BOTTOM				},
+				panControl: true,
+				panControlOptions: {
+					position: google.maps.ControlPosition.RIGHT_CENTER				},
+
+				//styles: styles,
+				scrollwheel: false, 
+
+
+
+	};
+    map = new google.maps.Map(document.getElementById("map_canvas"), maptnOptions);
+    geocoder = new google.maps.Geocoder();
+
+
+    setupEvents();
+    centerChanged();
+  }
+
+  function setupEvents() {
+    reverseGeocodedLast = new Date();
+    centerChangedLast = new Date();
+	/*
+    setInterval(function() {
+      if((new Date()).getSeconds() - centerChangedLast.getSeconds() > 1) {
+        if(reverseGeocodedLast.getTime() < centerChangedLast.getTime())
+          reverseGeocode();
+      }
+    }, 1000);
+	*/
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+      //document.getElementById("zoom_level").innerHTML = map.getZoom();
+    });
+
+    google.maps.event.addListener(map, 'center_changed', centerChanged);
+
+    google.maps.event.addDomListener(document.getElementById('crosshair'),'dblclick', function() {
+       map.setZoom(map.getZoom() + 1);
+    });
+
+  }
+
+  function getCenterLatLngText() {
+    return '(' + map.getCenter().lat() +', '+ map.getCenter().lng() +')';
+  }
+
+  function centerChanged() {
+    centerChangedLast = new Date();
+    var latlng = getCenterLatLngText();
+    currentReverseGeocodeResponse = null;
+  }
+
+  function reverseGeocode() {
+    reverseGeocodedLast = new Date();
+    geocoder.geocode({latLng:map.getCenter()},reverseGeocodeResult);
+  }
+
+
+
+  function geocode() {
+    var address = document.getElementById("address").value;
+
+    geocoder.geocode({
+      'address': address,
+      'partialmatch': true}, geocodeResult);
+  }
+
+  function geocodeResult(results, status) {
+    if (status == 'OK' && results.length > 0) {
+      map.fitBounds(results[0].geometry.viewport);
+	  
+	
+	if(activeWindow != null)
+	   activeWindow.close(); 
+	  
+	if(eval(map.getZoom())<12){
+		map.setZoom(map.getZoom() + 3);
+	}
+	else {
+		 if(eval(map.getZoom())<15){
+			map.setZoom(map.getZoom() + 1);
+		}
+	}
+	
+	
+    } else {
+	
+	var contentString = '<div id="content">'+
+		'<div id="siteNotice">'+
+		'</div>'+
+		'<h4 id="firstHeading" class="firstHeading">'+status+'</h4>'+
+		'<div id="bodyContent">'+
+		"<p>La localisation n'a pas reussit</p>"+
+		"<p>Veuillez vérifier l'adresse fournie</p>"+
+		'</div>'+
+		'</div>';
+	
+	var contentString = "La localisation n'a pas reussit, Veuillez vérifier l'adresse fournie";
+	var options = {
+		content: contentString,
+		position: map.getCenter(),
+		pixelOffset:new google.maps.Size(0, 0),
+		enableEventPropagation: false
+	}
+	var infowindow = new google.maps.InfoWindow(options);
+
+  //Close active window if exists 
+	if(activeWindow != null)
+	   activeWindow.close(); 
+	//Open new window 
+	infowindow.open(map); 
+	 //Store new window in global variable 
+	activeWindow = infowindow; 
+					
+					
+	
+    }
+	
+	
+  }
+/*
+  function addMarkerAtCenter() {
+     var marker = new google.maps.Marker({
+        position: map.getCenter(),
+        map: map
+    }); 
+
+    var text = 'Lat/Lng: ' + getCenterLatLngText();
+    if(currentReverseGeocodeResponse) {
+      var addr = '';
+      if(currentReverseGeocodeResponse.size == 0) {
+        addr = '...';
+      } else {
+        addr = currentReverseGeocodeResponse[0].formatted_address;
+      }
+      text = text + '<br>' + 'addresse: <br>' + addr;
+    }
+
+    var infowindow = new google.maps.InfoWindow({ content: text });
+	infowindow.open(map,marker);
+
+    google.maps.event.addListener(marker, 'click', function() {
+      ;
+    });
+  }
+  */
+ 
+</script>		
+		
+  </head>
+  <body onLoad="initializeMaps()" class="benfarhat ar">
+  <div class="multicolor"></div>
+    <!-- Menu
+    ================================================== -->
+	  <body onLoad="initializeMaps()">
+
+  
+  <div class="navbar-wrapper">
+      <div class="container-fluid">
+        <div class="navbar navbar-inverse navbar-static-top stickynav" role="navigation">
+          <div class="navbar-inner">
+            <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="/ar/" class="brand" style="min-width:120px;">وزارة الداخلية</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="/ar/"><i class="icon-home icon-white"></i></a></li>
+
+                <li class="dropdown" style="min-width:150px;">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">بيانات المفتوحة <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/ar/article/definition-de-l-open-data">تقديم</a></li>
+                    <li><a href="/ar/article/demo">عرض فيديو للموقع</a></li>
+					<li><a href="/ar/article/references-legislatives">الإطار القانوني</a></li>
+					<li><a href="/ar/article/guide-simplifie-de-l-acces-a-l-information-au-ministere-de-l-interieur">دليل مبسّط لطالب النفاذ إلى المعلومة  </a></li>
+					<li><a href="/ar/article/liste-des-cadres-charges-du-dossier-d-acces-a-l-information-au-ministere-de-l-interieur">قائمة الإطارات المكلفة بملف النفاذ</a></li>
+					<li><a href="/ar/article/lexique">قاموس</a></li>
+                    
+                    <li class="divider"></li>
+					
+                    <li><a href="/ar/outils/index">أدوات</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/ar/liens/index">روابط مفيدة</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">النوع <b class="caret"></b></a>
+                  <ul class="dropdown-menu">	
+
+				                      <li><a href="/ar/datas/index">عرض كل</a></li>				  
+				                      <li><a href="/ar/datas/index/type:11">كرسات الشروط</a></li>
+				                      <li><a href="/ar/datas/index/type:10">مراجع قانونية</a></li>
+				                      <li><a href="/ar/datas/index/type:9">بيانات فيديو</a></li>
+				                      <li><a href="/ar/datas/index/type:8">رسوم رقمية</a></li>
+				                      <li><a href="/ar/datas/index/type:7">إحصائيات</a></li>
+				                      <li><a href="/ar/datas/index/type:6">مطبوعة</a></li>
+				                      <li><a href="/ar/datas/index/type:5">دراسات</a></li>
+				                      <li><a href="/ar/datas/index/type:4">وثائق</a></li>
+				                      <li><a href="/ar/datas/index/type:3">خرائط</a></li>
+				                      <li><a href="/ar/datas/index/type:2">جداول زمنية</a></li>
+				                      <li><a href="/ar/datas/index/type:1">بيانات</a></li>
+				                    </ul>
+                </li>
+                <li class="dropdown">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">المحاور <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+				  				  
+                    <li><a href="/ar/datas/index">عرض كل</a></li>
+				                      <li><a href="/ar/datas/index/categorie:11">النشاط الحكومي</a></li>
+				                      <li><a href="/ar/datas/index/categorie:10">بيانات بين الوزارات</a></li>
+				                      <li><a href="/ar/datas/index/categorie:9">إدارة الاكترونية</a></li>
+				                      <li><a href="/ar/datas/index/categorie:8">التكوين</a></li>
+				                      <li><a href="/ar/datas/index/categorie:7">خدمات إدارية</a></li>
+				                      <li><a href="/ar/datas/index/categorie:6">الحماية والنجدة</a></li>
+				                      <li><a href="/ar/datas/index/categorie:5">السلامة المرورية</a></li>
+				                      <li><a href="/ar/datas/index/categorie:4">العمل الأمني</a></li>
+				                      <li><a href="/ar/datas/index/categorie:3">العمل البلدي</a></li>
+				                      <li><a href="/ar/datas/index/categorie:2">العمل الجهوي</a></li>
+				                      <li><a href="/ar/datas/index/categorie:1">الوزارة</a></li>
+				                    </ul>
+                </li>
+				
+                <li class="dropdown">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">مساهمات <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/ar/article/participez">أفكاركم ومساهماتكم</a></li>
+
+				  <li class="divider"></li>
+				  
+					<li class="nav-header">أدوات على الخط</li>
+                    <li><a href="projects/geodata/">MI GeoData (Beta)</a></li>
+                    <li><a href="projects/dataviz/">MI DataViz (Beta)</a></li>	
+					
+					<li class="divider"></li>
+                    <li><a href="/ar/membres">اتصل بنا</a></li>
+                  </ul>
+                </li>
+				<li class="divider-vertical"></li>          
+              </ul>
+			  <ul class="nav pull-right">
+			  <li class="divider-vertical"></li>
+
+									<li class="francais"><a href="/fr/catalog/delegations-par-gouvernorats-de-la-republique">Francais</a></li>
+				
+								
+				<li class="divider-vertical"></li>
+				<li><a href="/ar/users/login"><i class="icon-user"></i></a></li>				
+				
+				
+				<li class="divider-vertical"></li>
+				<li><a href="/ar/article/licence">ترخيص</a></li>
+
+				</ul>
+            </div><!--/.nav-collapse -->
+          </div><!-- /.navbar-inner -->
+        </div><!-- /.navbar -->
+      </div> <!-- /.container -->
+    </div>	
+    <div class="logointerieur"><div class="logoinner" style="min-width:350px;">موقع البيانات المفتوحة لوزارة الداخلية التونسية</div></div>	 
+
+	<div class="carousel slide" id="myCarousel">
+      <div class="carousel-inner">
+        <div class="item active">
+         <img src="/img/caroussel/02.jpg" alt="" />
+          <div class="container">
+            <div class="carousel-caption">
+              <h1></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Sous Menu
+    ================================================== -->
+	<div class="sousmenu">
+	<div class="container">
+	<ul class="nav nav-pills sousmenu">
+				
+		<li class="pull-left">
+		<form method="get" action="/" class="form-inline" >
+<input name="q" style="padding:0 4px;" id="q" class="span4" type="text" placeholder="بحث في البيانات"  value="" autocomplete="off">
+<button type="submit" class="btn btn-info"> <i class="icon-search icon-big"></i></button>
+</form>		</li>
+			</ul>
+	</div>
+	<div class="clear"></div>
+	</div> <div class="shadow shadow9"></div> 
+			  <!--Contenu
+				================================================== -->
+	
+	<div id="wrap">
+		   <div class="container-fluid">
+		   			<div class="row-fluid">
+				
+			   				   <div class="span3 sidebar">
+						<div class="container-fluid ">
+		<div class="row-fluid sidebarwidth">
+			<div class="span12 stickysidebar">
+
+		<div class="menu">
+		<button class="btn btn-block btn-inverse taillemenu" data-target="listetypes">الانواع<span style="display:inline-block;text-align:center;float:left;width:24px;font-size:0.9em;line-height:20px;"><i class="fa fa-cog"></i></span></button>
+		<div class="subaccordeon listetypes">
+	<a class="btn btn-block btn-submenuactive" href="https://opendata.interieur.gov.tn/ar/datas/index">عرض كل <span style="direction:ltr;font-size:0.94em;background-color:#DFDFDF;color:#198D98;width:24px;height:18px;display:inline-block;text-align:center;float:left;">210</span></a>
+
+						<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/type:1">بيانات <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">99</span></a>
+													<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/type:3">خرائط <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">4</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/type:4">وثائق <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">24</span></a>
+																	<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/type:7">إحصائيات <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">78</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/type:8">رسوم رقمية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">4</span></a>
+																	</div>
+	<button class="btn btn-block btn-inverse taillemenu" data-target="listecategories">المحاور<span style="display:inline-block;text-align:center;float:left;width:24px;font-size:0.9em;line-height:20px;"><i class="fa fa-cog"></i></span></button>
+		<div class="subaccordeon listecategories">
+	<a class="btn btn-block btn-submenuactive" href="https://opendata.interieur.gov.tn/ar/datas/index">عرض كل <span style="direction:ltr;font-size:0.94em;background-color:#DFDFDF;color:#198D98;width:24px;height:18px;display:inline-block;text-align:center;float:left;">210</span></a>
+						<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:1">الوزارة <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">28</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:2">العمل الجهوي <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">5</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:3">العمل البلدي <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">16</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:4">العمل الأمني <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">56</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:5">السلامة المرورية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">39</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:6">الحماية والنجدة <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">23</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:7">خدمات إدارية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">23</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/categorie:8">التكوين <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">11</span></a>
+																		
+		
+	</div>
+	
+
+	<button class="btn btn-block btn-inverse taillemenu" data-target="listesources">المصادر<span style="display:inline-block;text-align:center;float:left;width:24px;font-size:0.9em;line-height:20px;"><i class="fa fa-cog"></i></span></button>
+		<div class="subaccordeon listesources">
+	<a class="btn btn-block btn-submenuactive" href="https://opendata.interieur.gov.tn/ar/datas/index">عرض كل <span style="direction:ltr;font-size:0.94em;background-color:#DFDFDF;color:#198D98;width:24px;height:18px;display:inline-block;text-align:center;float:left;">210</span></a>
+										<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:2">إدارة الحدود والأجانب <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">1</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:3">مكتب العلاقات مع المواطن <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">9</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:4">الادارة العامة للشؤون الجهوية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">7</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:5">الإدارة العامة للجماعات العمومية المحلية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">23</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:6">مركز التكوين ودعم اللامركزية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">10</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:7">الديوان الوطني للحماية المدنية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">24</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:8">الإدارة العامة للحرس الوطني <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">22</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:9">المرصد الوطني للإعلام والتكوين والتوثيق والدراسات حول سلامة المرور <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">35</span></a>
+													<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:11">وزارة المالية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">3</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:12">وزارة الداخلية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">21</span></a>
+													<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:14">صندوق القروض ومساعدة الجماعات المحلية <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">1</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:15">رئاسة الحكومة <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">1</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:16">الإدارة العامة للدراسات القانونية والنزاعات <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">13</span></a>
+									<a class="btn btn-block btn-submenu" href="https://opendata.interieur.gov.tn/ar/datas/index/source:17">الإدارة العامة للأمن العمومي <span style="direction:ltr;font-size:0.94em;background-color:#DEDEDE;color:#212121;width:24px;height:18px;display:inline-block;text-align:center;float:left;">35</span></a>
+						
+	</div>
+	
+	
+	
+	
+		
+</div>		
+
+			</div>
+		</div>
+	</div>	
+					</div>
+					<div class="span9 contenuwrap">
+										<div class="container-fluid outer">
+							
+						
+                    <div class="row-fluid">
+                        <!-- .inner -->
+                        <div class="span12 inner">
+						
+			<div style="margin-bottom: 18px;" class="tabbable">
+			<div>
+				<ul class="breadcrumb title">
+					<li><a href="#">معتمديات ولايات الجمهورية</a> <span class="divider">/</span></li>
+					<li><a href="#">&nbsp;</a> <span class="divider">/</span></li>
+					<li><a href="#">العمل الجهوي</a> <span class="divider">/</span></li>
+					<li><a href="#">خرائط</a></li>
+				</ul>
+			</div>			<ul class="nav nav-tabs">
+
+			                 <li class="active"><a data-toggle="tab" href="#dataset"><i class="icon-table icon-large"></i> بيانات جغرافية</a></li>
+			                   <li><a data-toggle="tab" href="#infodata"><i class="icon-list-alt icon-large"></i> معلومات</a></li>
+
+				
+                                 <li><a data-toggle="tab" href="#formatsouverts"><i class="icon-share icon-large"></i> صيغ مفتوحة</a></li>
+<li class="prev" data-toggle="tooltip" data-placement="top" title="عدد عمليات الإجتياز بطرق غير شرعية عبر البر تم إحباطها من قبل وحدات الحرس الوطني الحدودية البرية"><a href="/ar/catalog/nombre-d-operations-d-immigration-illegale-par-voie-terrestre-dejouees-par-les-unites-frontalieres-terrestres-de-la-garde-nationale"><i class="fa fa-forward"></i></a></li>
+  <li class="next" data-toggle="tooltip" data-placement="top" title="قائمة في المنتزهات الحضرية الموضوعة تحت تصرف  الجماعات المحلية"><a href="/ar/catalog/liste-des-parcs-urbains-a-la-disposition-des-collectivites-locales" data_toggle="tab"><i class="fa fa-backward"></i></a></li>				 
+              </ul>
+              <div style="padding-bottom: 9px; border-bottom: 1px solid #ddd;" class="tab-content">
+                <div id="infodata" class="tab-pane">
+                                    <div style="display:none" id="data-slug">delegations-par-gouvernorats-de-la-republique</div>
+<table cellpatding="0" cellspacing="0" class="table table-bordered table-hover table-stripped table-condensed">
+		
+	<tr>		<td><i class="icon-asterisk"></i> العنوان</td>
+		<td>
+			معتمديات ولايات الجمهورية		</td>
+		</tr>		
+	<tr>		<td><i class="icon-file-alt"></i> وصف</td>
+		<td>
+			معتمديات ولايات الجمهورية		</td>
+		</tr>		
+	<tr>		<td><i class="icon-certificate"></i> النوع</td>
+		<td>
+			خرائط		</td>
+		</tr>		
+	<tr>		<td><i class="icon-bookmark"></i> الصنف</td>
+		<td>
+			العمل الجهوي		</td>
+		</tr>		
+	<tr>		<td><i class="icon-circle-blank"></i> المواضيع</td>
+		<td>
+					</td>
+		</tr>		
+	<tr>		<td><i class="icon-eye-open"></i> عدد المشاهدات</td>
+		<td>
+			69087		</td>
+		</tr>		
+	<tr>		<td><i class="icon-star"></i> النتيجة</td>
+		<td>
+			65		</td>
+		</tr>		
+	<tr>		<td><i class="icon-edit"></i> تاريخ الإحداث</td>
+		<td>
+			2013-06-25 13:03:46		</td>
+		</tr>		
+	<tr>		<td><i class="icon-pencil"></i> تاريخ التعديل</td>
+		<td>
+			2026-11-14 21:39:55		</td>
+		</tr>		
+	<tr>		<td><i class="icon-user"></i> منتج البيانات</td>
+		<td>
+			الادارة العامة للشؤون الجهوية		</td>
+		</tr>	
+		
+	<tr>		<td><i class="icon-calendar"></i> التغطية الزمنية</td>
+		<td>
+			 		</td>
+		</tr>		
+	<tr>		<td><i class="icon-map-marker"></i> التغطية الجغرافية</td>
+		<td>
+			البلاد التونسية		</td>
+		</tr>	
+		
+				
+		</table>
+				  
+                                  </div>
+				
+				                <div id="dataset" class="tab-pane active">
+                  				    <section>
+					
+
+					
+<div class="datas view">
+
+<style>
+.leaflet-popup-content-wrapper{
+text-align:right;
+dfirection:rtl;
+}
+</style>
+<div id="mapOSM" class="row-fluid" style="height:600px;"></div>
+<script>
+function initmap() {
+	map = new L.Map('mapOSM');
+	var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	var osmAttrib='Map data de OpenStreetMap';
+	var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 10, attribution: osmAttrib});           
+	map.setView(new L.LatLng(33.45, 9.33),6);
+	map.addLayer(osm);
+	map.attributionControl.setPrefix(signature);
+	L.control.layers(cartesDeFond).addTo(map);	
+}
+initmap();
+
+var tableau = [
+[tunis,'تونس','21','قرطاج- المدينة- باب البحر- باب سويقة- العمران- العمران الأعلى- التحرير- المنزه- حي الخضراء- باردو- السيجومي- الزهور- الحرائرية- سيدي حسين- الوردية- الكبارية- سيدي البشير- جبل الجلود- حلق الوادي- الكرم- المرسى.','1'],
+[ariana,'أريانة','7','أريانة المدينة- سكرة- رواد- قلعة الأندلس- سيدي ثابت- حي التضامن- المنيهلة.','2'],
+[manouba,'منوبة','8','منوبة- وادي الليل- طبربة- البطان- الجديدة- المرناقية- برج العامري- دوار هيشر.','3'],
+[benarous,'بن عروس','12','بن عروس- المدينة الجديدة- المروج- حمام الأنف- حمام الشط- بومهل البساتين- الزهراء- رادس- مقرين- المحمدية- فوشانة- مرناق.','4'],
+[nabeul,'نابل','16','نابل- دار شعبان الفهري- بني خيار- قربة- منزل تميم- الميدة- قليبية- حمام الأغزاز- الهوارية- تاكلسة- سليمان- منزل بوزلفة- بني خلاد- قرمبالية- بوعرقوب- الحمامات.','5'],
+[bizerte,'بنزرت','14','بنزرت الشمالية- جرزونة- بنزرت الجنوبية- سجنان- جومين- ماطر- غزالة- منزل بورقيبة- تينجة- أوتيك- غار الملح - منزل جميل- العالية - رأس الجبل.','6'],
+[zaghouan,'زغوان','6','زغوان- الزريبة- بئر مشارقة- الفحص- الناظور- صواف.','7'],
+[sousse,'سوسة','16','سوسة المدينة- الزاوية القصيبة الثريات - سوسة الرياض- سوسة جوهرة- سوسة سيدي عبد الحميد- حمام سوسة- أكودة- القلعة الكبرى- سيدي بوعلي- هرقلة- النفيضة- بوفيشة- كندار- سيدي الهاني- مساكن- القلعة الصغرى.','8'],
+[monastir,'المنستير','13','المنستيـر- الوردانيـن- الساحليـن- زرمديـن- بنـي حسان- جمـال- بنبلة- المكنين- البقالطة- طبلبة- قصر هلال- قصيبة المديوني- صيادة لمطة بوحجر.','9'],
+[mahdia,'المهدية','11','المهدية- بومرداس- أولاد الشامخ- شربان- هبيرة- السواسي- الجم- الشابة- ملولش- سيدي علوان- قصور الساف.','10'],
+[sfax,'صفاقس','16','صفاقـس المدينة- صفاقـس الغربية- ساقية الزيت- ساقية الداير- صفاقس الجنوبية - طينة- عقارب- جبنيانة- العامرة- الحنشة- منزل شاكر- الغريبة- بئر علي بن خليفة- الصخيرة- المحرس- قـرقنـة.','11'],
+[beja,'باجة','9','باجة الشمالية- باجة الجنوبية- عمدون- نفزة- تبرسق- تيبار- تستور- قبلاط- مجاز الباب.','12'],
+[jendouba,'جندوبة','9','جنـدوبة- جنـدوبة الشمالية- بوسالم- طبرقـة- عين دراهم- فرنانة- غار الدماء- وادي مليز- بلطة بوعوان.','13'],
+[kef,'الكاف','11','الكاف الغربية- الكاف الشرقية- نبـر- ساقية سيدي يوسف- تاجروين- قلعة سنان- القلعة الخصبة- الجريصة- القصور- الدهماني- السرس.','14'],
+[siliana,'سليانة','11','سليانة الشمالية- سليانة الجنوبية- بوعرادة- قعفور- العروسة- الكريب- بورويس- مكثر- الروحية- كسرى- برقو.','15'],
+[kairouan,'القيروان','11','القيروان الشمالية- القيروان الجنوبية- الشبيكة- السبيخة- الوسلاتية- حفوز- العلا- حاجب العيون- نصر الله- الشراردة- بوحجلة.','16'],
+[sidibouzid,'سيدي بوزيد','12','سيدي بوزيد الغربية- سيدي بوزيد الشرقية- جلمة- سبالة أولاد عسكر- بئر الحفي- سيدي علي بن عون- منزل بوزيان- المكناسي- سوق الجديد- المزونة- الرقاب- أولاد حفوز.','17'],
+[kasserine,'القصرين','13','القصرين الشمالية- القصرين الجنوبية- الزهور- حاسي الفريد- سبيطلة- سبيبة- جدليان- العيون- تالة- حيدرة- فوسانة- فريانة- ماجل بلعباس.','18'],
+[gabes,'قابس','10','قابـس المدينة-قابـس الغربية- قابـس الجنوبية- غنوش- المطوية- منزل الحبيب- الحامة- مطماطة- مطماطة الجديدة- مارث.','19'],
+[medenine,'مدنين','9','مدنيـن الشمالية- مدنين الجنوبية- بني خداش- بن قردان- جرجيس- جربة حومة السوق- جربة ميدون- جربة أجيم- سيدي مخلوف.','20'],
+[gafsa,'قفصة','11','قفصة الشمالية- سيدي عيش- القصر- قفصة الجنوبية- أم العرائس- الرديف- المتلوي- المظيلة- القطار- بلخير- السند.','21'],
+[tozeur,'توزر','5','توزر- دقاش- تمغزة- نفطة- حزوة.','22'],
+[tataouine,'تطاوين','7','تطاوين الشمالية- تطاوين الجنوبية- الصمار- البئر الأحمر- غمراسن- ذهيبة- رمادة.','23'],
+[kebili,'قبلي','6','قبلي الجنوبية- قبلي الشمالية- سوق الأحد- دوز الشمالية- دوز الجنوبية - الفوار.','24']
+		];
+
+var 	widthstroke=0.5,
+		opacitystroke= 1,
+		fillopacity= 0.4,
+		randomcolor;
+		
+message = new Array(); 
+message[1]="عدد المعتمديات : ";
+message[2]="قائمة المعتمديات : ";
+
+var couleur_de_base='#BD362F',
+	taux_de_variation_couleur=80;
+
+for (i = 0; i < tableau.length; i++) {
+          
+				var message_popup="<strong> اسم الولاية : " +tableau[i][1]+ "<br>"+message[1]+"</strong>"+tableau[i][2]+"<br><strong>"+message[2]+"</strong>"+tableau[i][3];
+				var data=tableau[i][0];
+				randomcolor=tableau[i][4]/24; 
+				var colorstroke=melange_couleur(couleur_de_base, (100* randomcolor),150);
+				data.bindPopup(message_popup).setStyle({color: colorstroke, weight: widthstroke, opacity:opacitystroke, fillOpacity: fillopacity}).addTo(map).on('dblclick', function(e) {map.fitBounds(data.getBounds())});	
+            }
+	
+        </script>
+
+<table id="datatable" style="display:none;">
+<thead>
+  <tr> <th>  الولاية </th> <th>العدد </th> <th>المعتمديات  </th> </tr>
+</thead>
+<tbody>
+
+ <tr> <td>  تونس</td> <td>21</td> <td>قرطاج- المدينة- باب البحر- باب سويقة- العمران- العمران الأعلى- التحرير- المنزه- حي الخضراء- باردو- السيجومي- الزهور- الحرائرية- سيدي حسين- الوردية- الكبارية- سيدي البشير- جبل الجلود- حلق الوادي- الكرم- المرسى.  </td> </tr>
+ <tr> <td>  أريانة </td> <td>7</td> <td>أريانة المدينة- سكرة- رواد- قلعة الأندلس- سيدي ثابت- حي التضامن- المنيهلة.  </td> </tr>
+ <tr> <td>  منوبة </td> <td>8</td> <td>منوبة- وادي الليل- طبربة- البطان- الجديدة- المرناقية- برج العامري- دوار هيشر.  </td> </tr>
+ <tr> <td>  بن عروس </td> <td>12</td> <td>بن عروس- المدينة الجديدة- المروج- حمام الأنف- حمام الشط- بومهل البساتين- الزهراء- رادس- مقرين- المحمدية- فوشانة- مرناق.  </td> </tr>
+ <tr> <td>  نابل </td> <td>16</td> <td>نابل- دار شعبان الفهري- بني خيار- قربة- منزل تميم- الميدة- قليبية- حمام الأغزاز- الهوارية- تاكلسة- سليمان- منزل بوزلفة- بني خلاد- قرمبالية- بوعرقوب- الحمامات.  </td> </tr>
+ <tr> <td>  بنزرت </td> <td>14</td> <td>بنزرت الشمالية- جرزونة- بنزرت الجنوبية- سجنان- جومين- ماطر- غزالة- منزل بورقيبة- تينجة- أوتيك- غار الملح - منزل جميل- العالية - رأس الجبل.  </td> </tr>
+ <tr> <td>  زغوان </td> <td>6</td> <td>زغوان- الزريبة- بئر مشارقة- الفحص- الناظور- صواف.  </td> </tr>
+ <tr> <td>  سوسة </td> <td>16</td> <td>سوسة المدينة- الزاوية القصيبة الثريات - سوسة الرياض- سوسة جوهرة- سوسة سيدي عبد الحميد- حمام سوسة- أكودة- القلعة الكبرى- سيدي بوعلي- هرقلة- النفيضة- بوفيشة- كندار- سيدي الهاني- مساكن- القلعة الصغرى.  </td> </tr>
+ <tr> <td>  المنستير </td> <td>13</td> <td>المنستيـر- الوردانيـن- الساحليـن- زرمديـن- بنـي حسان- جمـال- بنبلة- المكنين- البقالطة- طبلبة- قصر هلال- قصيبة المديوني- صيادة لمطة بوحجر.  </td> </tr>
+ <tr> <td>  المهدية </td> <td>11</td> <td>المهدية- بومرداس- أولاد الشامخ- شربان- هبيرة- السواسي- الجم- الشابة- ملولش- سيدي علوان- قصور الساف.  </td> </tr>
+ <tr> <td>  صفاقس </td> <td>16</td> <td>صفاقـس المدينة- صفاقـس الغربية- ساقية الزيت- ساقية الداير- صفاقس الجنوبية - طينة- عقارب- جبنيانة- العامرة- الحنشة- منزل شاكر- الغريبة- بئر علي بن خليفة- الصخيرة- المحرس- قـرقنـة.  </td> </tr>
+ <tr> <td>  باجة </td> <td>9</td> <td>باجة الشمالية- باجة الجنوبية- عمدون- نفزة- تبرسق- تيبار- تستور- قبلاط- مجاز الباب.  </td> </tr>
+ <tr> <td>  جندوبة </td> <td>9</td> <td>جنـدوبة- جنـدوبة الشمالية- بوسالم- طبرقـة- عين دراهم- فرنانة- غار الدماء- وادي مليز- بلطة بوعوان.  </td> </tr>
+ <tr> <td>  الكاف </td> <td>11</td> <td>الكاف الغربية- الكاف الشرقية- نبـر- ساقية سيدي يوسف- تاجروين- قلعة سنان- القلعة الخصبة- الجريصة- القصور- الدهماني- السرس.  </td> </tr>
+ <tr> <td>  سليانة </td> <td>11</td> <td>سليانة الشمالية- سليانة الجنوبية- بوعرادة- قعفور- العروسة- الكريب- بورويس- مكثر- الروحية- كسرى- برقو.  </td> </tr>
+ <tr> <td>  القيروان </td> <td>11</td> <td>القيروان الشمالية- القيروان الجنوبية- الشبيكة- السبيخة- الوسلاتية- حفوز- العلا- حاجب العيون- نصر الله- الشراردة- بوحجلة.  </td> </tr>
+ <tr> <td>  سيدي بوزيد </td> <td>12</td> <td>سيدي بوزيد الغربية- سيدي بوزيد الشرقية- جلمة- سبالة أولاد عسكر- بئر الحفي- سيدي علي بن عون- منزل بوزيان- المكناسي- سوق الجديد- المزونة- الرقاب- أولاد حفوز.  </td> </tr>
+ <tr> <td>  القصرين </td> <td>13</td> <td>القصرين الشمالية- القصرين الجنوبية- الزهور- حاسي الفريد- سبيطلة- سبيبة- جدليان- العيون- تالة- حيدرة- فوسانة- فريانة- ماجل بلعباس.  </td> </tr>
+ <tr> <td>  قابس </td> <td>10</td> <td>قابـس المدينة-قابـس الغربية- قابـس الجنوبية- غنوش- المطوية- منزل الحبيب- الحامة- مطماطة- مطماطة الجديدة- مارث.  </td> </tr>
+ <tr> <td>  مدنين </td> <td>9</td> <td>مدنيـن الشمالية- مدنين الجنوبية- بني خداش- بن قردان- جرجيس- جربة حومة السوق- جربة ميدون- جربة أجيم- سيدي مخلوف.  </td> </tr>
+ <tr> <td>  قفصة </td> <td>11</td> <td>قفصة الشمالية- سيدي عيش- القصر- قفصة الجنوبية- أم العرائس- الرديف- المتلوي- المظيلة- القطار- بلخير- السند.  </td> </tr>
+ <tr> <td>  توزر </td> <td>5</td> <td>توزر- دقاش- تمغزة- نفطة- حزوة.  </td> </tr>
+ <tr> <td>  تطاوين </td> <td>7</td> <td>تطاوين الشمالية- تطاوين الجنوبية- الصمار- البئر الأحمر- غمراسن- ذهيبة- رمادة.  </td> </tr>
+ <tr> <td>  قبلي </td> <td>6</td> <td>قبلي الجنوبية- قبلي الشمالية- سوق الأحد- دوز الشمالية- دوز الجنوبية - الفوار.  </td> </tr>
+ </tbody>
+</table>	
+	
+
+
+	
+</div>
+
+   </section>
+                                  </div>
+				
+				
+				
+				  <div id="formatsouverts" class="tab-pane">
+                  <div class="row-fluid">	
+<code>Format CSV</code>	<br>	
+<textarea id="csv" class="span12" rows="10" cols="50" onclick="this.focus();this.select()" readonly="readonly"></textarea/><br><br>	
+
+<code>Format JSON</code>	<br>	
+<textarea id="json" class="span12" rows="10" cols="50" onclick="this.focus();this.select()" readonly="readonly"></textarea/><br><br>
+
+<code>Format XML</code><br>	
+<textarea id="xml" class="span12" rows="10" cols="50" onclick="this.focus();this.select()" readonly="readonly"></textarea/><br><br>
+			 
+			 
+</div>
+</div>
+				 
+				  
+			  			</div>			  <div id="participation" class="tab-pane">
+			  <div class="row-fluid">	
+	<span class="pull-right">	
+	
+<input type="hidden" name="id" value="142"/>
+
+
+<style>
+.rating{
+direction:rtl;
+text-align:left;
+}
+.rating a.rate{
+/* unicode-bidi: bidi-override;
+  direction: ltr;*/
+  font-size:1.4em;
+  color:#B94A48;
+  outline:none;
+}
+.rating > a i.icon-star {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+  color:#ddd;
+}
+.rating > a.note i.icon-star {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+  color:#198d98;
+}
+.rating > a.rate i.icon-star:hover:before,
+.rating > a.rate:hover ~ a.rate i.icon-star:before {
+   color:#B94A48;
+   cursor:pointer;
+}
+	</style>
+
+<div class="rating"><a class="push-left rate" title="" data-value="5" data-placement="bottom" rel="tooltip" data-toggle="tooltip" href="#" data-original-title="5"><i class="icon-star" ></i></a><a class="push-left rate" title="" data-value="4" data-placement="bottom" rel="tooltip" data-toggle="tooltip" href="#" data-original-title="4"><i class="icon-star" ></i></a><a class="push-left rate" title="" data-value="3" data-placement="bottom" rel="tooltip" data-toggle="tooltip" href="#" data-original-title="3"><i class="icon-star" ></i></a><a class="push-left rate" title="" data-value="2" data-placement="bottom" rel="tooltip" data-toggle="tooltip" href="#" data-original-title="2"><i class="icon-star" ></i></a><a class="push-left rate" title="" data-value="1" data-placement="bottom" rel="tooltip" data-toggle="tooltip" href="#" data-original-title="1"><i class="icon-star" ></i></a>&nbsp; <a href="#"
+            class="btn btn-info noter"
+            onclick="
+                $.get( 'https://opendata.interieur.gov.tn/ar/datas/ajax_rating',						
+                        { id: 142,
+						  note: $('a.note:first').attr('data-value'),
+						  notes:65,
+						  nb:22
+						},
+                        function( data ) {
+                            var obj = jQuery.parseJSON( data );
+                        }
+                );
+                return false; ">
+            Notez
+        </a>
+		<div class="ajax_loading_image"></div>
+	
+
+	  
+	
+	</div>
+	</span> 
+	<div style="clear:both"></div>
+	<hr />
+</div>
+
+					  
+                                  </div>			
+				
+              </div>
+    	
+	</div>
+</div>
+<div id="social"></div>
+
+						</div>
+					</div>
+
+						</div>
+		</div>	
+		
+			<!-- #push do not remove -->
+	<div id="push"></div>
+	<!-- /#push -->
+
+	<!-- END WRAP -->
+	</div>
+	<div class="clearfix"></div>
+
+	<div id="wrapper">
+
+    <!-- Liens utiles
+    ================================================== -->
+	<div class="sousmenubottom">
+	<div class="container">
+	<ul class="nav nav-pills sousmenubottom">
+		<li class="active" style="min-width:120px;"><a href="#">روابط موفيدة</a></li>
+		<li><a href="http://data.gov.tn/" style="font-family:Oswald, tahoma,verdana,serif;"><i class="fa fa-external-link"></i> http://data.gov.tn</a></li>
+		<li><a href="http://baladia.marsad.tn/" style="font-family:Oswald, tahoma,verdana,serif;"><i class="fa fa-external-link"></i> http://baladia.marsad.tn</a></li>
+		<li><a href="http://tunisia.opendataforafrica.org/" style="font-family:Oswald, tahoma,verdana,serif;"><i class="fa fa-external-link"></i> http://tunisia.opendataforafrica.org</a></li>
+		<li><a href="http://www.afdb.org/en/knowledge/statistics/" style="font-family:Oswald, tahoma,verdana,serif;"><i class="fa fa-external-link"></i> http://www.afdb.org/en/knowledge/statistics</a></li>
+			</ul>
+	</div>
+	</div>
+   <!-- Footer
+    ================================================== -->
+    <footer class="footer" id="footer" style="background-color:#222;">
+      <div class="container">
+	  										
+	  <div class="row-fluid">
+		<div class="licence span6" style="direction:ltr;">
+
+		
+		
+		 <div class="row-fluid">
+			<div class="span12">
+
+					<p style="font-family:Oswald, tahoma,verdana,serif;">
+		<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.fr" target="blank" class="push-left"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a><br />Sauf mention contraire, <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Les données du site des données ouvertes</span> du <a xmlns:cc="http://creativecommons.org/ns#" href="http://opendata.interieur.gov.tn" property="cc:attributionName" rel="cc:attributionURL">Ministère de l'intérieur dela République Tunisienne</a> sont mises à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.fr">licence Creative Commons Attribution 3.0 non transposé</a>.<br />Fondé(e) sur une œuvre à <a xmlns:dct="http://purl.org/dc/terms/" href="http://opendata.interieur.gov.tn" rel="dct:source">http://opendata.interieur.gov.tn</a>.
+		</p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+					<p style="font-family:Oswald, tahoma,verdana,serif;"><img src="/img/cc/by.png" width="24px" class="pull-left"/>  L'œuvre peut être librement utilisée, à la condition de l'attribuer à l'auteur en citant le nom du Ministère de l'Intérieur de la République Tunisienne.</a></p>
+					<hr>
+					<p style="font-family:Oswald, tahoma,verdana,serif;"><a href="http://search.creativecommons.org/" target="blank"><i class="icon-search"></i> Recherche Creative commons</a></p>
+			
+			</div>
+
+
+		</div>
+		
+		</div>
+		
+		
+		
+		<div class="span6">
+        <div class="row-fluid">
+			<div class="span12">
+					
+		<p class="pull-left"><a href="#"><i class="icon-chevron-up icon-white"></i></a>&nbsp;&nbsp;</p>
+        <p>2013 &copy; الجمهورية التونسية | وزارة الداخلية 
+		<hr>
+			</div>
+		</div>
+        <div class="row-fluid">
+			<div class="span6">
+				<ul class="unstyled">
+					<li style="font-family:Oswald, tahoma,verdana,serif;"><i class="icon-home"></i> Ministère de l'Intérieur</li>
+					<li style="font-family:Oswald, tahoma,verdana,serif;"><i class="icon-phone"></i> 71333000</li>
+					<li style="font-family:Oswald, tahoma,verdana,serif;"><i class="icon-envelope"></i> Avenue Habib Bourguiba, 1000 Tunis, Tunisie</li>
+				</ul>
+			</div>
+			<div class="span6">
+				<ul class="unstyled">
+					<li style="font-family:Oswald, tahoma,verdana,serif;"><a href="http://services.interieur.gov.tn/" target="_blank"><i class="icon-group"></i> services.interieur.gov.tn/</a></li>
+					<li style="font-family:Oswald, tahoma,verdana,serif;"><a href="http://opendata.interieur.gov.tn/" target="_blank"><i class="icon-bar-chart"></i> opendata.interieur.gov.tn</a></li>
+					<li style="font-family:Oswald, tahoma,verdana,serif;"><a href="https://www.facebook.com/ministere.interieur.tunisie" target="_blank"><i class="icon-facebook"></i> www.facebook.com/ministere.interieur.tunisie</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+        <div class="row-fluid">
+			<div class="span12">
+					
+        <p><i class="icon-wrench"></i> 2013 &copy; تصميم خلية الإعلامية بالديوان 
+		
+			</div>
+		</div>
+		
+		</div>
+		
+		<div style="clear:both;"></div>
+		
+		<div style="clear:both;"></div>
+		<div style="direction:ltr;"></div>
+		
+		</div>
+		<div style="display:none;">
+			<div itemscope itemtype="http://schema.org/GovernmentOrganization">
+				<a itemprop="url" href="http://services.interieur.gov.tn"><div itemprop="name"><strong>République Tunisienne - Ministère de l'Intérieur</strong></div>
+				</a>
+				<div itemprop="description">Site dédié aux données ouvertes (opendata) du Ministère de l'Intérieur</div>
+				<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+					<span itemprop="streetAddress">Rue Habib Bourguiba</span><br>
+					<span itemprop="addressLocality">Tunis</span><br>
+					<span itemprop="addressRegion">Tunis</span><br>
+					<span itemprop="postalCode">1000</span><br>
+					<span itemprop="addressCountry">Tunisie</span><br>
+				</div>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+      </div>
+    </footer><div class="multicolor"></div>
+</div>
+  <!-- javascript 
+    ================================================== -->
+	<script>
+      !function ($) {
+        $(function(){
+          // carousel demo
+          $('#myCarousel').carousel()
+        })
+      }(window.jQuery)
+    </script>  
+<script type="text/javascript" src="/js/core.js"></script><script type="text/javascript" src="/js/cartographie/cartographie.js"></script><script type="text/javascript" src="/js/jquery.rating.js"></script><script type="text/javascript" src="/js/jquery.share.js"></script><script type="text/javascript" src="/js/highcharts/highcharts.js"></script><script type="text/javascript" src="/js/highcharts/highcharts-3d.js"></script><script type="text/javascript" src="/js/highcharts/modules/exporting.js"></script><script type="text/javascript" src="/js/openformats.js"></script><script type="text/javascript" src="/js/jquery.masonry.min.js"></script><script type="text/javascript" src="/js/stnav.js"></script><script type="text/javascript">
+//<![CDATA[
+
+$(function () {
+   
+
+	// Format CSV
+	var csvstring= $('#datatable').table2CSV().replace(/\n/gi, ' ').replace(/\s+/gi,' ');
+	$('#csv').text(csvstring);
+	// Format JSON
+	var t = $('#datatable').tableToJSON();
+	$('#json').text(JSON.stringify(t));
+	// Format XML
+	var x = json2xml(t);
+	$('#xml').text(x);
+
+
+	$('.rating > a.rate').click(function(){
+		$(this).addClass('note');
+		$(this).nextAll('a.rate').addClass("note");
+		$(this).prevAll('a.rate').removeClass("note");
+		return false;
+	});
+	
+	$('#social').share({
+        networks: ['email','pinterest','tumblr','googleplus','digg','facebook','twitter','linkedin','stumbleupon'],
+        theme: 'square'
+    });
+
+});
+
+//]]>
+</script><script type="text/javascript" src="/js/highcharts/opendata.js"></script><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41778109-1', 'interieur.gov.tn');
+  ga('send', 'pageview');
+
+</script>
+<script type="application/ld+json">
+{
+   "@context": "http://schema.org",
+   "@type": "WebSite",
+   "url": "http://opendata.interieur.gov.tn/",
+   "potentialAction": {
+     "@type": "SearchAction",
+     "target": "http://opendata.interieur.gov.tn/?q={search_term_string}",
+     "query-input": "required name=search_term_string"
+   }
+}
+</script>
+  </body>
+</html>

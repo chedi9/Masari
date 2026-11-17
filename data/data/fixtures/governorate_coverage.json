@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-11-15T01:48:24.565480",
+  "governorates": [
+    "Tunis",
+    "Ariana",
+    "Ben Arous",
+    "Manouba",
+    "Nabeul",
+    "Zaghouan",
+    "Bizerte",
+    "Béja",
+    "Jendouba",
+    "Le Kef",
+    "Siliana",
+    "Sousse",
+    "Monastir",
+    "Mahdia",
+    "Sfax",
+    "Kairouan",
+    "Kasserine",
+    "Sidi Bouzid",
+    "Gabès",
+    "Medenine",
+    "Tataouine",
+    "Gafsa",
+    "Tozeur",
+    "Kebili"
+  ],
+  "pilot_coverage": [
+    "Tunis",
+    "Ariana",
+    "Ben Arous",
+    "Manouba",
+    "Sousse",
+    "Monastir",
+    "Sfax"
+  ],
+  "status": "Expanded network fixtures ready for React Native client"
+}
