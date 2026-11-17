@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Tunisia Mobility",
+    "slug": "tunisia-mobility",
+    "scheme": "tunisiamobility",
+    "version": "0.1.0",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "plugins": ["expo-router"]
+  }
+}

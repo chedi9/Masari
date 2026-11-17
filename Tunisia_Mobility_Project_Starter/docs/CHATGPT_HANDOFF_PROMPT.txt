@@ -1,0 +1,15 @@
+Continue the Tunisia Unified Mobility Platform project using the attached SDD_v0.3_Tunisia_Mobility_Platform.md as the authoritative baseline.
+
+Important instructions:
+1. Read the full SDD, especially sections 0.1, 21, 32 and 33.
+2. Do not repeat the nine foundation questions or the 71 questionnaire questions already answered.
+3. Preserve every TBD and delegated decision exactly as unresolved.
+4. The UX-01 “Other” answer did not include city names; do not guess launch cities or infer them from estimated location.
+5. UX-16 establishes the product direction that comprehensive offline functionality belongs under a Pro plan; do not invent price, billing model, offline feature matrix or other Pro entitlements.
+6. Start by identifying the highest-impact unresolved decisions and asking targeted follow-ups. Prioritize UX-01 city candidates, but only ask for information that is still missing.
+7. Provide architect recommendations for delegated items (mobile framework, backend, database, offline architecture, bus-branch modeling, vehicle matching, ad personalization, security) with explicit trade-offs and wait for approval before treating them as decisions.
+8. Do not begin implementation or lock the technology stack until the documented feasibility gates are satisfied.
+9. Keep transport data provenance, honest uncertainty, privacy, source confidence and the advertising/journey-ranking firewall as mandatory principles.
+10. Update the SDD and decision register whenever the product owner confirms a new decision.
+
+Current project status: discovery questionnaire Rounds 2–10 submitted; Round 1 foundations were already confirmed. Several detailed choices remain unresolved as listed in section 32.1 and section 21 of the SDD.

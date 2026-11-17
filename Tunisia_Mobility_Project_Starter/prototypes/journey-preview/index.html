@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6f3">
+  <title>Tunisia Mobility — aperçu</title>
+  <style>
+    /* Prototype-only tokens. This is not an approved product brand palette. */
+    :root {
+      color-scheme: light;
+      --page: #f2f5f2;
+      --surface: #ffffff;
+      --surface-soft: #f7f9f6;
+      --ink: #162f3d;
+      --muted: #667780;
+      --line: #dce5e1;
+      --primary: #087e70;
+      --primary-dark: #06675d;
+      --accent: #d3a54a;
+      --map: #193844;
+      --map-line: #42616a;
+      --map-land: #244752;
+      --warning-bg: #fbf3dc;
+      --warning-ink: #614814;
+      --shadow: 0 22px 60px rgba(26, 52, 61, .10);
+      --radius-card: 26px;
+      --radius-control: 16px;
+      font-family: Inter, "Segoe UI", "Noto Sans Arabic", Arial, sans-serif;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --page: #101d23;
+      --surface: #182a31;
+      --surface-soft: #20343c;
+      --ink: #f0f4f1;
+      --muted: #afc0c1;
+      --line: #34505a;
+      --primary: #42c5a6;
+      --primary-dark: #2aab91;
+      --accent: #e2ba66;
+      --map: #102a35;
+      --map-line: #34535d;
+      --map-land: #183b47;
+      --warning-bg: #3c3321;
+      --warning-ink: #f0d790;
+      --shadow: 0 22px 60px rgba(0, 0, 0, .25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 78% 0%, rgba(8,126,112,.09), transparent 34rem),
+        var(--page);
+      color: var(--ink);
+      transition: background-color .2s ease, color .2s ease;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .app-shell { width: min(1180px, 100%); margin: 0 auto; padding: 20px 30px 36px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 54px; }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-mark {
+      display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center;
+      border-radius: 14px; background: var(--ink); color: #fff; font-size: 15px; font-weight: 800; letter-spacing: -.08em;
+    }
+    .brand-copy { display: grid; gap: 2px; }
+    .brand-copy strong { font-size: 14px; letter-spacing: -.02em; }
+    .brand-copy span { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
+    .quiet-button, .locale-button {
+      min-height: 42px; padding: 0 13px; border: 1px solid var(--line); border-radius: 13px;
+      background: var(--surface); cursor: pointer; font-size: 12px; font-weight: 700;
+    }
+    .quiet-button { display: grid; width: 42px; padding: 0; place-items: center; font-size: 18px; }
+    .locale-button[aria-pressed="true"] { border-color: var(--primary); color: var(--primary); }
+    .prototype-banner {
+      display: flex; align-items: center; gap: 10px; margin: 24px 0 27px; padding: 11px 14px;
+      border: 1px solid color-mix(in srgb, var(--accent) 46%, transparent); border-radius: 14px;
+      background: var(--warning-bg); color: var(--warning-ink); font-size: 12px; font-weight: 650; line-height: 1.45;
+    }
+    .prototype-banner .dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--accent); }
+    main { display: grid; grid-template-columns: minmax(340px, .92fr) minmax(390px, 1.08fr); gap: 24px; align-items: stretch; }
+    .planner, .map-card { border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow); }
+    .planner { padding: clamp(22px, 3vw, 36px); }
+    .eyebrow { margin: 0 0 12px; color: var(--primary); font-size: 10px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
+    h1 { max-width: 480px; margin: 0; font-size: clamp(29px, 4vw, 45px); font-weight: 720; letter-spacing: -.055em; line-height: 1.06; }
+    .intro { max-width: 420px; margin: 14px 0 24px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .field-stack { position: relative; display: grid; gap: 10px; }
+    .journey-field {
+      display: grid; grid-template-columns: 22px minmax(0, 1fr) 20px; align-items: center; gap: 12px;
+      min-height: 67px; padding: 10px 15px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--surface-soft);
+    }
+    .journey-field label { display: grid; gap: 4px; min-width: 0; }
+    .journey-field label span { color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .journey-field input { width: 100%; min-width: 0; padding: 0; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 14px; font-weight: 650; }
+    .journey-field input::placeholder { color: var(--muted); opacity: .82; }
+    .journey-field input:focus-visible { outline: 0; }
+    .field-symbol { display: grid; width: 18px; height: 18px; place-items: center; color: var(--primary); }
+    .field-symbol svg { width: 18px; height: 18px; }
+    .field-stack::after { position: absolute; top: 55px; bottom: 55px; left: 25px; width: 1px; background: var(--line); content: ""; }
+    [dir="rtl"] .field-stack::after { right: 25px; left: auto; }
+    .swap-button { position: absolute; z-index: 2; top: 72px; right: 11px; width: 29px; height: 29px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; color: var(--muted); }
+    [dir="rtl"] .swap-button { right: auto; left: 11px; }
+    .preference-label { margin: 22px 0 10px; color: var(--muted); font-size: 11px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+    .preferences { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .preference {
+      min-height: 42px; padding: 7px 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer;
+      color: var(--muted); font-size: 11px; font-weight: 700; transition: border-color .15s ease, background .15s ease, color .15s ease;
+    }
+    .preference[aria-checked="true"] { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 9%, var(--surface)); color: var(--primary); }
+    .search-button {
+      display: flex; width: 100%; min-height: 53px; align-items: center; justify-content: center; gap: 10px; margin-top: 18px;
+      border: 0; border-radius: 15px; background: var(--primary); color: #fff; cursor: pointer; font-size: 14px; font-weight: 800;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .search-button:hover { transform: translateY(-1px); background: var(--primary-dark); }
+    .search-button:active { transform: translateY(0); }
+    .status-message { min-height: 40px; margin: 11px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .status-message.error { color: #a53b35; }
+    .trust-note { display: flex; align-items: flex-start; gap: 9px; margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .trust-note svg { width: 16px; height: 16px; flex: 0 0 auto; color: var(--primary); }
+    .map-card { position: relative; display: flex; min-height: 540px; flex-direction: column; overflow: hidden; padding: 18px; background: var(--map); color: #f3f7f2; }
+    .map-topline { z-index: 2; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .map-heading { display: grid; gap: 5px; }
+    .map-heading strong { font-size: 13px; letter-spacing: -.01em; }
+    .map-heading span { color: #a4bab9; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; }
+    .art-tag { padding: 7px 9px; border: 1px solid rgba(221,241,231,.25); border-radius: 9px; background: rgba(10,30,37,.45); color: #e4eee7; font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+    .map-art { position: absolute; inset: 46px 0 118px; width: 100%; height: calc(100% - 164px); }
+    .map-art .contour { fill: none; stroke: var(--map-line); stroke-width: 1.2; opacity: .6; }
+    .map-art .land { fill: var(--map-land); opacity: .82; }
+    .map-art .route-halo { fill: none; stroke: rgba(69,203,168,.18); stroke-width: 18; stroke-linecap: round; }
+    .map-art .route { fill: none; stroke: #65d6b6; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1 0; }
+    .map-art .node { fill: #f4f4e8; stroke: #65d6b6; stroke-width: 5; }
+    .map-art .minor-node { fill: #a8c4bf; opacity: .78; }
+    .map-art text { fill: #e7f0eb; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+    .map-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(203,231,221,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(203,231,221,.035) 1px, transparent 1px); background-size: 46px 46px; mask-image: linear-gradient(to bottom, black, transparent 95%); }
+    .map-compass { position: absolute; right: 20px; bottom: 142px; display: grid; width: 39px; height: 39px; place-items: center; border: 1px solid rgba(221,241,231,.23); border-radius: 50%; color: #dcebe5; font-size: 13px; }
+    .map-bottom { z-index: 1; display: grid; gap: 13px; margin-top: auto; padding: 16px; border: 1px solid rgba(220,242,231,.14); border-radius: 18px; background: rgba(10,31,38,.73); backdrop-filter: blur(12px); }
+    .map-bottom p { margin: 0; color: #b5c7c2; font-size: 11px; line-height: 1.5; }
+    .map-bottom strong { color: #f4f5ed; font-size: 13px; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 14px; color: #b9cbc5; font-size: 10px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 7px; }
+    .legend-line { width: 18px; height: 3px; border-radius: 4px; background: #65d6b6; }
+    .legend-dot { width: 8px; height: 8px; border: 2px solid #65d6b6; border-radius: 50%; background: #f4f4e8; }
+    .footer { display: flex; justify-content: space-between; gap: 15px; margin-top: 22px; color: var(--muted); font-size: 10px; }
+    .footer strong { color: var(--ink); font-weight: 750; }
+    [hidden] { display: none !important; }
+    @media (max-width: 820px) {
+      .app-shell { width: min(620px, 100%); padding: 14px 16px calc(22px + env(safe-area-inset-bottom)); }
+      .prototype-banner { margin: 17px 0 18px; }
+      main { grid-template-columns: 1fr; gap: 15px; }
+      .planner { padding: 24px 20px; }
+      .map-card { min-height: 390px; }
+      .map-art { inset: 45px 0 105px; height: calc(100% - 150px); }
+      .map-compass { bottom: 128px; }
+    }
+    @media (max-width: 420px) {
+      .app-shell { padding-right: 12px; padding-left: 12px; }
+      .brand-copy span { font-size: 9px; }
+      .top-actions { gap: 6px; }
+      .locale-button { min-height: 39px; padding: 0 10px; }
+      .quiet-button { width: 39px; min-height: 39px; }
+      .planner { border-radius: 22px; }
+      .map-card { min-height: 350px; border-radius: 22px; }
+      .footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="Tunisia Mobility">
+        <div class="brand-mark" aria-hidden="true">TM</div>
+        <div class="brand-copy">
+          <strong>Tunisia Mobility</strong>
+          <span data-fr="Aperçu du produit" data-ar="معاينة المنتج">Aperçu du produit</span>
+        </div>
+      </div>
+      <div class="top-actions" aria-label="Display settings">
+        <button class="locale-button" type="button" data-locale="fr" aria-pressed="true" aria-label="Afficher en français">FR</button>
+        <button class="locale-button" type="button" data-locale="ar" aria-pressed="false" aria-label="عرض باللغة العربية">عربي</button>
+        <button class="quiet-button" id="theme-toggle" type="button" aria-label="Activer le thème sombre" title="Thème clair / sombre"><span aria-hidden="true">◐</span></button>
+      </div>
+    </header>
+
+    <div class="prototype-banner" role="note">
+      <span class="dot" aria-hidden="true"></span>
+      <span data-fr="Prototype visuel · contenu fictif · aucun horaire, trajet ou service réel." data-ar="نموذج بصري · محتوى افتراضي · لا توجد مواعيد أو مسارات أو خدمات حقيقية.">Prototype visuel · contenu fictif · aucun horaire, trajet ou service réel.</span>
+    </div>
+
+    <main>
+      <section class="planner" aria-labelledby="page-title">
+        <p class="eyebrow" data-fr="La mobilité, plus lisible" data-ar="تنقّل أوضح">La mobilité, plus lisible</p>
+        <h1 id="page-title" data-fr="Votre prochaine destination, en toute clarté." data-ar="وجهتك القادمة، بكل وضوح.">Votre prochaine destination, en toute clarté.</h1>
+        <p class="intro" data-fr="Un point de départ, une destination. Les options apparaîtront ici lorsque les données de transport seront vérifiées." data-ar="نقطة انطلاق ووجهة. ستظهر الخيارات هنا بعد التحقق من بيانات النقل.">Un point de départ, une destination. Les options apparaîtront ici lorsque les données de transport seront vérifiées.</p>
+
+        <form id="journey-form" novalidate>
+          <div class="field-stack">
+            <div class="journey-field">
+              <span class="field-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2.3"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" opacity=".42"/></svg></span>
+              <label for="origin"><span data-fr="Départ" data-ar="من">Départ</span><input id="origin" name="origin" autocomplete="off" placeholder="Choisir un point de départ" data-placeholder-fr="Choisir un point de départ" data-placeholder-ar="اختر نقطة الانطلاق"></label>
+              <span aria-hidden="true"></span>
+            </div>
+            <div class="journey-field">
+              <span class="field-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.2" fill="currentColor"/></svg></span>
+              <label for="destination"><span data-fr="Destination" data-ar="إلى">Destination</span><input id="destination" name="destination" autocomplete="off" placeholder="Où souhaitez-vous aller ?" data-placeholder-fr="Où souhaitez-vous aller ?" data-placeholder-ar="إلى أين تريد الذهاب؟"></label>
+              <span aria-hidden="true"></span>
+            </div>
+            <button class="swap-button" id="swap-places" type="button" aria-label="Inverser le départ et la destination" title="Inverser">↕</button>
+          </div>
+
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="preference-label" data-fr="Votre priorité" data-ar="أولويتك">Votre priorité</legend>
+            <div class="preferences" role="radiogroup" aria-label="Préférence de trajet">
+              <button class="preference" type="button" role="radio" aria-checked="false" data-mode="economic" data-fr="Économique" data-ar="الأوفر">Économique</button>
+              <button class="preference" type="button" role="radio" aria-checked="false" data-mode="fast" data-fr="Le plus rapide" data-ar="الأسرع">Le plus rapide</button>
+              <button class="preference" type="button" role="radio" aria-checked="true" data-mode="balanced" data-fr="Équilibré" data-ar="متوازن">Équilibré</button>
+            </div>
+          </fieldset>
+
+          <button class="search-button" type="submit">
+            <span data-fr="Prévisualiser la recherche" data-ar="معاينة البحث">Prévisualiser la recherche</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+          <p class="status-message" id="form-status" aria-live="polite" data-fr="Aucun réseau de transport n'est connecté à cet aperçu." data-ar="لا توجد شبكة نقل متصلة بهذه المعاينة.">Aucun réseau de transport n'est connecté à cet aperçu.</p>
+        </form>
+
+        <div class="trust-note">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 19 6v5c0 4.7-2.8 8-7 10-4.2-2-7-5.3-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.7"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-fr="Les informations de transport devront toujours afficher leur source et leur fraîcheur." data-ar="يجب أن تعرض معلومات النقل مصدرها وحداثتها دائمًا.">Les informations de transport devront toujours afficher leur source et leur fraîcheur.</span>
+        </div>
+      </section>
+
+      <section class="map-card" aria-label="Illustration cartographique de démonstration">
+        <div class="map-grid" aria-hidden="true"></div>
+        <div class="map-topline">
+          <div class="map-heading">
+            <strong data-fr="Le trajet, en un regard" data-ar="رحلتك في لمحة">Le trajet, en un regard</strong>
+            <span data-fr="Illustration abstraite · non géographique" data-ar="رسم توضيحي · غير جغرافي">Illustration abstraite · non géographique</span>
+          </div>
+          <span class="art-tag" data-fr="APERÇU" data-ar="معاينة">APERÇU</span>
+        </div>
+
+        <svg class="map-art" viewBox="0 0 620 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Carte abstraite et fictive, sans données géographiques">
+          <path class="land" d="M-30 100 80 52l75 18 48 66 83-31 72 22 46-49 103 16 85 67-31 71-82 2-52 56-74-20-62 58-81-20-38 73-85-23-38-93-62-18Z"/>
+          <path class="contour" d="M-25 127 60 81l99 12 48 64 92-38 83 30 55-57 112 23 87 63"/>
+          <path class="contour" d="M-12 173 73 119l94 22 47 70 99-37 72 26 52-57 97 26 101 51"/>
+          <path class="contour" d="M-25 228 68 177l94 28 47 64 99-38 72 26 52-56 91 31 97 49"/>
+          <path class="contour" d="M-15 290 73 231l87 36 49 66 92-43 76 30 53-57 84 31 95 47"/>
+          <path class="contour" d="M-35 350 69 293l88 35 48 70 96-42 73 30 56-55 81 38 85 40"/>
+          <path class="contour" d="M20 405 84 358l77 29 55 70 83-41 75 31 65-47 85 33 67 42"/>
+          <path class="contour" d="M128 20 167 82l-14 68 43 56-11 62 48 49-17 65 41 60"/>
+          <path class="contour" d="M316 3 287 79l31 55-22 68 42 47-13 73 39 55-20 80"/>
+          <path class="contour" d="M489 20 454 83l24 61-32 65 40 59-12 62 44 61-11 75"/>
+          <path class="route-halo" d="M115 346 C165 326 167 263 220 259 S293 308 333 257 384 166 435 186 480 254 529 195"/>
+          <path class="route" d="M115 346 C165 326 167 263 220 259 S293 308 333 257 384 166 435 186 480 254 529 195"/>
+          <circle class="minor-node" cx="166" cy="302" r="4"/><circle class="minor-node" cx="277" cy="278" r="4"/><circle class="minor-node" cx="386" cy="199" r="4"/><circle class="minor-node" cx="477" cy="217" r="4"/>
+          <circle class="node" cx="115" cy="346" r="8"/><circle class="node" cx="529" cy="195" r="8"/>
+          <text x="91" y="378">A</text><text x="535" y="181">B</text>
+        </svg>
+        <div class="map-compass" aria-hidden="true">N</div>
+
+        <div class="map-bottom">
+          <div>
+            <strong data-fr="Les détails viendront avec les données vérifiées." data-ar="ستظهر التفاصيل بعد التحقق من البيانات.">Les détails viendront avec les données vérifiées.</strong>
+            <p data-fr="Aucune ligne, station, durée ou disponibilité réelle n'est affichée dans ce prototype." data-ar="لا يعرض هذا النموذج أي خطوط أو محطات أو مدد أو توفر حقيقي.">Aucune ligne, station, durée ou disponibilité réelle n'est affichée dans ce prototype.</p>
+          </div>
+          <div class="map-legend" aria-label="Legend">
+            <span class="legend-item"><i class="legend-line" aria-hidden="true"></i><span data-fr="Parcours illustratif" data-ar="مسار توضيحي">Parcours illustratif</span></span>
+            <span class="legend-item"><i class="legend-dot" aria-hidden="true"></i><span data-fr="Points fictifs A/B" data-ar="نقطتان افتراضيتان أ/ب">Points fictifs A/B</span></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><strong>Tunisia Mobility</strong> · <span data-fr="prototype local" data-ar="نموذج محلي">prototype local</span></span>
+      <span data-fr="Aucune donnée de déplacement n'est collectée." data-ar="لا يتم جمع أي بيانات عن التنقل.">Aucune donnée de déplacement n'est collectée.</span>
+    </footer>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const form = document.getElementById('journey-form');
+    const status = document.getElementById('form-status');
+    let locale = 'fr';
+
+    document.querySelectorAll('[data-locale]').forEach((button) => {
+      button.addEventListener('click', () => {
+        locale = button.dataset.locale;
+        root.lang = locale;
+        root.dir = locale === 'ar' ? 'rtl' : 'ltr';
+        document.title = locale === 'ar' ? 'تنقّل تونس — معاينة' : 'Tunisia Mobility — aperçu';
+        document.querySelectorAll('[data-locale]').forEach((item) => {
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+        document.querySelectorAll('[data-fr][data-ar]').forEach((item) => {
+          item.textContent = item.dataset[locale];
+        });
+        document.querySelectorAll('[data-placeholder-fr][data-placeholder-ar]').forEach((item) => {
+          item.placeholder = item.dataset[locale === 'fr' ? 'placeholderFr' : 'placeholderAr'];
+        });
+        document.querySelector('.preferences').setAttribute('aria-label', locale === 'ar' ? 'تفضيل الرحلة' : 'Préférence de trajet');
+        document.querySelector('.map-legend').setAttribute('aria-label', locale === 'ar' ? 'مفتاح الخريطة' : 'Légende');
+        document.querySelector('.top-actions').setAttribute('aria-label', locale === 'ar' ? 'إعدادات العرض' : 'Réglages d’affichage');
+        document.querySelector('.map-card').setAttribute('aria-label', locale === 'ar' ? 'رسم توضيحي تجريبي للخريطة' : 'Illustration cartographique de démonstration');
+        document.getElementById('theme-toggle').setAttribute('aria-label', locale === 'ar' ? 'تبديل المظهر الفاتح والداكن' : 'Activer le thème sombre');
+        document.getElementById('swap-places').setAttribute('aria-label', locale === 'ar' ? 'اعكس نقطة الانطلاق والوجهة' : 'Inverser le départ et la destination');
+      });
+    });
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const dark = root.dataset.theme !== 'dark';
+      root.dataset.theme = dark ? 'dark' : 'light';
+      document.getElementById('theme-toggle').setAttribute('aria-label', dark
+        ? (locale === 'ar' ? 'تفعيل المظهر الفاتح' : 'Activer le thème clair')
+        : (locale === 'ar' ? 'تفعيل المظهر الداكن' : 'Activer le thème sombre'));
+    });
+
+    document.querySelectorAll('.preference').forEach((button, index, buttons) => {
+      button.addEventListener('click', () => {
+        buttons.forEach((item) => item.setAttribute('aria-checked', String(item === button)));
+      });
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+        event.preventDefault();
+        const offset = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1;
+        const next = buttons[(index + offset + buttons.length) % buttons.length];
+        next.click();
+        next.focus();
+      });
+    });
+
+    document.getElementById('swap-places').addEventListener('click', () => {
+      const origin = document.getElementById('origin');
+      const destination = document.getElementById('destination');
+      [origin.value, destination.value] = [destination.value, origin.value];
+      origin.focus();
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      status.classList.remove('error');
+      const origin = document.getElementById('origin').value.trim();
+      const destination = document.getElementById('destination').value.trim();
+      if (!origin || !destination) {
+        status.classList.add('error');
+        status.textContent = locale === 'ar'
+          ? 'أدخل نقطة انطلاق ووجهة لمعاينة التفاعل. لن يحسب هذا النموذج مسارًا حقيقيًا.'
+          : 'Ajoutez un départ et une destination pour voir l’interaction. Cet aperçu ne calcule aucun trajet réel.';
+        (!origin ? document.getElementById('origin') : document.getElementById('destination')).focus();
+        return;
+      }
+      status.textContent = locale === 'ar'
+        ? 'المعاينة جاهزة، لكن لا توجد بيانات نقل متصلة. لم يتم حساب أي مسار.'
+        : 'Aperçu prêt, mais aucune donnée de transport n’est connectée. Aucun trajet n’a été calculé.';
+    });
+  </script>
+</body>
+</html>

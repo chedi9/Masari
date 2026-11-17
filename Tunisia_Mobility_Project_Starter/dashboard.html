@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tunisia Mobility Platform — Project Dashboard</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2d3248;
+    --accent: #4f8ef7;
+    --accent2: #7c5cfc;
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --orange: #f97316;
+    --muted: #6b7280;
+    --text: #e2e8f0;
+    --textdim: #94a3b8;
+    --radius: 10px;
+    --font: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 16px;
+    padding: 12px 24px;
+  }
+  .topbar-logo { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
+  .topbar-sub { color: var(--muted); font-size: 12px; }
+  .topbar-phase {
+    margin-left: auto;
+    background: linear-gradient(135deg, #1e3a5f, #1a1d27);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 4px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600;
+  }
+  .nav-tabs {
+    display: flex; gap: 4px;
+    padding: 0 24px 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 10px 18px;
+    cursor: pointer;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: color .15s, border-color .15s;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* ── LAYOUT ── */
+  .page { display: none; padding: 24px; max-width: 1280px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 600; color: var(--textdim);
+    text-transform: uppercase; letter-spacing: .6px;
+    margin-bottom: 14px;
+  }
+
+  /* ── GRID ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+  @media(max-width:900px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ── STAT BOX ── */
+  .stat { text-align: center; }
+  .stat-value { font-size: 36px; font-weight: 800; line-height: 1.1; }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+  .stat-sub { font-size: 12px; color: var(--textdim); margin-top: 6px; }
+
+  /* ── PHASE PROGRESS ── */
+  .phase-track { display: flex; gap: 0; align-items: stretch; margin-bottom: 20px; }
+  .phase-step {
+    flex: 1; padding: 12px 8px; text-align: center;
+    background: var(--surface2); border: 1px solid var(--border);
+    position: relative; cursor: default;
+  }
+  .phase-step:first-child { border-radius: 8px 0 0 8px; }
+  .phase-step:last-child  { border-radius: 0 8px 8px 0; }
+  .phase-step.current {
+    background: linear-gradient(135deg,#1a2f5a,#1e2d52);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+    z-index: 1;
+  }
+  .phase-step.done { background: #0d2b1a; border-color: #1a5c35; }
+  .phase-step-num { font-size: 11px; color: var(--muted); }
+  .phase-step-name { font-size: 12px; font-weight: 600; margin-top: 2px; }
+  .phase-step.current .phase-step-name { color: var(--accent); }
+  .phase-step.done .phase-step-name { color: var(--green); }
+  .phase-step-status { font-size: 10px; margin-top: 4px; color: var(--muted); }
+  .phase-step.current .phase-step-status { color: var(--accent); }
+  .phase-step.done .phase-step-status { color: var(--green); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap { background: var(--surface2); border-radius: 100px; height: 8px; overflow: hidden; margin: 6px 0; }
+  .progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .5s; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+  }
+  .badge-ready     { background: #1a3a5c; color: #60a5fa; border: 1px solid #2255a0; }
+  .badge-backlog   { background: #1e2030; color: var(--muted); border: 1px solid var(--border); }
+  .badge-inprog    { background: #2d1f00; color: #fbbf24; border: 1px solid #78450a; }
+  .badge-done      { background: #0d2b1a; color: var(--green); border: 1px solid #1a5c35; }
+  .badge-blocked   { background: #2d0f0f; color: #f87171; border: 1px solid #7a1e1e; }
+  .badge-deferred  { background: #1e1530; color: #a78bfa; border: 1px solid #4c3880; }
+  .badge-p0 { background:#3b1515; color:#fca5a5; border:1px solid #6b2525; font-size:10px; padding:1px 7px; }
+  .badge-p1 { background:#2d2010; color:#fcd34d; border:1px solid #7a5510; font-size:10px; padding:1px 7px; }
+  .badge-p2 { background:#12231a; color:#6ee7b7; border:1px solid #1d5c3a; font-size:10px; padding:1px 7px; }
+  .badge-p3 { background:#1a1a2e; color:#93c5fd; border:1px solid #2a3a6b; font-size:10px; padding:1px 7px; }
+  .badge-confirmed{ background:#0d2b1a; color:var(--green); border:1px solid #1a5c35; }
+  .badge-tbd      { background:#2d2010; color:#fcd34d; border:1px solid #7a5510; }
+  .badge-delegated{ background:#1a1a2e; color:#a78bfa; border:1px solid #4c3880; }
+
+  /* ── TASK TABLE ── */
+  .task-filter-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
+  .filter-btn {
+    padding: 4px 14px; border-radius: 20px; font-size: 12px; cursor: pointer;
+    background: var(--surface2); border: 1px solid var(--border); color: var(--textdim);
+    transition: all .15s;
+  }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .search-input {
+    margin-left: auto; padding: 5px 12px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 13px; outline: none;
+    min-width: 180px;
+  }
+  .search-input:focus { border-color: var(--accent); }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; padding: 8px 10px;
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .5px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+  tbody tr:hover { background: var(--surface2); }
+  tbody td { padding: 10px 10px; font-size: 13px; vertical-align: top; }
+  .task-id { font-size: 11px; font-family: monospace; color: var(--muted); }
+  .task-name { font-weight: 500; }
+  .task-desc { font-size: 12px; color: var(--textdim); margin-top: 2px; }
+
+  /* ── CURRENT TASK HIGHLIGHT ── */
+  .current-task-card {
+    background: linear-gradient(135deg,#1a2f5a22,#7c5cfc11);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 18px 20px; margin-bottom: 20px;
+  }
+  .current-task-label { font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 6px; }
+  .current-task-id { font-size: 13px; font-family: monospace; color: var(--textdim); }
+  .current-task-name { font-size: 20px; font-weight: 700; margin: 4px 0; }
+  .current-task-desc { color: var(--textdim); font-size: 13px; max-width: 720px; margin-top: 8px; }
+
+  /* ── TODO LIST ── */
+  .todo-list { list-style: none; }
+  .todo-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+  }
+  .todo-item:last-child { border-bottom: none; }
+  .todo-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px;
+    cursor: pointer; transition: all .15s; background: transparent;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .todo-check.done { border-color: var(--green); background: var(--green); }
+  .todo-check.done::after { content: '✓'; color: #fff; font-size: 11px; }
+  .todo-text { flex: 1; }
+  .todo-text.done-text { text-decoration: line-through; color: var(--muted); }
+  .todo-tag {
+    font-size: 10px; padding: 1px 7px; border-radius: 10px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); white-space: nowrap; align-self: flex-start;
+  }
+
+  /* ── SDD SECTIONS ── */
+  .sdd-section { margin-bottom: 12px; }
+  .sdd-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; cursor: pointer;
+    transition: border-color .15s;
+  }
+  .sdd-section-header:hover { border-color: var(--accent); }
+  .sdd-section-header.open { border-radius: 8px 8px 0 0; border-bottom: none; border-color: var(--accent); }
+  .sdd-section-title { font-weight: 600; font-size: 14px; }
+  .sdd-section-num { font-size: 11px; color: var(--muted); margin-right: 8px; }
+  .sdd-section-body {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 16px;
+  }
+  .sdd-section-body.open { display: block; }
+  .sdd-body-text { font-size: 13px; color: var(--textdim); line-height: 1.7; }
+  .sdd-body-text ul { margin: 8px 0 8px 18px; }
+  .sdd-body-text li { margin-bottom: 4px; }
+  .sdd-body-text strong { color: var(--text); }
+  .sdd-chevron { font-size: 12px; color: var(--muted); transition: transform .2s; }
+  .sdd-section-header.open .sdd-chevron { transform: rotate(180deg); }
+
+  /* ── DECISIONS ── */
+  .decision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+  .decision-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px;
+    transition: border-color .15s;
+  }
+  .decision-card:hover { border-color: var(--accent); }
+  .decision-id { font-size: 10px; font-family: monospace; color: var(--muted); }
+  .decision-question { font-size: 13px; font-weight: 500; margin: 4px 0; }
+  .decision-state { font-size: 12px; color: var(--textdim); margin-top: 4px; }
+  .decision-action { font-size: 11px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* ── BLOCKERS ── */
+  .blocker-list { list-style: none; }
+  .blocker-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+  }
+  .blocker-item:last-child { border-bottom: none; }
+  .blocker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-top: 5px; flex-shrink: 0; }
+  .blocker-text { font-size: 13px; }
+
+  /* ── ARCHITECTURE ── */
+  .arch-diagram {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px; font-family: monospace; font-size: 12px;
+    line-height: 1.8; color: var(--textdim); overflow-x: auto;
+    white-space: pre;
+  }
+  .arch-component {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 14px; margin: 6px 4px;
+    font-size: 13px; cursor: default;
+    transition: border-color .15s;
+  }
+  .arch-component:hover { border-color: var(--accent); }
+  .arch-component-icon { font-size: 16px; }
+  .arch-wrap { display: flex; flex-wrap: wrap; }
+
+  /* ── MISC ── */
+  .section-header { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .section-sub { font-size: 13px; color: var(--textdim); margin-bottom: 20px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+  .empty-state { text-align: center; color: var(--muted); padding: 40px; font-size: 14px; }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:var(--border); }
+  .timeline-item { position: relative; margin-bottom: 20px; }
+  .timeline-dot {
+    position: absolute; left: -20px; top: 3px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--surface2); border: 2px solid var(--border);
+  }
+  .timeline-dot.done { background: var(--green); border-color: var(--green); }
+  .timeline-dot.current { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .timeline-date { font-size: 11px; color: var(--muted); }
+  .timeline-title { font-size: 13px; font-weight: 600; margin: 2px 0; }
+  .timeline-detail { font-size: 12px; color: var(--textdim); }
+
+  /* scroll */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="topbar-logo">🚌 Tunisia Mobility</span>
+  <span class="topbar-sub">Project Dashboard · SDD v0.5 · 3 Nov 2026</span>
+  <span class="topbar-phase">📍 Phase 0 — Discovery</span>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showPage('overview')">Overview</div>
+  <div class="nav-tab" onclick="showPage('tasks')">Tasks &amp; Roadmap</div>
+  <div class="nav-tab" onclick="showPage('todos')">My TODOs</div>
+  <div class="nav-tab" onclick="showPage('sdd')">SDD</div>
+  <div class="nav-tab" onclick="showPage('decisions')">Decisions</div>
+  <div class="nav-tab" onclick="showPage('architecture')">Architecture</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE: OVERVIEW
+═══════════════════════════════════════════════════════ -->
+<div id="page-overview" class="page active">
+
+  <div class="section-header">Project Overview</div>
+  <div class="section-sub">Tunisia Unified Mobility Platform · Free-to-use, community-powered, multimodal</div>
+
+  <!-- PHASE TRACK -->
+  <div class="phase-track">
+    <div class="phase-step current">
+      <div class="phase-step-num">Phase 0</div>
+      <div class="phase-step-name">Discovery</div>
+      <div class="phase-step-status">▶ IN PROGRESS</div>
+    </div>
+    <div class="phase-step">
+      <div class="phase-step-num">Phase 1</div>
+      <div class="phase-step-name">Foundation MVP</div>
+      <div class="phase-step-status">Awaiting P0 gate</div>
+    </div>
+    <div class="phase-step">
+      <div class="phase-step-num">Phase 2</div>
+      <div class="phase-step-name">Community</div>
+      <div class="phase-step-status">Backlog</div>
+    </div>
+    <div class="phase-step">
+      <div class="phase-step-num">Phase 3</div>
+      <div class="phase-step-name">GPS &amp; Rewards</div>
+      <div class="phase-step-status">Backlog</div>
+    </div>
+    <div class="phase-step">
+      <div class="phase-step-num">Phase 4</div>
+      <div class="phase-step-name">Partners</div>
+      <div class="phase-step-status">Backlog</div>
+    </div>
+  </div>
+
+  <!-- PHASE 0 PROGRESS -->
+  <div class="card">
+    <div class="card-title">Phase 0 Progress — 12 tasks</div>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+      <div class="progress-wrap" style="flex:1">
+        <div class="progress-fill" style="width: 0%"></div>
+      </div>
+      <div style="font-size:13px; color:var(--muted)">1 / 12 done</div>
+    </div>
+    <div style="font-size:12px; color:var(--muted)">Gate: Reproducible import + route query using real, licensed, validated data · Owner approval required to exit Phase 0</div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="card stat">
+      <div class="stat-value" style="color:var(--accent)">1</div>
+      <div class="stat-label">Active prototype</div>
+      <div class="stat-sub">TUM-PRE-002 · native Expo</div>
+    </div>
+    <div class="card stat">
+      <div class="stat-value" style="color:var(--yellow)" id="tbd-count">0</div>
+      <div class="stat-label">Open TBD decisions</div>
+      <div class="stat-sub">Evidence, legal and implementation review</div>
+    </div>
+    <div class="card stat">
+      <div class="stat-value" style="color:var(--green)">33</div>
+      <div class="stat-label">Confirmed decisions</div>
+      <div class="stat-sub">DEC-001 through DEC-033</div>
+    </div>
+  </div>
+
+  <!-- CURRENT NEXT TASK -->
+  <div class="current-task-card">
+    <div class="current-task-label">⚡ Current Next Task</div>
+    <div class="current-task-id">TUM-P0-010</div>
+    <div class="current-task-name">Data &amp; routing feasibility prototype</div>
+    <div class="current-task-desc">
+      Built reproducible SQLite importer and routing query engine from verified SNCFT GTFS data. Tested and verified real pilot queries for Tunis Banlieue Sud (Tunis Ville ➔ Borj Cédria, 800 millimes) and Sahel Metro (Sousse ➔ Monastir, 350 millimes). 4-tab mobile app shell complete and passing typecheck.
+    </div>
+    <div class="tag-row" style="margin-top:12px;">
+      <span class="badge badge-done">✓ DONE</span>
+      <span class="badge badge-p0">P0</span>
+      <span style="font-size:12px; color:var(--muted)">Owner: Antigravity / Product Owner</span>
+      <span style="font-size:12px; color:var(--muted)">Tools: Python 3.15, SQLite3, Expo SDK 57</span>
+    </div>
+  </div>
+
+  <!-- BLOCKERS -->
+  <div class="card">
+    <div class="card-title">🔴 Current Blockers &amp; Approval Gates</div>
+    <ul class="blocker-list">
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Launch order confirmed: Greater Tunis → Sousse → Monastir → Sfax (D-01)</div></li>
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Home screen: journey-first working default; UX validation remains</div></li>
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Accessible-by-default baseline adopted; device and user validation remains</div></li>
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Rural services: verified service patterns only; regional data validation remains</div></li>
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Taxi availability claims require recent reliable evidence; source thresholds remain open</div></li>
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Stack confirmed: React Native/Expo, FastAPI, PostGIS, SQLite packages; validation remains</div></li>
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Moderation direction confirmed; case lifecycle, appeals and thresholds need definition (D-54)</div></li>
+      <li class="blocker-item"><div class="blocker-dot"></div><div class="blocker-text">Location/contribution retention periods require privacy &amp; legal review (D-57)</div></li>
+      <li class="blocker-item"><div class="blocker-dot" style="background:var(--yellow)"></div><div class="blocker-text" style="color:var(--yellow)">🚧 Full application implementation NOT authorized until Phase 0 gate passes</div></li>
+    </ul>
+  </div>
+
+  <!-- RECENT ACTIVITY -->
+  <div class="card">
+    <div class="card-title">📋 Activity Log</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">14 November 2026</div>
+        <div class="timeline-title">TUM-P0-010 · Data &amp; Routing Feasibility Prototype</div>
+        <div class="timeline-detail">Built reproducible SQLite importer and routing query engine from verified SNCFT GTFS data. Tested and verified real pilot queries for Tunis Banlieue Sud (Tunis Ville ➔ Borj Cédria, 800 millimes) and Sahel Metro (Sousse ➔ Monastir, 350 millimes).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">14 November 2026</div>
+        <div class="timeline-title">TUM-APP-006 · Account &amp; Preferences Tab Complete</div>
+        <div class="timeline-detail">Wired AccountScreen into apps/mobile/app/(tabs)/account.tsx. Validated journey criteria (Budget, Time, Walking distance), guest identity, Pro offline simulation, privacy commitments, and full FR/AR RTL. Typecheck passes with 0 errors.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">13 November 2026</div>
+        <div class="timeline-title">TUM-P0-003 / 003b · SNCFT GTFS Harvest &amp; National Directory</div>
+        <div class="timeline-detail">Downloaded and profiled authentic national SNCFT GTFS dataset (24.4MB, 53 routes, 223 stops, 4,795 stop times, fares in TND) from official server; integrated master transport data directory (TUNISIA_PUBLIC_TRANSPORT_DATA_DIRECTORY.md).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">3 November 2026</div>
+        <div class="timeline-title">TUM-APP-005 · Transit Network &amp; Lines Explorer Screen</div>
+        <div class="timeline-detail">Implemented multimodal line browser (Métro, Bus, Train, Taxi Collectif), real-time search, Grand Tunis pilot banner, expandable station sequences with timeline rail, and honest Phase 0 data audit labels; bilingual French/Arabic RTL.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">3 November 2026</div>
+        <div class="timeline-title">TUM-APP-004 · D-06 Option C Passenger Reporting Screen</div>
+        <div class="timeline-detail">Implemented guest-accessible reporting (delays, crowding, stop status), prominent critical safety alert box, transit mode selector, report ID generator, and account evidence notice; bilingual French and Arabic RTL.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">3 November 2026</div>
+        <div class="timeline-title">TUM-APP-003 · Landscape &amp; 3-Choice Results Cards</div>
+        <div class="timeline-detail">Unlocked Expo orientation to landscape, added responsive layout, built 3-choice journey results cards (Balanced, Fastest, Economic) with expandable steps, millimes fares, and Arabic RTL/French copy. Passed typecheck with 0 errors.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">3 November 2026</div>
+        <div class="timeline-title">TUM-APP-002 · Journey flow polish &amp; elastic button feedback</div>
+        <div class="timeline-detail">Added tactile spring press animations across navigation tabs, search button, route swap, and priority selectors.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">3 November 2026</div>
+        <div class="timeline-title">TUM-P0-001b · Recommendation defaults reconciled</div>
+        <div class="timeline-detail">Local SDD v0.5, decision register, dashboard and roadmap aligned. Discovery remains active; no full application build authorized.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">3 November 2026</div>
+        <div class="timeline-title">SDD v0.5 consolidated</div>
+        <div class="timeline-detail">Owner-confirmed decisions and recommended defaults recorded. Evidence-dependent and legal items remain TBD.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot current"></div>
+        <div class="timeline-date">Now</div>
+      <div class="timeline-title">TUM-PRE-002 — IN PROGRESS</div>
+        <div class="timeline-detail">Build an isolated Android-first Expo preview. Public dataset file inspection remains blocked; no transport service claims are shown.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE: TASKS
+═══════════════════════════════════════════════════════ -->
+<div id="page-tasks" class="page">
+  <div class="section-header">Tasks &amp; Roadmap</div>
+  <div class="section-sub">All tasks across all phases · One active writer at a time</div>
+
+  <div class="task-filter-row">
+    <button class="filter-btn active" onclick="filterTasks('ALL',this)">All</button>
+    <button class="filter-btn" onclick="filterTasks('READY',this)">Ready</button>
+    <button class="filter-btn" onclick="filterTasks('IN_PROGRESS',this)">In Progress</button>
+    <button class="filter-btn" onclick="filterTasks('BACKLOG',this)">Backlog</button>
+    <button class="filter-btn" onclick="filterTasks('DONE',this)">Done</button>
+    <button class="filter-btn" onclick="filterTasks('BLOCKED',this)">Blocked</button>
+    <button class="filter-btn" onclick="filterPhase('P0',this)" style="margin-left:8px;">Phase 0</button>
+    <button class="filter-btn" onclick="filterPhase('P1',this)">Phase 1</button>
+    <button class="filter-btn" onclick="filterPhase('P2',this)">Phase 2</button>
+    <button class="filter-btn" onclick="filterPhase('P3',this)">Phase 3</button>
+    <button class="filter-btn" onclick="filterPhase('P4',this)">Phase 4</button>
+    <input class="search-input" id="task-search" placeholder="Search tasks…" oninput="searchTasks(this.value)">
+  </div>
+
+  <div class="card" style="padding:0; overflow:hidden;">
+    <table id="task-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Task</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Dependencies</th>
+        </tr>
+      </thead>
+      <tbody id="task-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE: TODOS
+═══════════════════════════════════════════════════════ -->
+<div id="page-todos" class="page">
+  <div class="section-header">My TODOs</div>
+  <div class="section-sub">Owner checklist · Click to toggle · State resets on page refresh</div>
+
+  <div class="card">
+    <div class="card-title">Owner Checklist</div>
+    <ul class="todo-list" id="todo-list"></ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Phase 0 Acceptance Criteria (gate to Phase 1)</div>
+    <ul class="todo-list" id="gate-list"></ul>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE: SDD
+═══════════════════════════════════════════════════════ -->
+<div id="page-sdd" class="page">
+  <div class="section-header">Software Design Document</div>
+  <div class="section-sub">SDD v0.5 — 3 November 2026 · Owner decisions reconciled · Not a final implementation contract</div>
+
+  <div id="sdd-accordion"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE: DECISIONS
+═══════════════════════════════════════════════════════ -->
+<div id="page-decisions" class="page">
+  <div class="section-header">Decision Register</div>
+  <div class="section-sub">v0.5 · current decisions · Filter by status</div>
+
+  <div class="task-filter-row">
+    <button class="filter-btn active" onclick="filterDecisions('ALL',this)">All</button>
+    <button class="filter-btn" onclick="filterDecisions('Confirmed',this)">✅ Confirmed</button>
+    <button class="filter-btn" onclick="filterDecisions('TBD',this)">⚠️ TBD</button>
+    <button class="filter-btn" onclick="filterDecisions('Delegated',this)">🔵 Delegated</button>
+    <input class="search-input" id="dec-search" placeholder="Search decisions…" oninput="searchDecisions(this.value)">
+  </div>
+
+  <div style="display:flex; gap:12px; margin-bottom:16px;">
+    <div class="card" style="flex:1; padding:14px; text-align:center;">
+      <div style="font-size:24px; font-weight:800; color:var(--green)">33</div>
+      <div style="font-size:11px; color:var(--muted); text-transform:uppercase;">Confirmed</div>
+    </div>
+    <div class="card" style="flex:1; padding:14px; text-align:center;">
+      <div style="font-size:24px; font-weight:800; color:var(--yellow)">13</div>
+      <div style="font-size:11px; color:var(--muted); text-transform:uppercase;">TBD</div>
+    </div>
+    <div class="card" style="flex:1; padding:14px; text-align:center;">
+      <div style="font-size:24px; font-weight:800; color:#a78bfa">5</div>
+      <div style="font-size:11px; color:var(--muted); text-transform:uppercase;">Delegated</div>
+    </div>
+  </div>
+
+  <div class="decision-grid" id="decision-grid"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE: ARCHITECTURE
+═══════════════════════════════════════════════════════ -->
+<div id="page-architecture" class="page">
+  <div class="section-header">System Architecture</div>
+  <div class="section-sub">Proposed modular monolith · Not locked until Phase 0 ADRs are approved</div>
+
+  <div class="card">
+    <div class="card-title">Logical Components</div>
+    <div class="arch-wrap" id="arch-components"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">High-Level Data Flow</div>
+    <div class="arch-diagram">
+  [Passenger Mobile Client (Android-first)]
+          │ REST / WebSocket
+          ▼
+  [Backend API — Modular Monolith]
+  ┌───────┬──────────┬──────────┬────────┐
+  │  Auth  │ Journey  │Transport │ Reward │
+  │Consent │ Engine   │ Catalog  │Referral│
+  └───┬────┴────┬─────┴────┬─────┴───┬────┘
+      │         │          │         │
+      └─────────┴──────────┴─────────┘
+                      │
+              [Primary Database]
+            (PostgreSQL + PostGIS — owner-confirmed)
+                      │
+         ┌────────────┴─────────────┐
+         ▼                          ▼
+  [Realtime Ingestion]    [Observation &amp; Trust Engine]
+         │                          │
+         ▼                          ▼
+  [Official Data /        [Notification Worker]
+   Operator Feeds /              │
+   Map Provider]                 ▼
+                      [Passenger Mobile Client]
+
+  Opt-in GPS path:
+  Passenger ─(explicit consent)─▶ API ─▶ Device Observation ─▶ Trust Engine
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Technology Stack Status</div>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Candidate</th><th>Status</th></tr>
+      </thead>
+      <tbody id="stack-table"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Transport Modes in Domain Model</div>
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Mode</th><th>First-release stance</th></tr>
+      </thead>
+      <tbody id="modes-table"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     DATA + SCRIPTS
+═══════════════════════════════════════════════════ -->
+<script>
+// ── PAGE NAV ──────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── TASKS DATA ────────────────────────────────────
+const TASKS = [
+  // Phase 0
+  { id:'TUM-P0-001', name:'Repository and source-of-truth audit', pri:'P0', status:'DONE', phase:'P0',
+    deps:'None', desc:'Reconciled current owner decisions, recommended defaults and TBD evidence gates in local project files. No app code.' },
+  { id:'TUM-P0-001b', name:'Apply owner-directed recommendation defaults', pri:'P0', status:'DONE', phase:'P0',
+    deps:'Latest owner instruction', desc:'Authorized working defaults recorded; passenger-report classification D-06 is confirmed as Option C.' },
+  { id:'TUM-P0-002', name:'Candidate-area readiness evidence review', pri:'P0', status:'DONE', phase:'P0',
+    deps:'P0-001', desc:'Preliminary sourced desk review is complete; no area is certified ready. See docs/research/TUM-P0-002_CANDIDATE_AREA_READINESS.md.' },
+  { id:'TUM-P0-003', name:'Transport dataset inventory', pri:'P0', status:'DONE', phase:'P0',
+    deps:'P0-001, P0-002', desc:'Verified and profiled authentic national SNCFT GTFS dataset (24.4MB, 53 routes, 223 stops, 4,795 stop times, fares in TND) in data/raw/sncft_gtfs.zip; master directory integrated.' },
+  { id:'TUM-PRE-001', name:'Standalone browser journey preview', pri:'P1', status:'REVIEW', phase:'P0',
+    deps:'Modular structure', desc:'Responsive French/Arabic visual prototype with no real transport data. Owner visual review pending.' },
+  { id:'TUM-PRE-002', name:'Native Expo journey-screen prototype', pri:'P1', status:'DONE', phase:'P0',
+    deps:'Owner request to start coding; Expo SDK 57', desc:'Isolated native preview for Expo Go. Owner confirmed rendered on Android. TypeScript check passes with 0 errors.' },
+  { id:'TUM-APP-001', name:'Modular mobile app shell and placeholder-safe journey home', pri:'P1', status:'DONE', phase:'P0',
+    deps:'Owner-authorized pre-gate UI coding; Expo SDK 57', desc:'Expo Router app under apps/mobile; localized Arabic/French UI, safe-area-aware tab bar, and horizontal swipe between tabs. TypeScript check passes with 0 errors.' },
+  { id:'TUM-APP-002', name:'Journey flow polish and responsive button feedback', pri:'P1', status:'DONE', phase:'P0',
+    deps:'TUM-APP-001 UI shell', desc:'Added spring press feedback to language, route swap, priority, search and all four tab buttons. Typecheck passes.' },
+  { id:'TUM-APP-003', name:'Landscape orientation & 3-choice journey results flow', pri:'P1', status:'DONE', phase:'P0',
+    deps:'TUM-APP-002', desc:'Unlocked app.json to default orientation (landscape/portrait); responsive landscape layout; 3-choice results cards (Balanced, Fastest, Economic) with expandable steps, transfer pills, millimes fares, and honest Phase 0 demo watermark. Typecheck exit 0.' },
+  { id:'TUM-APP-004', name:'D-06 Option C passenger reporting flow', pri:'P1', status:'DONE', phase:'P0',
+    deps:'Confirmed D-06 Option C decision', desc:'Built PassengerReportsScreen with guest-accessible incident categories (delays, crowding, stop status), prominent critical safety alert box, transit mode selector, report ID generator, and account evidence notice; bilingual French and Arabic RTL. Typecheck exit 0.' },
+  { id:'TUM-APP-005', name:'Transit network & lines explorer screen', pri:'P1', status:'DONE', phase:'P0',
+    deps:'Owner request to continue core flows', desc:'Built TransitExplorerScreen with search bar, mode chips (Metro, Bus, Train, Taxi Collectif), Grand Tunis active pilot banner, lines list (M1, M2, TGM, B28, SNCFT Sud, Collectif 12), expandable stop sequences with timeline dots, and Phase 0 audit notice; bilingual FR/AR RTL. Typecheck exit 0.' },
+  { id:'TUM-APP-006', name:'Account & preferences tab', pri:'P1', status:'DONE', phase:'P0',
+    deps:'TUM-APP-005', desc:'Wired AccountScreen into apps/mobile/app/(tabs)/account.tsx. Validated journey criteria (Budget, Time, Walking distance), guest identity, Pro offline simulation, privacy commitments, and full FR/AR RTL. Typecheck exit 0.' },
+  { id:'TUM-P0-004', name:'Data licensing and reuse audit', pri:'P0', status:'BACKLOG', phase:'P0',
+    deps:'P0-003', desc:'Record license/terms and permitted use for every proposed source. No production use until allowed use is clear.' },
+  { id:'TUM-P0-005', name:'Map/geocoding/routing provider comparison', pri:'P0', status:'BACKLOG', phase:'P0',
+    deps:'P0-002', desc:'Compare free/OSS options for Tunisia coverage, Arabic/French search, tile/geocoding limits, offline terms and cost.' },
+  { id:'TUM-P0-006', name:'UX validation and Pro offline detail pack', pri:'P1', status:'BACKLOG', phase:'P0',
+    deps:'P0-001b, P0-005', desc:'Validate journey-first home, accessible-by-default baseline and approved report flow; define Pro offline matrix, licensing, sync and commercial details still TBD.' },
+  { id:'TUM-P0-007', name:'Transport operations research', pri:'P1', status:'BACKLOG', phase:'P0',
+    deps:'P0-003', desc:'Recommend rural transport model; document bus branch/variant prototype; taxi availability evidence model. No invented service behavior.' },
+  { id:'TUM-P0-008', name:'Privacy and security review plan', pri:'P0', status:'BACKLOG', phase:'P0',
+    deps:'P0-001', desc:'Threat model/checklist, qualified local legal questions, retention options without setting unapproved retention periods.' },
+  { id:'TUM-P0-009', name:'Technical stack architecture decision pack', pri:'P0', status:'BACKLOG', phase:'P0',
+    deps:'P0-003, P0-005', desc:'Document the owner-confirmed mobile, backend, database and offline baselines in ADRs; validate providers, operations, licensing and costs before implementation.' },
+  { id:'TUM-P0-010', name:'Data and routing feasibility prototype', pri:'P0', status:'DONE', phase:'P0',
+    deps:'P0-002,003,004,005,009', desc:'Built reproducible SQLite importer (tools/data_pipeline/sources/sncft_importer.py) and routing query engine (tools/data_pipeline/query_journey.py) using real SNCFT GTFS data. Verified pilot queries for Tunis Banlieue Sud (Tunis Ville -> Borj Cedria, 800 millimes) and Sahel Metro (Sousse -> Monastir, 350 millimes).' },
+  { id:'TUM-P0-011', name:'Pro offline product/technical definition', pri:'P1', status:'BACKLOG', phase:'P0',
+    deps:'P0-006, P0-005, P0-009', desc:'Define offline packages, freshness, sync, storage, licensing, free/Pro boundaries. Owner approves matrix and commercial terms.' },
+  { id:'TUM-P0-012', name:'Phase 0 gate review', pri:'P0', status:'BACKLOG', phase:'P0',
+    deps:'P0-002 through P0-011', desc:'Consolidated evidence pack, ADRs, unresolved items, pilot recommendation and owner approval. Phase 0 exit criteria satisfied.' },
+
+  // Phase 1
+  { id:'TUM-P1-001', name:'Approved repository/application foundation', pri:'P0', status:'BACKLOG', phase:'P1',
+    deps:'P0-012', desc:'Scaffold approved stack; build/lint/test commands documented; no paid service dependency.' },
+  { id:'TUM-P1-002', name:'Localization and design foundation', pri:'P1', status:'BACKLOG', phase:'P1',
+    deps:'P1-001, approved UX', desc:'Arabic RTL and French foundations pass basic layout/localization tests.' },
+  { id:'TUM-P1-003', name:'Transport data ingestion and coverage catalog', pri:'P0', status:'BACKLOG', phase:'P1',
+    deps:'P1-001, P0-010', desc:'Versioned imports, validation report, provenance, rollback and city/mode coverage status.' },
+  { id:'TUM-P1-004', name:'Stop/route search and details', pri:'P1', status:'BACKLOG', phase:'P1',
+    deps:'P1-002, P1-003', desc:'Search and stop/route pages use verified data and clearly state gaps.' },
+  { id:'TUM-P1-005', name:'Multimodal journey engine MVP', pri:'P0', status:'BACKLOG', phase:'P1',
+    deps:'P1-003, approved spec', desc:'Economic, Fastest and Balanced options over validated bus/metro pilot data. No manufactured alternatives.' },
+  { id:'TUM-P1-006', name:'Guest journey planning and core passenger flows', pri:'P1', status:'BACKLOG', phase:'P1',
+    deps:'P1-002,004,005', desc:'Core flows work for guests; saved routines within approved scope.' },
+  { id:'TUM-P1-007', name:'Pilot beta validation', pri:'P0', status:'BACKLOG', phase:'P1',
+    deps:'P1-006', desc:'Daily commuters and university students validate real journeys; acceptance evidence and defect triage recorded.' },
+
+  // Phase 2
+  { id:'TUM-P2-001', name:'Guest basic / authenticated advanced reports', pri:'P1', status:'BACKLOG', phase:'P2',
+    deps:'P1-007', desc:'Report permissions match the approved contribution classification.' },
+  { id:'TUM-P2-002', name:'Report verification, expiry and dispute handling', pri:'P1', status:'BACKLOG', phase:'P2',
+    deps:'P2-001, moderation decision', desc:'Evidence, confidence, timestamps and expiry work; contradictions do not overwrite official records.' },
+  { id:'TUM-P2-003', name:'Moderation and data-quality views', pri:'P1', status:'BACKLOG', phase:'P2',
+    deps:'P2-002, approved admin model', desc:'Moderators handle cases with audit history and role checks.' },
+
+  // Phase 3
+  { id:'TUM-P3-001', name:'Trip contribution consent and controls', pri:'P1', status:'BACKLOG', phase:'P3',
+    deps:'Privacy review, P2-003', desc:'Explicit, revocable trip-scoped controls; no all-day tracking.' },
+  { id:'TUM-P3-002', name:'Vehicle matching prototype and validation', pri:'P1', status:'BACKLOG', phase:'P3',
+    deps:'P3-001, labeled field data', desc:'Measured precision and false-positive rates; source/confidence labels.' },
+  { id:'TUM-P3-003', name:'Reward ledger, levels and leaderboards', pri:'P2', status:'BACKLOG', phase:'P3',
+    deps:'Approved reward rules', desc:'Auditable ledger, separate contribution categories, no unapproved tangible benefits.' },
+  { id:'TUM-P3-004', name:'Referral eligibility and anti-fraud', pri:'P2', status:'BACKLOG', phase:'P3',
+    deps:'Referral rules, P2-001', desc:'First-journey-search activation defined and validated with caps/anti-abuse rules.' },
+
+  // Phase 4
+  { id:'TUM-P4-001', name:'Expand validated city and transport coverage', pri:'P1', status:'BACKLOG', phase:'P4',
+    deps:'City-readiness gates, P1-007', desc:'Each new mode/city has source, license, quality checks, support and uncertainty states.' },
+  { id:'TUM-P4-002', name:'Improve individual taxi discovery and estimates', pri:'P2', status:'BACKLOG', phase:'P4',
+    deps:'Taxi tariff/source validation', desc:'Estimate basis/range and availability state are explicit.' },
+  { id:'TUM-P4-003', name:'Verified taxi partner booking', pri:'P3', status:'BACKLOG', phase:'P4',
+    deps:'Partner/legal/operations approvals', desc:'No booking promise until partners, driver, cancellation and support flows are validated.' },
+  { id:'TUM-P4-004', name:'Pro offline functionality', pri:'P2', status:'BACKLOG', phase:'P4',
+    deps:'P0-011, approved billing', desc:'Pro offline feature matrix with entitlement and licensing checks.' },
+  { id:'TUM-P4-005', name:'Advertising readiness and launch', pri:'P3', status:'BACKLOG', phase:'P4',
+    deps:'Coverage/trust gates, privacy', desc:'Clearly labeled ads, frequency caps, privacy review and enforced ranking firewall.' },
+];
+
+function badgeStatus(s) {
+  const map = { READY:'badge-ready', BACKLOG:'badge-backlog', IN_PROGRESS:'badge-inprog', DONE:'badge-done', BLOCKED:'badge-blocked', DEFERRED:'badge-deferred', REVIEW:'badge-ready' };
+  const dot = { READY:'●', BACKLOG:'○', IN_PROGRESS:'▶', DONE:'✓', BLOCKED:'✕', DEFERRED:'⏸' };
+  return `<span class="badge ${map[s]||'badge-backlog'}">${dot[s]||'○'} ${s}</span>`;
+}
+function badgePri(p) {
+  return `<span class="badge badge-${p.toLowerCase()}">${p}</span>`;
+}
+function badgePhase(p) {
+  const colors = { P0:'#1a3a5c', P1:'#2d2010', P2:'#12231a', P3:'#1a1a2e', P4:'#2d1520' };
+  const tc = { P0:'#60a5fa', P1:'#fcd34d', P2:'#6ee7b7', P3:'#93c5fd', P4:'#fda4af' };
+  return `<span class="badge" style="background:${colors[p]};color:${tc[p]};border:1px solid ${tc[p]}40">Phase ${p.slice(1)}</span>`;
+}
+
+let currentFilter = 'ALL';
+let currentPhaseFilter = '';
+let currentSearch = '';
+
+function renderTasks() {
+  const tbody = document.getElementById('task-tbody');
+  const filtered = TASKS.filter(t => {
+    const matchStatus = currentFilter === 'ALL' || t.status === currentFilter;
+    const matchPhase = !currentPhaseFilter || t.phase === currentPhaseFilter;
+    const matchSearch = !currentSearch || t.name.toLowerCase().includes(currentSearch.toLowerCase()) || t.id.toLowerCase().includes(currentSearch.toLowerCase()) || t.desc.toLowerCase().includes(currentSearch.toLowerCase());
+    return matchStatus && matchPhase && matchSearch;
+  });
+
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No tasks match the filter</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(t => `
+    <tr data-status="${t.status}" data-phase="${t.phase}">
+      <td>
+        <div class="task-id">${t.id}</div>
+        ${badgePhase(t.phase)}
+      </td>
+      <td>
+        <div class="task-name">${t.name}</div>
+        <div class="task-desc">${t.desc}</div>
+      </td>
+      <td>${badgePri(t.pri)}</td>
+      <td>${badgeStatus(t.status)}</td>
+      <td style="font-size:12px;color:var(--muted)">${t.deps}</td>
+    </tr>
+  `).join('');
+}
+
+function filterTasks(status, btn) {
+  currentFilter = status;
+  currentPhaseFilter = '';
+  document.querySelectorAll('#page-tasks .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTasks();
+}
+function filterPhase(phase, btn) {
+  currentFilter = 'ALL';
+  currentPhaseFilter = (currentPhaseFilter === phase) ? '' : phase;
+  document.querySelectorAll('#page-tasks .filter-btn').forEach(b => b.classList.remove('active'));
+  if (currentPhaseFilter) btn.classList.add('active');
+  renderTasks();
+}
+function searchTasks(val) {
+  currentSearch = val;
+  renderTasks();
+}
+
+// ── TODOS DATA ─────────────────────────────────────
+const OWNER_TODOS = [
+  { text:'Keep the local TODO board running while working (start_todo_board.bat)', tag:'Setup', done:false },
+  { text:'Read AGENTS.md, SDD v0.5, and the current decision register', tag:'Reading', done:false },
+  { text:'Execute TUM-P0-001 — Repository and source-of-truth audit (assign to an AI agent)', tag:'P0-001', done:false },
+  { text:'Complete preliminary area readiness desk review', tag:'P0-002', done:true },
+  { text:'Inspect actual public transport dataset files', tag:'P0-003', done:true },
+  { text:'Review the candidate-city comparison framework once P0-002 is complete', tag:'P0-002', done:false },
+  { text:'Approve or revise ADRs produced in P0-009 before any stack is locked', tag:'Approval', done:false },
+  { text:'Review the Phase 0 gate evidence pack (P0-012) before Phase 1 begins', tag:'Gate', done:false },
+  { text:'Do NOT start a full application build before the Phase 0 gate', tag:'⚠️ Constraint', done:false },
+];
+
+const GATE_TODOS = [
+  { text:'P0-002: Candidate-city evidence review complete', tag:'P0-002', done:true },
+  { text:'P0-003: Transport dataset inventory produced', tag:'P0-003', done:true },
+  { text:'P0-004: Data licensing and reuse audit complete', tag:'P0-004', done:false },
+  { text:'P0-005: Map/geocoding/routing provider comparison done', tag:'P0-005', done:false },
+  { text:'P0-006: UX open-decision pack submitted for owner review', tag:'P0-006', done:false },
+  { text:'P0-007: Transport operations research done', tag:'P0-007', done:false },
+  { text:'P0-008: Privacy and security review plan produced', tag:'P0-008', done:false },
+  { text:'P0-009: Technical stack ADRs produced and pending owner approval', tag:'P0-009', done:false },
+  { text:'P0-010: Reproducible import + one verified pilot journey demonstrated', tag:'P0-010', done:true },
+  { text:'P0-011: Pro offline product/technical definition completed', tag:'P0-011', done:false },
+  { text:'P0-012: Owner has approved Phase 0 gate review', tag:'P0-012 ⭐', done:false },
+];
+
+function renderTodos(listId, items) {
+  const el = document.getElementById(listId);
+  el.innerHTML = items.map((t,i) => `
+    <li class="todo-item">
+      <div class="todo-check ${t.done?'done':''}" onclick="toggleTodo('${listId}',${i})"></div>
+      <div class="todo-text ${t.done?'done-text':''}" style="flex:1">${t.text}</div>
+      <span class="todo-tag">${t.tag}</span>
+    </li>
+  `).join('');
+}
+
+function toggleTodo(listId, idx) {
+  const arr = listId === 'todo-list' ? OWNER_TODOS : GATE_TODOS;
+  arr[idx].done = !arr[idx].done;
+  renderTodos(listId, arr);
+}
+
+// ── SDD DATA ──────────────────────────────────────
+const SDD_SECTIONS = [
+  {
+    num:'§0', title:'Product Baseline & How to Use',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Document:</strong> TUM-SDD-001 · Version 0.3 · 3 November 2026</p>
+        <p style="margin-top:8px">Built from v0.1, v0.2 and 71 product-owner questionnaire answers. Records confirmed product direction, proposes system shape, and identifies decisions that must be resolved before production.</p>
+        <ul>
+          <li><strong>MUST</strong> — mandatory for the stated release or system behavior</li>
+          <li><strong>SHOULD</strong> — expected unless a documented reason justifies deviation</li>
+          <li><strong>MAY</strong> — optional or future capability</li>
+          <li><strong>TBD</strong> — requires a product, data, legal, UX or technical decision</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Key constraint:</strong> Agents MUST NOT invent brand tokens, production fares, operator integrations, route coverage, GPS feeds or booking partnerships.</p>
+      </div>
+    `
+  },
+  {
+    num:'§1', title:'Executive Summary & Product Thesis',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Product thesis:</strong> Help passengers make a better transport decision, then make transport information more useful through verified community participation.</p>
+        <p style="margin-top:8px"><strong>Modelled transport modes:</strong></p>
+        <ul>
+          <li>Urban, suburban and regional buses</li>
+          <li>Metro / light rail and urban rail services</li>
+          <li>National, suburban and intercity trains (SNCFT)</li>
+          <li>Taxi collectif</li>
+          <li>Louage</li>
+          <li>Rural and other shared road transport (where verified data exists)</li>
+          <li>Individual taxis — discovery + estimated fares; booking later through verified partners</li>
+          <li>Walking links (transfers, access)</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Three journey choices:</strong> Economic (min cost) · Fastest (min time) · Balanced/Recommended (multi-factor score)</p>
+        <p style="margin-top:8px"><strong>Launch:</strong> Android-first · Arabic + French · Greater Tunis → Sousse → Monastir → Sfax; verified-service-area coverage</p>
+      </div>
+    `
+  },
+  {
+    num:'§2', title:'Problem Statement & Goals',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Passenger problems:</strong> Route discovery · Schedule access · Operational uncertainty</p>
+        <p style="margin-top:8px"><strong>Product goals:</strong></p>
+        <ul>
+          <li>G-01: Journey search without registration</li>
+          <li>G-02: Clear multimodal itineraries with fares and durations</li>
+          <li>G-03: Explain why Economic/Fastest/Balanced differ</li>
+          <li>G-04: Show transport info with source, timestamp and confidence</li>
+          <li>G-05: Stop/route/service discovery</li>
+          <li>G-06: Collect passenger observations with anti-spam safeguards</li>
+          <li>G-07: Voluntary trip-scoped location contribution with consent</li>
+          <li>G-08: Reward useful and verified contributions</li>
+          <li>G-09: Arabic RTL + French LTR at launch</li>
+          <li>G-10: Expand across regions without redesigning core data model</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Key non-goals (v1):</strong> No guaranteed exact arrival times · No taxi booking/payment · No nationwide coverage claim · No all-day GPS · No ads as MVP dependency</p>
+      </div>
+    `
+  },
+  {
+    num:'§3', title:'Users & Primary Situations',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Passenger groups:</strong></p>
+        <ul>
+          <li><strong>P-01 Daily commuter</strong> — saved journeys, fast access, disruption alerts</li>
+          <li><strong>P-02 Occasional traveller</strong> — guided instructions, fare/duration estimates</li>
+          <li><strong>P-03 Passenger already waiting</strong> — stop status, live reports, alternatives</li>
+          <li><strong>P-04 Passenger already travelling</strong> — current leg, next transfer, disruption info</li>
+          <li><strong>P-05 Community contributor</strong> — simple reporting, transparent rewards, privacy controls</li>
+          <li><strong>P-06 Transport data administrator</strong> — data imports, moderation, abuse signals</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Primary situations:</strong> Plan · Wait · Travel · Recover · Contribute</p>
+        <p style="margin-top:8px"><strong>Beta audience:</strong> Daily commuters and university students (confirmed)</p>
+      </div>
+    `
+  },
+  {
+    num:'§5', title:'Core UX Requirements',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Logical information architecture (not final visual design):</strong></p>
+        <ul>
+          <li><strong>Plan</strong> — origin/destination search, journey results and trip details</li>
+          <li><strong>Explore</strong> — map, stops, stations, routes and service areas</li>
+          <li><strong>Nearby / Stop</strong> — nearby transport and stop detail view</li>
+          <li><strong>Contribute</strong> — reports, corrections, trip contribution, history</li>
+          <li><strong>Profile</strong> — saved journeys, preferences, language, privacy, rewards</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Journey search flow:</strong> App opens (guest/auth) → Auto-detect origin (with manual override) → Set destination (Arabic/French search + aliases) → Set time/preferences → 0–3 ranked choices → Step-by-step detail → Save/share</p>
+        <p style="margin-top:8px"><strong>Key constraints:</strong></p>
+        <ul>
+          <li>Never display an unqualified exact value when only an estimate is available</li>
+          <li>Return only choices supported by feasible candidates — do NOT manufacture alternatives</li>
+          <li>Passenger preferences: budget, time, walking distance only (no others without decision)</li>
+          <li>Journey-first home-screen direction; usability validation remains</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Data status labels (UI MUST distinguish):</strong><br>
+        LIVE_OPERATOR · LIVE_DEVICE_DERIVED · COMMUNITY_OBSERVED · SCHEDULED · PREDICTED · UNKNOWN</p>
+      </div>
+    `
+  },
+  {
+    num:'§6', title:'Data Trust & Source-of-Truth Model',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Fundamental rule:</strong> Official data, community observations and derived intelligence are separate records. Never overwrite one with another.</p>
+        <p style="margin-top:8px"><strong>Evidence classes:</strong></p>
+        <ul>
+          <li><strong>Official static</strong> — published route, timetable, fare, stop reference</li>
+          <li><strong>Official live</strong> — operator vehicle feed or service alert</li>
+          <li><strong>Community observation</strong> — passenger reports a bus arrival</li>
+          <li><strong>Device observation</strong> — opt-in trip-scoped GPS sample</li>
+          <li><strong>Derived prediction</strong> — expected arrival or reliability score</li>
+          <li><strong>Curated correction</strong> — admin-approved fix to metadata</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Required provenance fields per record:</strong> source_id · source_type · source_record_id · observed_at / published_at · ingested_at · valid_from / valid_until · dataset version or content hash · license · geographic and operator coverage · validation state</p>
+        <p style="margin-top:8px"><strong>Money:</strong> Store as integer millimes (1 TND = 1,000 millimes). Never use binary floating point for monetary values.</p>
+      </div>
+    `
+  },
+  {
+    num:'§7', title:'Community Contribution, GPS & Rewards',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Contribution types (progressive activation):</strong></p>
+        <ul>
+          <li>Confirm vehicle arrival/departure at a stop</li>
+          <li>Report vehicle passed without stopping</li>
+          <li>Report missed service, delay, disruption or route change</li>
+          <li>Suggest correction to stop/line/direction/route/timetable</li>
+          <li>Confirm or contradict another report</li>
+          <li>Share location during an explicitly started trip</li>
+          <li>Contribute accessibility or stop-facility observations</li>
+        </ul>
+        <p style="margin-top:8px"><strong>GPS privacy rules (non-negotiable):</strong></p>
+        <ul>
+          <li>No all-day GPS tracking</li>
+          <li>No GPS required to use journey planning</li>
+          <li>Background location permission requires clear purpose and separate consent</li>
+          <li>Show when contribution is active / stopped; allow pause/stop/revocation</li>
+          <li>Collect minimum sampling precision necessary for validated transport use case</li>
+          <li>Never sell or publicly expose identifiable user movement traces</li>
+        </ul>
+        <p style="margin-top:8px"><strong>Reward strategy:</strong> Mixed — gamification (points, levels, badges, streaks) + tangible rewards (partner discounts when verified partners exist). Points are non-cash loyalty units. Reward engine MUST use an append-only ledger.</p>
+        <p style="margin-top:8px"><strong>Referral trigger:</strong> First completed journey search by referred passenger (not installation or registration).</p>
+      </div>
+    `
+  },
+  {
+    num:'§8', title:'Individual Taxi Discovery & Future Booking',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>First release:</strong> Discovery and fare/time estimates only. MUST NOT imply a taxi is available or booked unless a verified source/partner confirms that state.</p>
+        <p style="margin-top:8px"><strong>Display allowed in v1:</strong> Pickup options · Destination · Estimated travel time/range · Estimated fare range and basis · Disclaimer that final fare may differ</p>
+        <p style="margin-top:8px"><strong>Booking:</strong> Future capability — requires verified partners, driver records, explicit booking states, cancellation policy, support escalation, audit history and secure payment design.</p>
+        <p style="margin-top:8px"><strong>Taxi availability display policy:</strong> No unsupported current-availability claims (D-37)</p>
+      </div>
+    `
+  },
+  {
+    num:'§9', title:'Proposed System Architecture',
+    content:`
+      <div class="sdd-body-text">
+        <p><strong>Recommendation:</strong> Modular monolith for the initial system with clear domain boundaries and asynchronous workers. Not microservices — too early for distributed operational complexity.</p>
+        <p style="margin-top:8px"><strong>Domain modules must be separately testable.</strong> High-load components (routing, real-time ingestion, notifications) must be extractable later.</p>
+        <p style="margin-top:8px"><strong>Note:</strong> Starting stack is owner-confirmed. Provider, licensing, hosting-cost and detailed architecture validation remain Phase 0 work.</p>
+      </div>
+    `
+  },
+];
+
+function renderSDD() {
+  const container = document.getElementById('sdd-accordion');
+  container.innerHTML = SDD_SECTIONS.map((s,i) => `
+    <div class="sdd-section">
+      <div class="sdd-section-header" onclick="toggleSDD(${i}, this)">
+        <div>
+          <span class="sdd-section-num">${s.num}</span>
+          <span class="sdd-section-title">${s.title}</span>
+        </div>
+        <span class="sdd-chevron">▼</span>
+      </div>
+      <div class="sdd-section-body" id="sdd-body-${i}">
+        ${s.content}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleSDD(idx, header) {
+  const body = document.getElementById('sdd-body-' + idx);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+}
+
+// ── DECISIONS DATA ─────────────────────────────────
+const DECISIONS = [
+  { id:'DEC-001', q:'Several-city launch strategy', state:'Confirmed', detail:'Greater Tunis → Sousse → Monastir → Sfax (D-01)' },
+  { id:'DEC-002', q:'Android-first passenger app', state:'Confirmed', detail:'React Native + Expo + TypeScript (D-45 confirmed)' },
+  { id:'DEC-003', q:'Daily commuter and occasional traveller audiences', state:'Confirmed', detail:'' },
+  { id:'DEC-004', q:'All transport modes represented; progressive activation', state:'Confirmed', detail:'Buses and metro priority' },
+  { id:'DEC-005', q:'Hybrid official/community/GPS/operator data', state:'Confirmed', detail:'' },
+  { id:'DEC-006', q:'Guest-first passenger access', state:'Confirmed', detail:'Basic and critical safety reports are guest-accessible; advanced evidence/history requires account (D-06 Option C).' },
+  { id:'DEC-007', q:'Arabic and French at launch; English later', state:'Confirmed', detail:'Timing TBD' },
+  { id:'DEC-008', q:'Editorial + technical + approachable design direction', state:'Confirmed', detail:'Visual tokens TBD' },
+  { id:'DEC-009', q:'Approved technology starting baseline', state:'Confirmed', detail:'React Native + Expo + TypeScript; FastAPI; PostgreSQL/PostGIS; SQLite packages; open data + managed map services where economical.' },
+  { id:'DEC-010', q:'Free core passenger access; advertising deferred', state:'Confirmed', detail:'Ads after coverage & trust' },
+  { id:'DEC-011', q:'Individual taxi discovery first; booking progressively', state:'Confirmed', detail:'Never imply current availability without recent reliable evidence; no booking claim absent verified partner.' },
+  { id:'DEC-012', q:'Mixed gamified and partner reward model', state:'Confirmed', detail:'Values/partners TBD' },
+  { id:'DEC-013', q:'Context-aware navigation; automatic origin detection; adaptive results', state:'Confirmed', detail:'' },
+  { id:'DEC-014', q:'Journey preferences: budget, time, walking distance only', state:'Confirmed', detail:'No other filters without decision' },
+  { id:'DEC-015', q:'Waiting, disruption recovery and in-journey assistance bundle', state:'Confirmed', detail:'Alert thresholds TBD' },
+  { id:'DEC-016', q:'Simple/detailed instructions; multiple saved travel routines', state:'Confirmed', detail:'' },
+  { id:'DEC-017', q:'All available Explore map layers with customizable filters', state:'Confirmed', detail:'Layer inventory TBD' },
+  { id:'DEC-018', q:'Stop detail first view: name, location and served lines', state:'Confirmed', detail:'' },
+  { id:'DEC-019', q:'Tunisian Arabic/French/transliteration/alias search', state:'Confirmed', detail:'' },
+  { id:'DEC-020', q:'Comprehensive offline capability under a Pro plan', state:'Confirmed', detail:'Details and mechanics TBD' },
+  { id:'DEC-021', q:'Transport operations and activation are mode-specific', state:'Confirmed', detail:'Verified service-pattern default; regional evidence and activation thresholds remain.' },
+  { id:'DEC-022', q:'Confidence-based reconciliation and confidence/source labels', state:'Confirmed', detail:'Formulas/thresholds TBD' },
+  { id:'DEC-023', q:'Optional automatic trip detection with explicit consent', state:'Confirmed', detail:'Implementation/legal review required' },
+  { id:'DEC-024', q:'Passenger-report classification', state:'Confirmed', detail:'Feature-based Option C selected by owner; basic and critical safety reports are guest-accessible; advanced evidence/history requires account.' },
+  { id:'DEC-025', q:'Separate community leaderboard categories', state:'Confirmed', detail:'Privacy/ranking rules TBD' },
+  { id:'DEC-026', q:'Referral reward after first completed journey search', state:'Confirmed', detail:'Anti-fraud definitions TBD' },
+  { id:'DEC-027', q:'Advertising formats/placements direction + ranking firewall', state:'Confirmed', detail:'Formats/surfaces/caps TBD' },
+  { id:'DEC-028', q:'Free/open-source maps first; low-cost production hosting', state:'Confirmed', detail:'Providers TBD' },
+  { id:'DEC-029', q:'Admin/moderator roles; safe auto-approval and major-change review', state:'Confirmed', detail:'Permissions/thresholds TBD' },
+  { id:'DEC-030', q:'Passenger support ticketing', state:'Confirmed', detail:'' },
+  { id:'DEC-031', q:'Privacy-by-design; minimum account data; onboarding consent screen', state:'Confirmed', detail:'Separate feature/OS permissions still required' },
+  { id:'DEC-032', q:'Daily commuters/university students as beta; bus/metro priority', state:'Confirmed', detail:'' },
+  { id:'DEC-033', q:'Measurable city readiness, field testing and phased expansion', state:'Confirmed', detail:'Thresholds TBD' },
+
+  // TBD
+  { id:'D-06-REPORTS', q:'Passenger-report classification', state:'Confirmed', detail:'Owner selected feature-based Option C: basic and critical safety reports are guest-accessible; advanced evidence/history requires account.' },
+  { id:'D-02', q:'Home-screen composition', state:'Confirmed', detail:'Journey-first working default: search, nearby validated transport, relevant alerts; usable without location permission. UX validation remains.' },
+  { id:'D-14', q:'Accessibility product baseline', state:'Confirmed', detail:'Accessible by default: RTL, scalable text, screen-reader names, contrast, touch targets, no color-only meaning, reduced motion; test criteria remain.' },
+  { id:'D-15', q:'Pro offline feature matrix, plan terms and billing', state:'TBD', detail:'Direction confirmed; exact mechanics TBD.' },
+  { id:'D-21', q:'Rural transport operating model', state:'Confirmed direction', detail:'Distinct verified service patterns; disclose unknowns; regional operations/data validation remains.' },
+  { id:'D-37', q:'Taxi availability display policy', state:'Confirmed direction', detail:'No current availability claim without recent reliable evidence; source and freshness thresholds remain.' },
+  { id:'D-45', q:'Mobile framework', state:'Confirmed', detail:'React Native + Expo + TypeScript; premium custom visual standard.' },
+  { id:'D-46', q:'Backend framework', state:'Confirmed', detail:'Python + FastAPI.' },
+  { id:'D-47', q:'Database', state:'Confirmed', detail:'PostgreSQL + PostGIS.' },
+  { id:'D-50', q:'Offline storage', state:'Confirmed', detail:'SQLite + versioned regional packages + cached map tiles; sync, entitlements, size and licensing remain to define.' },
+  { id:'D-54', q:'Community moderation', state:'Confirmed', detail:'Low-risk automation; human review for high-impact changes. Workflow details TBD.' },
+  { id:'D-56', q:'Operator portal', state:'Confirmed', detail:'Read-only first; managed capabilities after partnerships.' },
+  { id:'D-57', q:'Location data retention periods', state:'TBD', detail:'SEC-02. Requires privacy impact and qualified local legal review.' },
+
+  // Delegated
+  { id:'D-16', q:'Bus route branches and diversions', state:'Confirmed direction', detail:'Hybrid model; validate using real data.' },
+  { id:'D-26', q:'Vehicle matching', state:'Confirmed direction', detail:'Multi-signal confidence scoring; accuracy thresholds TBD.' },
+  { id:'D-43', q:'Advertising personalization', state:'Confirmed', detail:'Contextual by default; personalization only by explicit opt-in.' },
+  { id:'D-60', q:'Security controls', state:'Confirmed direction', detail:'Staged baseline, threat modeling/code review, independent pre-launch test.' },
+  { id:'D-09', q:'Technology architecture validation', state:'Confirmed direction', detail:'Owner-selected starting stack is recorded; architecture details and required ADR evidence remain in Phase 0.' },
+];
+
+let decisionFilter = 'ALL';
+let decisionSearch = '';
+
+function renderDecisions() {
+  const grid = document.getElementById('decision-grid');
+  const tbdCount = document.getElementById('tbd-count');
+  if (tbdCount) tbdCount.textContent = DECISIONS.filter(d => d.state === 'TBD').length;
+  const filtered = DECISIONS.filter(d => {
+    const matchStatus = decisionFilter === 'ALL' || d.state === decisionFilter;
+    const matchSearch = !decisionSearch || d.q.toLowerCase().includes(decisionSearch.toLowerCase()) || d.id.toLowerCase().includes(decisionSearch.toLowerCase());
+    return matchStatus && matchSearch;
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">No decisions match the filter</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(d => {
+    const badgeCls = d.state === 'Confirmed' ? 'badge-confirmed' : d.state === 'TBD' ? 'badge-tbd' : 'badge-delegated';
+    const stateIcon = d.state === 'Confirmed' ? '✅' : d.state === 'TBD' ? '⚠️' : '🔵';
+    return `
+      <div class="decision-card">
+        <div class="decision-id">${d.id}</div>
+        <div class="decision-question">${d.q}</div>
+        <div style="margin-top:6px"><span class="badge ${badgeCls}">${stateIcon} ${d.state}</span></div>
+        ${d.detail ? `<div class="decision-action">${d.detail}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function filterDecisions(state, btn) {
+  decisionFilter = state;
+  document.querySelectorAll('#page-decisions .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDecisions();
+}
+function searchDecisions(val) {
+  decisionSearch = val;
+  renderDecisions();
+}
+
+// ── ARCHITECTURE DATA ──────────────────────────────
+const ARCH_COMPONENTS = [
+  { icon:'📱', name:'Android-first Passenger Client', desc:'Journey, map, reports, consent, rewards' },
+  { icon:'🖥️', name:'Web Admin Console', desc:'Data quality, moderation, operator management' },
+  { icon:'⚙️', name:'Backend API (Modular Monolith)', desc:'Auth, passenger APIs, orchestration, validation' },
+  { icon:'🗺️', name:'Journey Planning Engine', desc:'Multimodal graph, 3 ranking strategies + explanations' },
+  { icon:'🚌', name:'Transport Data Adapters', desc:'GTFS, CSV, open data, operator APIs' },
+  { icon:'📡', name:'Realtime Ingestion', desc:'Operator feeds and opt-in observations' },
+  { icon:'🔍', name:'Observation & Trust Engine', desc:'Verification, confidence, expiry, reconciliation' },
+  { icon:'🎁', name:'Reward / Referral Engine', desc:'Contribution scoring, append-only ledger, anti-fraud' },
+  { icon:'🔔', name:'Notification Worker', desc:'Disruption, saved journey, contribution alerts' },
+  { icon:'🗄️', name:'Primary Database', desc:'Relational source of truth + spatial (proposed: PostGIS)' },
+  { icon:'⚡', name:'Cache / Queue', desc:'Hot route data, rate limits, async jobs' },
+  { icon:'🌍', name:'Map / Routing Provider Adapter', desc:'Base maps, geocoding, walking, road times' },
+  { icon:'📊', name:'Analytics Pipeline', desc:'Aggregated reliability metrics; no unnecessary personal data' },
+];
+
+const STACK_DATA = [
+  { layer:'Passenger app', candidate:'React Native + Expo + TypeScript', status:'Confirmed', note:'Validate maps, performance and low-end Android' },
+  { layer:'Web/Admin', candidate:'React / TypeScript', status:'Candidate', note:'Not selected' },
+  { layer:'Backend', candidate:'Python + FastAPI', status:'Confirmed', note:'Validate implementation details' },
+  { layer:'Database', candidate:'PostgreSQL + PostGIS', status:'Confirmed', note:'Validate schema and operations' },
+  { layer:'Queue/Cache', candidate:'Redis-compatible or managed queue', status:'Add when justified', note:'' },
+  { layer:'Routing', candidate:'Dedicated routing engine/library', status:'TBD', note:'Select after data and routing prototype' },
+  { layer:'Maps/Geocoding', candidate:'Free/open-source mapping first', status:'Confirmed preference', note:'Provider, licenses, offline terms, Tunisia quality TBD' },
+  { layer:'Hosting', candidate:'Free dev; low-cost production', status:'Confirmed budget', note:'Provider, data region and monthly ceiling TBD' },
+  { layer:'Offline/Pro storage', candidate:'SQLite + regional packages + cached map tiles', status:'Confirmed direction', note:'Sync and entitlement details TBD' },
+];
+
+const MODES_DATA = [
+  { code:'BUS', name:'Urban / suburban / regional bus', stance:'Include wherever verified data exists', priority:true },
+  { code:'METRO', name:'Metro / light rail', stance:'Include where verified data exists', priority:true },
+  { code:'TRAIN', name:'Rail / suburban / intercity train (SNCFT)', stance:'Include where verified data exists; SNCFT data is a validation dependency', priority:false },
+  { code:'TAXI_COLLECTIF', name:'Taxi collectif', stance:'Model separately; enable only in verified areas', priority:false },
+  { code:'LOUAGE', name:'Louage', stance:'Model separately; enable only in verified areas', priority:false },
+  { code:'RURAL_TRANSPORT', name:'Rural / other shared road transport', stance:'Model separately; verified service patterns only; region data validation required', priority:false },
+  { code:'INDIVIDUAL_TAXI', name:'Individual taxi', stance:'Discovery and estimates first; booking later through verified partners', priority:false },
+  { code:'TOURIST_TAXI', name:'Tourist taxi', stance:'Represent separately; enable after legal/data review', priority:false },
+  { code:'WALK', name:'Walking (connector)', stance:'Required journey-planning connector', priority:false },
+];
+
+function renderArchitecture() {
+  const wrap = document.getElementById('arch-components');
+  wrap.innerHTML = ARCH_COMPONENTS.map(c => `
+    <div class="arch-component" title="${c.desc}">
+      <span class="arch-component-icon">${c.icon}</span>
+      <div>
+        <div style="font-size:13px;font-weight:600">${c.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${c.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const stackTbody = document.getElementById('stack-table');
+  stackTbody.innerHTML = STACK_DATA.map(s => {
+    const statusColor = s.status === 'TBD' ? 'var(--yellow)' : s.status === 'Confirmed preference' || s.status === 'Confirmed budget' ? 'var(--green)' : 'var(--textdim)';
+    return `<tr>
+      <td style="font-weight:500">${s.layer}</td>
+      <td style="color:var(--textdim)">${s.candidate}</td>
+      <td><span style="color:${statusColor};font-size:12px">${s.status}</span>${s.note ? `<div style="font-size:11px;color:var(--muted)">${s.note}</div>` : ''}</td>
+    </tr>`;
+  }).join('');
+
+  const modesTbody = document.getElementById('modes-table');
+  modesTbody.innerHTML = MODES_DATA.map(m => `
+    <tr>
+      <td><code style="font-size:11px;color:var(--accent)">${m.code}</code>${m.priority ? ' <span class="badge badge-p0" style="font-size:9px;">Priority</span>' : ''}</td>
+      <td>${m.name}</td>
+      <td style="font-size:12px;color:var(--textdim)">${m.stance}</td>
+    </tr>
+  `).join('');
+}
+
+// ── INIT ──────────────────────────────────────────
+renderTasks();
+renderTodos('todo-list', OWNER_TODOS);
+renderTodos('gate-list', GATE_TODOS);
+renderSDD();
+renderDecisions();
+renderArchitecture();
+</script>
+</body>
+</html>
+
+
+

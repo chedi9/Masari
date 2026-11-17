@@ -1,0 +1,295 @@
+{
+  "profiles": {
+    "A": {
+      "status": "no_file_downloaded",
+      "resources": [
+        {
+          "name": "R\u00e9f\u00e9rentiel National d'Arr\u00eats",
+          "url": "http://data.transport.tn/dataset/76780f53-bb82-4c77-bc66-69425aaceed5/resource/25d0fbab-20ea-4986-9103-5c0cc662356c/download/referentiel-national-des-arrets.xlsx",
+          "format": "XLSX"
+        },
+        {
+          "name": "R\u00e9f\u00e9rentiel National d'Arr\u00eats ",
+          "url": "http://data.transport.tn/dataset/76780f53-bb82-4c77-bc66-69425aaceed5/resource/a58870d0-6f61-4e8e-acda-6aa94a9b0acc/download/referentiel-national-des-arrets.csv",
+          "format": "CSV"
+        }
+      ],
+      "error": ""
+    },
+    "B": [
+      {
+        "status": "no_file_downloaded",
+        "resources": [
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat d'Ariana",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/a88f2cf4-e353-478e-aca2-fd4ac4a94bd1/download/ariana.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Beja",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/6c973c32-cd33-42c7-aa87-070b679671f6/download/beja.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Zaghouan",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/e07696d0-b5c6-4548-a42d-1feaa83541af/download/zaghouen.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Tunis",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/f69fadf4-1fa2-4c6e-81a3-cbdd7e221ccc/download/tunis.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Sousse",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/322876f3-b3fd-485d-a871-b046de26bad8/download/sousse.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Siliana",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/2af7835d-61a2-4b42-be0a-f4df6e0d63d7/download/siliana.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Sidi Bouzid",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/77f2be56-edfd-46e1-9cd8-09d67fd1b241/download/sidi-bouzid.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Sfax",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/0c0cdb2c-24f2-4c93-8dd6-100b4575c2e3/download/sfax.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Nabeul",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/ee72fcc5-7c8a-4062-9d2f-9ddbb5dce227/download/nabeul.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Monastir",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/7fb99851-3832-4854-9fff-3ada693dc1ed/download/monastir.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Medenine",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/025ef0a7-455f-4e30-94f1-813d45537c8e/download/medenine.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Manouba",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/797d9a12-6c2e-4f83-935b-62681daaef0d/download/manouba.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Mahdia",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/a8498638-c88c-4d41-9595-eba05d3a852c/download/mahdia.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Kef",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/7a08952d-a8f5-4e8f-a5cb-9db395a54481/download/kef.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Kasserine",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/5a53d46d-7af3-4664-b1cb-8b4db2f500d8/download/kasserine.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Kairouan",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/3faef94f-de31-4a65-8503-9046623d3c79/download/kairouan.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Jendouba",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/72e71213-b7cb-4031-a3f1-f36bd63ce251/download/jendouba.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - Djerba",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/61591d7f-eb3c-4932-88d6-05d1b07a0fcf/download/djerba.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Bizerte",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/14b8dbfd-491a-4ae6-9a57-6835fdb9ef60/download/bizerte.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - Ben Guerdane",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/20c370d1-e928-45ec-8888-c62cfe914661/download/ben-guerdane.csv",
+            "format": "CSV"
+          },
+          {
+            "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Ben Arous",
+            "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/9c2260b9-ac93-44c9-b11a-b8dd78ac4c71/download/ben-arous.csv",
+            "format": "CSV"
+          }
+        ],
+        "error": ""
+      }
+    ],
+    "C": {
+      "status": "unreachable",
+      "error": "",
+      "head_response": ""
+    },
+    "D": {
+      "status": "failed",
+      "error": "rc=28"
+    }
+  },
+  "results": {
+    "A": {
+      "id": "628f26a4-3ee0-4e9d-b8a1-9bb2c2f5b2ff",
+      "name": "National Stop Registry",
+      "ckan_rc": 0,
+      "resources": [
+        {
+          "name": "R\u00e9f\u00e9rentiel National d'Arr\u00eats",
+          "url": "http://data.transport.tn/dataset/76780f53-bb82-4c77-bc66-69425aaceed5/resource/25d0fbab-20ea-4986-9103-5c0cc662356c/download/referentiel-national-des-arrets.xlsx",
+          "format": "XLSX"
+        },
+        {
+          "name": "R\u00e9f\u00e9rentiel National d'Arr\u00eats ",
+          "url": "http://data.transport.tn/dataset/76780f53-bb82-4c77-bc66-69425aaceed5/resource/a58870d0-6f61-4e8e-acda-6aa94a9b0acc/download/referentiel-national-des-arrets.csv",
+          "format": "CSV"
+        }
+      ],
+      "files": [],
+      "title": "R\u00e9f\u00e9rentiel National d'arr\u00eat",
+      "license": "OTL",
+      "notes": "Ce jeu de donn\u00e9es pr\u00e9sente la base des arr\u00eats du r\u00e9seau national du transport terrestre (Bus, Train, Taxi, Louage ...).\r\nIl d\u00e9crit le type de chaque arr\u00eat, la disponibilit\u00e9 de certains services (\u00e9clai"
+    },
+    "B": {
+      "id": "c07055ec-6049-4c02-a713-3174bd1da096",
+      "name": "Taxi Collectif Routes",
+      "ckan_rc": 0,
+      "resources": [
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat d'Ariana",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/a88f2cf4-e353-478e-aca2-fd4ac4a94bd1/download/ariana.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Beja",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/6c973c32-cd33-42c7-aa87-070b679671f6/download/beja.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Zaghouan",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/e07696d0-b5c6-4548-a42d-1feaa83541af/download/zaghouen.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Tunis",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/f69fadf4-1fa2-4c6e-81a3-cbdd7e221ccc/download/tunis.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Sousse",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/322876f3-b3fd-485d-a871-b046de26bad8/download/sousse.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Siliana",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/2af7835d-61a2-4b42-be0a-f4df6e0d63d7/download/siliana.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Sidi Bouzid",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/77f2be56-edfd-46e1-9cd8-09d67fd1b241/download/sidi-bouzid.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Sfax",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/0c0cdb2c-24f2-4c93-8dd6-100b4575c2e3/download/sfax.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Nabeul",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/ee72fcc5-7c8a-4062-9d2f-9ddbb5dce227/download/nabeul.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Monastir",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/7fb99851-3832-4854-9fff-3ada693dc1ed/download/monastir.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Medenine",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/025ef0a7-455f-4e30-94f1-813d45537c8e/download/medenine.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Manouba",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/797d9a12-6c2e-4f83-935b-62681daaef0d/download/manouba.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Mahdia",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/a8498638-c88c-4d41-9595-eba05d3a852c/download/mahdia.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Kef",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/7a08952d-a8f5-4e8f-a5cb-9db395a54481/download/kef.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Kasserine",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/5a53d46d-7af3-4664-b1cb-8b4db2f500d8/download/kasserine.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Kairouan",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/3faef94f-de31-4a65-8503-9046623d3c79/download/kairouan.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Jendouba",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/72e71213-b7cb-4031-a3f1-f36bd63ce251/download/jendouba.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - Djerba",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/61591d7f-eb3c-4932-88d6-05d1b07a0fcf/download/djerba.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Bizerte",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/14b8dbfd-491a-4ae6-9a57-6835fdb9ef60/download/bizerte.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - Ben Guerdane",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/20c370d1-e928-45ec-8888-c62cfe914661/download/ben-guerdane.csv",
+          "format": "CSV"
+        },
+        {
+          "name": "LIGNES DES TAXIS COLLECTIFS - gouvernorat de Ben Arous",
+          "url": "http://data.transport.tn/dataset/7a407c8c-f4fd-426b-b3d6-41ff14588126/resource/9c2260b9-ac93-44c9-b11a-b8dd78ac4c71/download/ben-arous.csv",
+          "format": "CSV"
+        }
+      ],
+      "files": [],
+      "title": "Lignes des taxis collectifs",
+      "license": "OTL"
+    },
+    "C": {
+      "name": "TRANSTU GTFS",
+      "url": "http://data.transport.tn/dataset/8c42c45a-137c-444d-ab01-53ab50c5e583/resource/41e5bb3e-3ef6-4d1e-ba29-e504601ab17b/download/transtu_gtfs1.zip",
+      "files": [],
+      "status": "unreachable",
+      "head_rc": 28,
+      "head_response": ""
+    },
+    "D": {
+      "name": "RFR Station Mapping",
+      "url": "https://catalogue-data.transport.tn/dataset/245e848e-2829-4548-b563-2e8c3bc52e97/resource/4c512d3f-bf5b-41ca-8e50-6d71a932b6fa/download/245e848e-2829-4548-b563-2e8c3bc52e97_43dbb48c-4576-4520-8d93-59c4b6585e01.csv",
+      "files": [],
+      "status": "failed",
+      "error": "rc=28"
+    }
+  }
+}

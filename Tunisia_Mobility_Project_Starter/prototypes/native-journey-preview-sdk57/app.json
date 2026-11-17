@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "Tunisia Mobility Preview",
+    "slug": "tunisia-mobility-preview",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light"
+  }
+}
