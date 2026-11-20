@@ -102,8 +102,8 @@ The source-code audit is recorded in `docs/CODE_AUDIT_REMEDIATION.md`. These eng
 
 ## Current task state
 
-- **Active task:** None currently in execution. The next ready engineering task is TUM-ENG-001.
-- **Engineering next TODO:** Review TUM-ENG-001 implementation, run `npm run typecheck` from `Tunisia_Mobility_Project_Starter/apps/mobile/`, and verify Journey/Explore/Reports in an Android preview. Mark DONE only after those checks pass.
+- **Active task:** TUM-ENG-001 — REVIEW; implementation is committed to `docs/code-audit-remediation` and awaits local validation.
+- **Engineering next TODO:** Run `npm run typecheck` from `Tunisia_Mobility_Project_Starter/apps/mobile/` and verify Journey/Explore/Reports in an Android preview. Mark DONE only after those checks pass.
 - **Phase 0 next gate:** TUM-P0-012 remains in REVIEW; Phase 0 exit is not approved. TUM-P0-004 licensing remains BLOCKED.
 - **Data import follow-up:** TUM-P0-003c remains PARTIAL. The TRANSTU download/import still requires a successful, reproducible local run against a verified source. Do not treat the downloader script or an old local archive as proof of current service.
 - **Historical prototype evidence only:** Previous local query runs were recorded for SNCFT Banlieue Sud, SNCFT Sahel Metro, SRT Médenine and a synthesized RFR feed. These results demonstrate that prototype queries ran against those particular local datasets; they do not establish current timetables, live services, national coverage, legal clearance or a production multimodal router.
