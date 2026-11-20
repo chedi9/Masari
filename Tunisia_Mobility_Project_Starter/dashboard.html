@@ -400,16 +400,16 @@
   <!-- CURRENT NEXT TASK -->
   <div class="current-task-card">
     <div class="current-task-label">⚡ Current Next Task</div>
-    <div class="current-task-id">TUM-P0-010</div>
-    <div class="current-task-name">Data &amp; routing feasibility prototype</div>
+    <div class="current-task-id">TUM-P0-003c</div>
+    <div class="current-task-name">Multi-operator GTFS import (TRANSTU, SNTRI, STS, SORETRAS)</div>
     <div class="current-task-desc">
-      Built reproducible SQLite importer and routing query engine from verified SNCFT GTFS data. Tested and verified real pilot queries for Tunis Banlieue Sud (Tunis Ville ➔ Borj Cédria, 800 millimes) and Sahel Metro (Sousse ➔ Monastir, 350 millimes). 4-tab mobile app shell complete and passing typecheck.
+      Download and import additional GTFS archives (TRANSTU bus/metro/TGM, SNTRI intercity buses, STS Sahel buses, SORETRAS Sfax regional) into SQLite using the new download_and_import_transtu.py script. Extends the existing SNCFT-only prototype to multi-modal coverage. Owner to run download scripts locally due to network constraints.
     </div>
     <div class="tag-row" style="margin-top:12px;">
-      <span class="badge badge-done">✓ DONE</span>
+      <span class="badge badge-ready">READY</span>
       <span class="badge badge-p0">P0</span>
-      <span style="font-size:12px; color:var(--muted)">Owner: Antigravity / Product Owner</span>
-      <span style="font-size:12px; color:var(--muted)">Tools: Python 3.15, SQLite3, Expo SDK 57</span>
+      <span style="font-size:12px; color:var(--muted)">Owner: Product Owner (download) + Antigravity (validation)</span>
+      <span style="font-size:12px; color:var(--muted)">Tools: Python stdlib, SQLite3, urllib</span>
     </div>
   </div>
 
@@ -434,10 +434,34 @@
     <div class="card-title">📋 Activity Log</div>
     <div class="timeline">
       <div class="timeline-item">
+        <div class="timeline-dot current"></div>
+        <div class="timeline-date">20 November 2026</div>
+        <div class="timeline-title">TUM-P0-003c · Multi-operator GTFS import scripts created</div>
+        <div class="timeline-detail">Created download_and_import_transtu.py with progress indicator and retry logic. Extends prototype to bus/metro/TGM (TRANSTU), intercity (SNTRI), Sahel (STS), and Sfax (SORETRAS). Owner to run downloads locally; TUM-P0-004 licensing audit still blocked.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">20 November 2026</div>
+        <div class="timeline-title">TUM-P0-010 · Routing prototype verified</div>
+        <div class="timeline-detail">Re-ran query_journey.py on SNCFT GTFS data. 5 direct options Tunis Ville ➔ Borj Cédria confirmed (800 millimes, 31–43 min). Prototype exit code 0, all results sensible.</div>
+      </div>
+      <div class="timeline-item">
         <div class="timeline-dot done"></div>
         <div class="timeline-date">14 November 2026</div>
         <div class="timeline-title">TUM-P0-010 · Data &amp; Routing Feasibility Prototype</div>
         <div class="timeline-detail">Built reproducible SQLite importer and routing query engine from verified SNCFT GTFS data. Tested and verified real pilot queries for Tunis Banlieue Sud (Tunis Ville ➔ Borj Cédria, 800 millimes) and Sahel Metro (Sousse ➔ Monastir, 350 millimes).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot current"></div>
+        <div class="timeline-date">20 November 2026</div>
+        <div class="timeline-title">TUM-P0-003c · Multi-operator GTFS import scripts created</div>
+        <div class="timeline-detail">Created download_and_import_transtu.py with progress indicator and retry logic. Extends prototype to bus/metro/TGM (TRANSTU), intercity (SNTRI), Sahel (STS), and Sfax (SORETRAS). Owner to run downloads locally; TUM-P0-004 licensing audit still blocked.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done"></div>
+        <div class="timeline-date">20 November 2026</div>
+        <div class="timeline-title">TUM-P0-010 · Routing prototype verified</div>
+        <div class="timeline-detail">Re-ran query_journey.py on SNCFT GTFS data. 5 direct options Tunis Ville ➔ Borj Cédria confirmed (800 millimes, 31–43 min). Prototype exit code 0, all results sensible.</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot done"></div>
@@ -490,8 +514,8 @@
       <div class="timeline-item">
         <div class="timeline-dot current"></div>
         <div class="timeline-date">Now</div>
-      <div class="timeline-title">TUM-PRE-002 — IN PROGRESS</div>
-        <div class="timeline-detail">Build an isolated Android-first Expo preview. Public dataset file inspection remains blocked; no transport service claims are shown.</div>
+      <div class="timeline-title">TUM-P0-003c — READY · Multi-operator GTFS import</div>
+        <div class="timeline-detail">Scripts ready. Owner to run download_and_import_transtu.py locally and provide output. TUM-P0-004 licensing still blocked pending OTL verification.</div>
       </div>
     </div>
   </div>

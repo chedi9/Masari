@@ -1,8 +1,8 @@
 # Tunisia Mobility Platform — Master Roadmap
 
-**Roadmap version:** 0.6 — TUM-P0-004 licensing audit update  
+**Roadmap version:** 0.7 — multi-operator import scripts and routing verification  
 **Product baseline:** Active SDD v0.8 and Decision Register v0.7  
-**Date:** 17 November 2026  
+**Date:** 20 November 2026  
 **Owner:** Human product owner  
 **Cost rule:** Zero spend unless explicitly changed by the owner.
 
@@ -10,7 +10,7 @@
 
 ## CURRENT NEXT TODO
 
-**Product owner — unblock TUM-P0-004:** provide the applicable official OTL license text and/or authorize a narrowly scoped request for written terms covering the direct SNCFT GTFS feed. Do not integrate or redistribute pilot datasets until source-specific clearance is recorded. **Owner:** Product owner. **Tools:** official public license/catalog pages; optional operator contact only after owner authorization. **Dependencies:** TUM-P0-003 inventory. **Acceptance:** exact terms and version captured for each chosen pilot resource; source-by-source rights and attribution status reviewed; unresolved sources remain excluded.
+**Product owner — run multi-operator GTFS downloads:** execute `python tools/data_pipeline/sources/download_and_import_transtu.py` from the repository root and paste the console output. If the download stalls, the script shows progress (% and KB) so you can tell whether it is network-bound. Once the TRANSTU DB is built, test with `python tools/data_pipeline/query_journey.py "<origin>" "<dest>" data/processed/transtu.db`. **Owner:** Product owner. **Tools:** Python stdlib, urllib, SQLite3. **Dependencies:** TUM-P0-010 prototype (DONE). **Acceptance:** TRANSTU DB summary printed with non-zero record counts; at least one bus/metro query returns sensible results. TUM-P0-004 licensing remains blocked separately.
 
 ## Current project state
 
@@ -50,7 +50,8 @@ Read-only Greater Tunis rail feasibility pilot based only on verified SNCFT reco
 | Task ID | Task | Priority | Status | Owner | Dependencies | Deliverable / acceptance |
 |---|---|---:|---|---|---|---|
 | TUM-P0-002 | Candidate-area readiness evidence review | P0 | DONE | Data researcher | Confirmed rollout areas; SDD/register | Preliminary desk audit; no area approval. |
-| TUM-P0-003 | Transport dataset inventory | P0 | PARTIAL | Data researcher | P0-002 | SNCFT archive profiled; remaining sources, freshness and rights incomplete. |
+| TUM-P0-003 | Transport dataset inventory | P0 | PARTIAL | Data researcher | P0-002 | SNCFT archive profiled; TRANSTU/SNTRI/STS/SORETRAS download scripts created with progress indicators; owner to run locally. |
+| TUM-P0-003c | Multi-operator GTFS import | P0 | READY | Product owner + Antigravity | P0-003; P0-010 | Download and import TRANSTU, SNTRI, STS, SORETRAS GTFS archives. Scripts created; owner to execute and provide output. |
 | TUM-P0-004 | Data licensing and reuse audit | P0 | BLOCKED | Data/legal researcher | P0-003 | Audit recorded; exact terms/resource rights and direct-feed permission still needed. |
 | TUM-P0-005 | Map/geocoding/routing comparison | P0 | BACKLOG | Mapping researcher | P0-002; P0-004 | Zero-spend comparison with license and Tunisia coverage evidence. |
 | TUM-P0-006 | UX validation and Pro offline detail pack | P1 | BACKLOG | Product/UX designer | P0-001b; P0-005 | Device/RTL/accessibility validation and required offline decisions. |
@@ -77,9 +78,11 @@ Read-only Greater Tunis rail feasibility pilot based only on verified SNCFT reco
 | 2026-11-17 | GitHub repository review | TUM-P0-012 | Prepared gate review; summarized evidence, blockers and proposed rail-only boundaries; owner approval not claimed. | Existing roadmap/handoff and research records. |
 | 2026-11-17 | GitHub research and repository tools | TUM-P0-004 | Added source-by-source licensing audit; retained OTL labels as unverified rights evidence; marked task blocked pending primary terms and owner action. | `docs/research/TUM-P0-004_DATA_LICENSE_AUDIT.md`; official catalog/license links. |
 
+| 2026-11-20 | Antigravity | TUM-P0-003c | Created `download_and_import_transtu.py` with download progress, retry logic, and SQLite import. Re-verified SNCFT routing prototype (5 direct options Tunis Ville → Borj Cédria, 800 millimes). Dashboard and roadmap updated. | `tools/data_pipeline/sources/download_and_import_transtu.py`; routing output verified exit 0. |
+
 ## Current task state
 
-- **Active task:** None; TUM-P0-004 is blocked pending owner action/primary license evidence.
-- **Gate determination:** Phase 0 exit is not approved.
-- **Current next TODO:** Product owner to provide applicable official OTL text and/or authorize a narrowly scoped request about SNCFT direct-feed rights.
-- **Validation:** Desk audit only; exact legal clauses and per-resource permissions remain unverified. No local tests/builds run.
+- **Active task:** TUM-P0-003c — multi-operator GTFS import (scripts created, owner to run downloads).
+- **Gate determination:** Phase 0 exit is not approved. TUM-P0-004 licensing still blocked.
+- **Current next TODO:** Product owner to run `python tools/data_pipeline/sources/download_and_import_transtu.py` and provide console output. TUM-P0-004 OTL verification remains a separate blocker.
+- **Validation:** SNCFT routing prototype re-verified 20 Nov 2026 (exit 0, 5 direct options). Multi-operator import awaiting owner execution.
