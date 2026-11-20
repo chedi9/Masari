@@ -12,10 +12,6 @@ import { useLocale } from '../../../shared/i18n/LocaleProvider';
 import { colors, radii, spacing } from '../../../shared/theme/tokens';
 import { SwipeTabScreen } from '../../../shared/ui/SwipeTabScreen';
 import { ElasticPressable } from '../../../shared/ui/ElasticPressable';
-import {
-  JourneyOptionCard,
-  JourneyOptionData,
-} from '../components/JourneyOptionCard';
 
 type Priority = 'balanced' | 'fastest' | 'economic';
 
@@ -28,7 +24,6 @@ export default function JourneyHomeScreen() {
   const [destination, setDestination] = useState('');
   const [priority, setPriority] = useState<Priority>('balanced');
   const [hasSearched, setHasSearched] = useState(false);
-  const [selectedOptionId, setSelectedOptionId] = useState<Priority>('balanced');
   const [feedback, setFeedback] = useState('');
 
   const textDirection = isRtl ? styles.rtlText : undefined;
@@ -48,7 +43,6 @@ export default function JourneyHomeScreen() {
     }
     setFeedback('');
     setHasSearched(true);
-    setSelectedOptionId(priority);
   }
 
   function swap() {
@@ -69,84 +63,6 @@ export default function JourneyHomeScreen() {
     setHasSearched(false);
   }
 
-  // 3 SDD-mandated comparative journey options
-  const sampleOptions: JourneyOptionData[] = [
-    {
-      id: 'balanced',
-      priorityLabel: copy.balanced,
-      durationMinutes: 28,
-      departureTime: '08:15',
-      arrivalTime: '08:43',
-      fareMillimes: 750,
-      transfersCount: 1,
-      walkMinutes: 5,
-      segments: [
-        {
-          type: 'walk',
-          label: locale === 'ar' ? 'المشي إلى المحطة (350م)' : 'Marche vers la station (350m)',
-          durationMinutes: 5,
-        },
-        {
-          type: 'metro',
-          label: locale === 'ar' ? 'مترو الخط 1 (اتجاه برشلونة)' : 'Métro Ligne 1 (dir. Barcelone)',
-          lineCode: 'M1',
-          durationMinutes: 12,
-        },
-        {
-          type: 'bus',
-          label: locale === 'ar' ? 'حافلة 28 (اتجاه أريانة)' : 'Bus 28 (dir. Ariana)',
-          lineCode: 'B28',
-          durationMinutes: 11,
-        },
-      ],
-    },
-    {
-      id: 'fastest',
-      priorityLabel: copy.fastest,
-      durationMinutes: 21,
-      departureTime: '08:10',
-      arrivalTime: '08:31',
-      fareMillimes: 1000,
-      transfersCount: 0,
-      walkMinutes: 7,
-      segments: [
-        {
-          type: 'walk',
-          label: locale === 'ar' ? 'المشي إلى المحطة المركزية (500م)' : 'Marche vers la station centrale (500m)',
-          durationMinutes: 7,
-        },
-        {
-          type: 'metro',
-          label: locale === 'ar' ? 'قطار سريع / مترو مباشر' : 'Métro Express Direct',
-          lineCode: 'EXP',
-          durationMinutes: 14,
-        },
-      ],
-    },
-    {
-      id: 'economic',
-      priorityLabel: copy.economic,
-      durationMinutes: 37,
-      departureTime: '08:05',
-      arrivalTime: '08:42',
-      fareMillimes: 500,
-      transfersCount: 0,
-      walkMinutes: 4,
-      segments: [
-        {
-          type: 'walk',
-          label: locale === 'ar' ? 'المشي إلى نقطة الحافلة (250م)' : 'Marche vers l’arrêt (250m)',
-          durationMinutes: 4,
-        },
-        {
-          type: 'bus',
-          label: locale === 'ar' ? 'حافلة عادية خط 35' : 'Bus Régulier Ligne 35',
-          lineCode: 'B35',
-          durationMinutes: 33,
-        },
-      ],
-    },
-  ];
 
   return (
     <SwipeTabScreen>
@@ -290,9 +206,6 @@ export default function JourneyHomeScreen() {
                     key={item.id}
                     onPress={() => {
                       setPriority(item.id);
-                      if (hasSearched) {
-                        setSelectedOptionId(item.id);
-                      }
                     }}
                     style={[styles.priorityOption, selected && styles.prioritySelected]}
                   >
@@ -331,32 +244,18 @@ export default function JourneyHomeScreen() {
             ) : null}
           </View>
 
-          {/* Results Section (When Search is triggered) */}
+          {/* Search is intentionally unavailable until verified data is connected. */}
           {hasSearched ? (
             <View style={styles.resultsContainer}>
-              <View style={[styles.resultsHeader, rowDirection]}>
-                <View style={styles.resultsBadge}>
-                  <Text style={styles.resultsBadgeText}>{copy.simulatedBadge}</Text>
-                </View>
-                <Text style={[styles.resultsTitle, textDirection]}>
-                  {copy.resultsTitle}
+              <Text style={[styles.resultsTitle, textDirection]}>
+                {copy.resultsTitle}
+              </Text>
+              <View style={styles.unavailableCard}>
+                <Text style={[styles.unavailableText, textDirection]}>
+                  {copy.noData}
                 </Text>
               </View>
-              <Text style={[styles.resultsSub, textDirection]}>
-                {copy.resultsSubtitle}
-              </Text>
-
-              {/* 3 Comparative Option Cards */}
-              {sampleOptions.map((opt) => (
-                <JourneyOptionCard
-                  key={opt.id}
-                  option={opt}
-                  isSelected={selectedOptionId === opt.id}
-                  onSelect={() => setSelectedOptionId(opt.id)}
-                />
-              ))}
-            </View>
-          ) : (
+            </View>          ) : (
             <View style={styles.mapCard}>
               <Text style={[styles.mapEyebrow, isRtl && styles.rtlText]}>
                 {copy.mapLabel}
@@ -662,6 +561,20 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.muted,
     marginBottom: 14,
+    fontWeight: '600',
+  },
+  unavailableCard: {
+    marginTop: spacing.sm,
+    padding: spacing.lg,
+    borderRadius: radii.card,
+    borderWidth: 1,
+    borderColor: colors.line,
+    backgroundColor: colors.surface,
+  },
+  unavailableText: {
+    color: colors.muted,
+    fontSize: 12,
+    lineHeight: 19,
     fontWeight: '600',
   },
   mapCard: {
