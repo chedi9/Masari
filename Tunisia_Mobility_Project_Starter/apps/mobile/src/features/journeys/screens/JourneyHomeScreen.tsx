@@ -188,9 +188,7 @@ export default function JourneyHomeScreen() {
             >
               <Text style={styles.sampleGlyph}>💡</Text>
               <Text style={[styles.sampleText, textDirection]}>
-                {locale === 'ar'
-                  ? 'ملء تجريبي: تونس البحرية ← أريانة'
-                  : 'Remplir exemple : Tunis Marine → Ariana'}
+                {copy.sampleLocationsButton}
               </Text>
             </ElasticPressable>
 
@@ -255,7 +253,8 @@ export default function JourneyHomeScreen() {
                   {copy.noData}
                 </Text>
               </View>
-            </View>          ) : (
+            </View>
+          ) : (
             <View style={styles.mapCard}>
               <Text style={[styles.mapEyebrow, isRtl && styles.rtlText]}>
                 {copy.mapLabel}
