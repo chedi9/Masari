@@ -6,5 +6,9 @@ web-build/
 .DS_Store
 Thumbs.db
 data/raw/
+tunisia_map_harvest/
+tools/data_pipeline/sources/tunisia_transport_data/
 *.db
+*.part
+
 

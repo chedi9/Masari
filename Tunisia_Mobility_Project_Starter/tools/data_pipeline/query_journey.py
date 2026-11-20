@@ -146,4 +146,5 @@ def find_journeys(origin_query: str, dest_query: str, db_path: str = None, limit
 if __name__ == '__main__':
     orig = sys.argv[1] if len(sys.argv) > 1 else "Tunis Ville"
     dest = sys.argv[2] if len(sys.argv) > 2 else "Borj Cedria"
-    find_journeys(orig, dest)
+    database = sys.argv[3] if len(sys.argv) > 3 else None
+    find_journeys(orig, dest, db_path=database)
