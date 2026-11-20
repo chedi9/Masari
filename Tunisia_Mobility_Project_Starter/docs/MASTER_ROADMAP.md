@@ -10,14 +10,15 @@
 
 ## CURRENT NEXT TODO
 
-**Product owner — run multi-operator GTFS downloads:** execute `python tools/data_pipeline/sources/download_and_import_transtu.py` from the repository root and paste the console output. If the download stalls, the script shows progress (% and KB) so you can tell whether it is network-bound. Once the TRANSTU DB is built, test with `python tools/data_pipeline/query_journey.py "<origin>" "<dest>" data/processed/transtu.db`. **Owner:** Product owner. **Tools:** Python stdlib, urllib, SQLite3. **Dependencies:** TUM-P0-010 prototype (DONE). **Acceptance:** TRANSTU DB summary printed with non-zero record counts; at least one bus/metro query returns sensible results. TUM-P0-004 licensing remains blocked separately.
+**TUM-ENG-001 — Review implemented demo trust boundary and passenger-report safety changes.** Implementation is committed on `docs/code-audit-remediation`; review the changed Journey, Explore, Reports and FR/AR messages, run `npm run typecheck` from `apps/mobile/`, and perform a focused Android screen review. If checks pass, mark the task DONE; otherwise fix the reported issues and repeat validation. **Owner:** Product owner / mobile reviewer. **Priority:** P0. **Dependencies:** Current implementation on the audit PR branch. **Acceptance:** TypeScript check passes; synthetic transport fixtures cannot appear in Journey or Explore; no fake report ID or success state exists; submission remains disabled until a backend confirms persistence; safety limitation is explicit in French and Arabic. **Data boundary:** TUM-P0-004 remains blocked; no dataset is approved for public integration.
 
 ## Current project state
 
 - **Current phase:** Phase 0 — discovery and feasibility, with an owner-authorized data-independent mobile coding stream.
 - **Status marker:** **DISCOVERY IN PROGRESS**.
 - **Implementation gate:** Modular mobile UI, navigation, localization, accessibility and data-independent interactions may proceed with clearly labeled placeholders. Real transport records, service claims and production routing remain evidence-gated.
-- **Active task:** None; `TUM-P0-004` is blocked pending primary license evidence/owner action.
+- **Active engineering task:** TUM-ENG-001 — REVIEW; implementation committed to `docs/code-audit-remediation`, pending local typecheck and Android review.
+- **Phase 0 blocker:** `TUM-P0-004` remains blocked pending primary license evidence/owner action.
 - **Gate status:** **NOT APPROVED FOR EXIT**. TUM-P0-012 remains the formal gate-review task after blockers are addressed and owner review is obtained.
 - **Cost:** No paid services or APIs used for this task.
 
@@ -34,7 +35,7 @@
 ### Unresolved blockers
 
 - **TUM-P0-004:** Exact OTL terms and per-resource/source permissions, particularly SNCFT's direct feed, require verification.
-- **TUM-P0-005:** No free map/geocoding/routing comparison completed for Tunisia coverage, Arabic/French quality, license, fallback or current limits.
+- **TUM-P0-005:** A research comparison exists, but candidate providers, Tunisia coverage, Arabic/French quality, current terms, usage limits, fallback behavior and on-device performance are not yet validated or approved for production.
 - **TUM-P0-008:** Privacy/security plan and qualified legal review incomplete; persistent/location collection remains gated.
 - **TUM-P0-009:** Architecture/provider ADR pack incomplete.
 - **TUM-P0-011:** Pro/offline scope, freshness, synchronization, storage, entitlements and licensing remain TBD.
@@ -51,7 +52,7 @@ Read-only Greater Tunis rail feasibility pilot based only on verified SNCFT reco
 |---|---|---:|---|---|---|---|
 | TUM-P0-002 | Candidate-area readiness evidence review | P0 | DONE | Data researcher | Confirmed rollout areas; SDD/register | Preliminary desk audit; no area approval. |
 | TUM-P0-003 | Transport dataset inventory | P0 | PARTIAL | Data researcher | P0-002 | SNCFT archive profiled; TRANSTU/SNTRI/STS/SORETRAS download scripts created with progress indicators; owner to run locally. |
-| TUM-P0-003c | Multi-operator GTFS import | P0 | IN_PROGRESS | Product owner + Antigravity | P0-003; P0-010 | Download and import TRANSTU, SNTRI, STS, SORETRAS, SRT Médenine GTFS. SRT Médenine imported (1,250 stops, 20 routes) and bus routing verified (Medenine ➔ Djerba). TRANSTU download pending. |
+| TUM-P0-003c | Multi-operator GTFS import | P0 | PARTIAL | Product owner + Antigravity | P0-003; P0-010 | Download and import TRANSTU, SNTRI, STS, SORETRAS, SRT Médenine GTFS. SRT Médenine imported (1,250 stops, 20 routes) and bus routing verified (Medenine ➔ Djerba). TRANSTU download pending. |
 | TUM-P0-004 | Data licensing and reuse audit | P0 | BLOCKED | Data/legal researcher | P0-003 | Audit recorded; exact terms/resource rights and direct-feed permission still needed. |
 | TUM-P0-005 | Map/geocoding/routing comparison | P0 | DONE | Mapping researcher / Antigravity | P0-002; P0-004 | Produced zero-cost evaluation report (`docs/research/TUM-P0-005_MAP_GEOCODING_ROUTING.md`) covering MapLibre + CartoDB tiles, Photon/Nominatim multilingual geocoding, and OSRM walking routes. |
 | TUM-P0-006 | UX validation and Pro offline detail pack | P1 | BACKLOG | Product/UX designer | P0-001b; P0-005 | Device/RTL/accessibility validation and required offline decisions. |
@@ -61,6 +62,24 @@ Read-only Greater Tunis rail feasibility pilot based only on verified SNCFT reco
 | TUM-P0-010 | Data/routing feasibility prototype | P0 | DONE | Data/engineering contributor | P0-002–005; P0-009 | Reproducible rail import/query; historical schedule limitations documented. |
 | TUM-P0-011 | Pro offline product/technical definition | P1 | BACKLOG | Product/engineering contributor | P0-005; P0-009 | Package matrix, freshness, sync, storage, licensing and entitlement definitions. |
 | TUM-P0-012 | Phase 0 gate review | P0 | REVIEW | Product owner | P0-002–011 | Formal review package; no exit approval implied. |
+
+## Engineering remediation stream
+
+The source-code audit is recorded in `docs/CODE_AUDIT_REMEDIATION.md`. These engineering tasks are a separate, owner-authorized implementation stream; they do not approve Phase 0 exit, public data use, production routing, location collection, deployment or monetization.
+
+| Task ID | Task | Priority | Status | Owner | Dependencies | Deliverable / acceptance |
+|---|---|---:|---|---|---|---|
+| TUM-ENG-001 | Demo trust boundary and passenger-report safety | P0 | REVIEW | GPT-6 (GitHub) | None; active SDD and audit plan | Removed hardcoded journey cards and Explore lines; report submission disabled; FR/AR unavailable and safety disclaimers added. Awaiting local typecheck and Android review. |
+| TUM-ENG-002 | Safe GTFS import and data validation | P0 | BACKLOG | Data engineer | Existing importer/schema review | Reversible import, feed validation report, and last-known-good database preserved on failure. |
+| TUM-ENG-003 | GTFS calendars, stop identity and fare correctness | P0 | BACKLOG | Data engineer | ENG-002 | Service-date/exception correctness, ambiguous-stop handling and per-result fare or explicit unknown. |
+| TUM-ENG-004 | Journey-domain engine and deterministic ranking | P1 | BACKLOG | Routing engineer | ENG-003 | Tested direct journeys and real Economic/Fastest/Balanced ranking; transfers are a separately validated increment. |
+| TUM-ENG-005 | FastAPI data-backed vertical slice | P1 | BACKLOG | Backend engineer | ENG-002, ENG-003; SDD v0.8 | Versioned API contracts, source metadata, endpoint tests and modular domain boundaries. |
+| TUM-ENG-006 | Connect mobile Journey and Explore | P1 | BACKLOG | Mobile engineer | ENG-005 | Typed API client; hardcoded sample records removed from normal flows; loading/empty/error/stale states. |
+| TUM-ENG-007 | Reports lifecycle and persistent preferences | P1 | BACKLOG | Backend + mobile engineers | ENG-005; privacy/security review for sensitive workflows | Server-persisted reports and preferences; moderation boundary; no false success. |
+| TUM-ENG-008 | Geospatial walking and multilingual stop search | P1 | BACKLOG | Geospatial engineer | Source/coverage validation; ENG-002 | Alias-aware stop search and routed pedestrian distance; straight-line estimates explicitly labeled. |
+| TUM-ENG-009 | Automated tests and CI hardening | P1 | BACKLOG | Engineering | Start with ENG-001/002 | Reproducible Python/mobile tests, TypeScript checks, dependency lock and CI gates. |
+
+**Execution rule:** one active executor and one bounded task at a time, following `AGENTS.md`. Do not change the approved architecture or product decisions silently. The SDD's chosen backend direction is Python + FastAPI and PostgreSQL + PostGIS; the approved repository structure places the API under `services/api/`. Provider selection, operational details and any paid infrastructure remain gated by evidence and owner approval.
 
 ## Known approval gates
 
@@ -83,11 +102,13 @@ Read-only Greater Tunis rail feasibility pilot based only on verified SNCFT reco
 
 ## Current task state
 
-- **Active task:** TUM-P0-003c — multi-operator GTFS import (scripts created, owner to run downloads).
-- **Gate determination:** Phase 0 exit is not approved. TUM-P0-004 licensing still blocked.
-- **Current next TODO:** TRANSTU GTFS download deferred to backlog TODO (pending reliable host/source). Multi-modal feasibility evaluated across 3 independent live networks (National & Banlieue Rail, Sahel Metro, Regional Bus, RFR Rapid Rail). Proceed to Phase 0 gate evaluation (TUM-P0-012) and next architectural steps.
-- **Validation:** Multi-modal data & routing verified across:
-  1. SNCFT Banlieue Sud (Tunis Ville ➔ Borj Cédria, 800 millimes)
-  2. SNCFT Sahel Metro (Sousse Bab Jdid ➔ Monastir, 350 millimes)
-  3. SRT Médenine Regional Bus (Medenine Centre ➔ Houmet Souk Djerba, 4 departures)
-  4. RFR Tunis Rapid Rail (Line E Barcelone ➔ Bougatfa, Line D Barcelone ➔ Gobaa)
+- **Active task:** TUM-ENG-001 — REVIEW; implementation is committed to `docs/code-audit-remediation` and awaits local validation.
+- **Engineering next TODO:** Run `npm run typecheck` from `Tunisia_Mobility_Project_Starter/apps/mobile/` and verify Journey/Explore/Reports in an Android preview. Mark DONE only after those checks pass.
+- **Phase 0 next gate:** TUM-P0-012 remains in REVIEW; Phase 0 exit is not approved. TUM-P0-004 licensing remains BLOCKED.
+- **Data import follow-up:** TUM-P0-003c remains PARTIAL. The TRANSTU download/import still requires a successful, reproducible local run against a verified source. Do not treat the downloader script or an old local archive as proof of current service.
+- **Historical prototype evidence only:** Previous local query runs were recorded for SNCFT Banlieue Sud, SNCFT Sahel Metro, SRT Médenine and a synthesized RFR feed. These results demonstrate that prototype queries ran against those particular local datasets; they do not establish current timetables, live services, national coverage, legal clearance or a production multimodal router.
+- **Validation evidence:** See dated TUM-P0-003c/TUM-P0-010 handoff entries and the source-specific dataset inventory. Re-run all checks against the actual local database versions before relying on them.
+
+
+| 2026-11-20 | GPT-6 / GitHub repository review | TUM-ENG-AUDIT | Added a source-code audit remediation plan and a bounded engineering backlog. Corrected the roadmap's current next action and clarified that prior local route-query results are historical prototype evidence, not live service verification. | `docs/CODE_AUDIT_REMEDIATION.md`; static GitHub source inspection only; no code/runtime tests. |
+| 2026-11-20 | GPT-6 / GitHub repository tools | TUM-ENG-001 | Removed synthetic journey results and Explore sample routes; disabled simulated passenger-report submission; added explicit FR/AR availability and non-emergency disclaimers. Status REVIEW pending local validation. | JourneyHomeScreen.tsx; TransitExplorerScreen.tsx; PassengerReportsScreen.tsx; messages.ts; static source verification only. |

@@ -135,3 +135,57 @@ Read `AGENTS.md`, the active roadmap and handoff log. The owner has run `downloa
   - Authored `WORKSPACE_ORGANIZATION.md` providing a clear map of all directories and a 1-line command cheat-sheet for running the app, query engine, FTS5 search, and nearest-stop calculators.
 - **Files created/modified:** `.gitignore`, `WORKSPACE_ORGANIZATION.md`, `docs/AI_HANDOFF_LOG.md`.
 - **Validation:** Workspace structure matches owner-approved `docs/architecture/PROJECT_STRUCTURE.md`.
+
+
+## 2026-11-20 — TUM-ENG-AUDIT — GPT-6 / GitHub repository review
+- **Status:** PARTIAL — static audit and remediation documentation committed; no application code changed and no runtime validation performed.
+- **Goal:** Convert the deeper source-code audit into a prioritized, actionable engineering backlog while preserving approved product, architecture, licensing, privacy and zero-spend boundaries.
+- **Work completed:**
+  - Added `docs/CODE_AUDIT_REMEDIATION.md` with 20 tracked findings, severity, inspected evidence, required remediation, acceptance criteria, dependencies and safeguards.
+  - Added the engineering remediation stream to `docs/MASTER_ROADMAP.md`, with TUM-ENG-001 as the next bounded task.
+  - Clarified that TUM-P0-003c remains partial until a reproducible local TRANSTU import is actually verified.
+  - Clarified that previous SNCFT, Sahel, SRT and synthesized RFR query results are historical prototype evidence, not proof of current/live operations or a production multimodal router.
+  - Kept TUM-P0-004 licensing blocked and Phase 0 exit unapproved.
+- **Files created/modified:**
+  - Created: `docs/CODE_AUDIT_REMEDIATION.md`
+  - Updated: `docs/MASTER_ROADMAP.md`
+  - Updated: `docs/AI_HANDOFF_LOG.md` (this append-only entry)
+- **Tools used:** GitHub repository/file inspection; GitHub branch creation and file contents API through repository tools. No local shell, Python, npm, Android or database commands were run.
+- **Validation:** Confirmed branch creation and successful GitHub file commits. No markdown lint, tests, typecheck, Python execution, app build or database validation run.
+- **Decisions:** No product or architecture decisions changed. Existing SDD v0.8 direction (FastAPI, PostgreSQL/PostGIS; API under `services/api/`) was respected. No dataset rights, Phase 0 exit, location collection or deployment approval inferred.
+- **Known risks/limitations:** Static review only; local databases and runtime were unavailable. Re-check importer behavior and all findings against the latest branch before code changes. The audit is not a security penetration test or legal review.
+- **Next TODO:** TUM-ENG-001 — update Journey, Explore and Reports demo/safety states so synthetic transport content cannot be mistaken for verified service and no local-only report can claim submission or emergency monitoring.
+- **Suggested next agent:** Mobile engineer using Codex; inspect current files, add focused tests, implement only TUM-ENG-001, then update roadmap and append a new handoff entry.
+ 
+### Copy-ready next-agent prompt
+
+Read `AGENTS.md`, the active `SDD_Tunisia_Mobility_Platform.md`, `docs/MASTER_ROADMAP.md`, `docs/CODE_AUDIT_REMEDIATION.md` and this handoff entry. Execute only TUM-ENG-001. Inspect the current Journey, Explore and Reports screens and their FR/AR messages. Isolate synthetic fixture data from normal results, clearly label any demo state, use honest empty/unavailable states where verified transport data is absent, and ensure reports never show success without confirmed persistence. Preserve guest access as an approved product direction, but clearly state that the prototype is not an emergency service and do not imply monitoring or dispatch. Add focused tests, run the available TypeScript/test checks, and record exact commands/results. Do not build the backend, change architecture or product scope, publish datasets, collect location, spend money, or claim Phase 0 exit. Update the roadmap and append-only handoff log before handing off.
+
+
+## 2026-11-20 — TUM-ENG-001 — GPT-6 / GitHub repository tools
+- **Status:** REVIEW NEEDED — source changes committed; local typecheck and Android runtime review were not available in this session.
+- **Goal:** Prevent synthetic transport content and simulated passenger-report submission from being mistaken for real services.
+- **Work completed:**
+  - Journey: removed all three hardcoded sample journey cards. A valid search now returns an explicit no-data message until verified transport data is connected. The example-location helper is explicitly labeled as input-only and not a verified route.
+  - Explore: removed the six hardcoded sample lines, fake stop sequences and unsupported frequency claims. Replaced the route list/search/filter UI with a bilingual unavailable state.
+  - Reports: removed random local report IDs and the simulated success screen. Submission is disabled; entered details are explicitly described as an unsaved, unsent draft.
+  - Safety: added a persistent French/Arabic notice stating that this form is not an emergency service and reports are neither sent nor monitored. The UI does not promise dispatch or response.
+  - Localization: added explicit FR/AR strings for Explore unavailability, report draft state, disabled submission and safety limitations; updated guest-report copy so it describes the future capability rather than an active service.
+- **Files changed:**
+  - `apps/mobile/src/features/journeys/screens/JourneyHomeScreen.tsx`
+  - `apps/mobile/src/features/explore/screens/TransitExplorerScreen.tsx`
+  - `apps/mobile/src/features/reports/screens/PassengerReportsScreen.tsx`
+  - `apps/mobile/src/shared/i18n/messages.ts`
+  - `docs/MASTER_ROADMAP.md`
+  - `docs/AI_HANDOFF_LOG.md` (this append-only entry)
+- **Tools used:** GitHub repository file inspection and contents API updates on `docs/code-audit-remediation`. No local filesystem, shell, npm, TypeScript compiler, Android emulator or device was available.
+- **Validation performed:** Re-fetched all four changed source/localization files from GitHub. Static string checks confirmed the Journey screen no longer contains `sampleOptions`/ `JourneyOptionCard`, Explore no longer contains `SAMPLE_LINES`, Reports no longer contains `RPT-` or `Math.random`, and the required new localization keys exist. These are source checks only, not a compile or runtime test.
+- **Validation not performed:** `npm run typecheck`, automated UI tests, Expo build, Android preview, RTL visual review and accessibility runtime checks.
+- **Decisions:** No product or architecture decision changed. Guest-accessible reporting remains the approved future direction; the current prototype explicitly does not send or monitor reports. No emergency service is claimed.
+- **Known limitations:** Journey planning and Explore are intentionally unavailable until validated, licensed data and a backend are connected. Report form fields remain in component memory only and are lost when the screen/session is reset. This task does not implement report persistence or emergency escalation.
+- **Next TODO:** Run `npm run typecheck` in `Tunisia_Mobility_Project_Starter/apps/mobile/`, then review Journey, Explore and Reports on Android in both French and Arabic. Fix any failures before marking TUM-ENG-001 DONE.
+- **Suggested next agent:** Product owner or mobile reviewer with the local repository and Expo toolchain.
+
+### Copy-ready next-agent prompt
+
+Review TUM-ENG-001 on branch `docs/code-audit-remediation`. Read `AGENTS.md`, the active SDD, `docs/CODE_AUDIT_REMEDIATION.md`, the current roadmap and this handoff. Run `npm run typecheck` from `Tunisia_Mobility_Project_Starter/apps/mobile/`; inspect the Android preview in French and Arabic; verify no sample journey cards or Explore route fixtures appear, report submission is disabled and never shows success, and the emergency disclaimer is clear. Fix only issues within TUM-ENG-001, rerun checks, update the roadmap and append a handoff entry. Do not connect unlicensed data, implement backend/report persistence, collect location, add paid services or claim Phase 0 exit.
