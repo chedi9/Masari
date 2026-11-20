@@ -10,14 +10,15 @@
 
 ## CURRENT NEXT TODO
 
-**TUM-ENG-001 — Demo trust boundary and passenger-report safety.** Inspect the current Journey, Explore and Reports screens; remove or isolate synthetic transport fixtures from normal result flows; make all demonstration states unmistakable in French and Arabic; ensure a local-only report cannot show a successful submission or imply emergency monitoring. Preserve the owner-approved guest-accessible safety-reporting direction, but do not claim an emergency service exists. **Owner:** Mobile engineer. **Priority:** P0. **Tools:** Existing Expo/TypeScript toolchain and mobile tests. **Dependencies:** None; read `docs/CODE_AUDIT_REMEDIATION.md` and the active SDD first. **Acceptance:** no synthetic record appears as real transport data; no report success is shown without confirmed persistence; the non-emergency limitation is explicit; relevant UI/domain tests pass. **Data boundary:** this task does not clear any dataset for public integration; TUM-P0-004 remains blocked.
+**TUM-ENG-001 — Review implemented demo trust boundary and passenger-report safety changes.** Implementation is committed on `docs/code-audit-remediation`; review the changed Journey, Explore, Reports and FR/AR messages, run `npm run typecheck` from `apps/mobile/`, and perform a focused Android screen review. If checks pass, mark the task DONE; otherwise fix the reported issues and repeat validation. **Owner:** Product owner / mobile reviewer. **Priority:** P0. **Dependencies:** Current implementation on the audit PR branch. **Acceptance:** TypeScript check passes; synthetic transport fixtures cannot appear in Journey or Explore; no fake report ID or success state exists; submission remains disabled until a backend confirms persistence; safety limitation is explicit in French and Arabic. **Data boundary:** TUM-P0-004 remains blocked; no dataset is approved for public integration.
 
 ## Current project state
 
 - **Current phase:** Phase 0 — discovery and feasibility, with an owner-authorized data-independent mobile coding stream.
 - **Status marker:** **DISCOVERY IN PROGRESS**.
 - **Implementation gate:** Modular mobile UI, navigation, localization, accessibility and data-independent interactions may proceed with clearly labeled placeholders. Real transport records, service claims and production routing remain evidence-gated.
-- **Active task:** None; `TUM-P0-004` is blocked pending primary license evidence/owner action.
+- **Active engineering task:** TUM-ENG-001 — REVIEW; implementation committed to `docs/code-audit-remediation`, pending local typecheck and Android review.
+- **Phase 0 blocker:** `TUM-P0-004` remains blocked pending primary license evidence/owner action.
 - **Gate status:** **NOT APPROVED FOR EXIT**. TUM-P0-012 remains the formal gate-review task after blockers are addressed and owner review is obtained.
 - **Cost:** No paid services or APIs used for this task.
 
@@ -68,7 +69,7 @@ The source-code audit is recorded in `docs/CODE_AUDIT_REMEDIATION.md`. These eng
 
 | Task ID | Task | Priority | Status | Owner | Dependencies | Deliverable / acceptance |
 |---|---|---:|---|---|---|---|
-| TUM-ENG-001 | Demo trust boundary and passenger-report safety | P0 | READY | Mobile engineer | None; active SDD and audit plan | No synthetic transport data in normal results; no false report-success or emergency-monitoring claims; FR/AR demo/unavailable states tested. |
+| TUM-ENG-001 | Demo trust boundary and passenger-report safety | P0 | REVIEW | GPT-6 (GitHub) | None; active SDD and audit plan | Removed hardcoded journey cards and Explore lines; report submission disabled; FR/AR unavailable and safety disclaimers added. Awaiting local typecheck and Android review. |
 | TUM-ENG-002 | Safe GTFS import and data validation | P0 | BACKLOG | Data engineer | Existing importer/schema review | Reversible import, feed validation report, and last-known-good database preserved on failure. |
 | TUM-ENG-003 | GTFS calendars, stop identity and fare correctness | P0 | BACKLOG | Data engineer | ENG-002 | Service-date/exception correctness, ambiguous-stop handling and per-result fare or explicit unknown. |
 | TUM-ENG-004 | Journey-domain engine and deterministic ranking | P1 | BACKLOG | Routing engineer | ENG-003 | Tested direct journeys and real Economic/Fastest/Balanced ranking; transfers are a separately validated increment. |
@@ -102,7 +103,7 @@ The source-code audit is recorded in `docs/CODE_AUDIT_REMEDIATION.md`. These eng
 ## Current task state
 
 - **Active task:** None currently in execution. The next ready engineering task is TUM-ENG-001.
-- **Engineering next TODO:** TUM-ENG-001 — make demo data, report submission and safety-report limitations unambiguous before further UI integration.
+- **Engineering next TODO:** Review TUM-ENG-001 implementation, run `npm run typecheck` from `Tunisia_Mobility_Project_Starter/apps/mobile/`, and verify Journey/Explore/Reports in an Android preview. Mark DONE only after those checks pass.
 - **Phase 0 next gate:** TUM-P0-012 remains in REVIEW; Phase 0 exit is not approved. TUM-P0-004 licensing remains BLOCKED.
 - **Data import follow-up:** TUM-P0-003c remains PARTIAL. The TRANSTU download/import still requires a successful, reproducible local run against a verified source. Do not treat the downloader script or an old local archive as proof of current service.
 - **Historical prototype evidence only:** Previous local query runs were recorded for SNCFT Banlieue Sud, SNCFT Sahel Metro, SRT Médenine and a synthesized RFR feed. These results demonstrate that prototype queries ran against those particular local datasets; they do not establish current timetables, live services, national coverage, legal clearance or a production multimodal router.
@@ -110,3 +111,4 @@ The source-code audit is recorded in `docs/CODE_AUDIT_REMEDIATION.md`. These eng
 
 
 | 2026-11-20 | GPT-6 / GitHub repository review | TUM-ENG-AUDIT | Added a source-code audit remediation plan and a bounded engineering backlog. Corrected the roadmap's current next action and clarified that prior local route-query results are historical prototype evidence, not live service verification. | `docs/CODE_AUDIT_REMEDIATION.md`; static GitHub source inspection only; no code/runtime tests. |
+| 2026-11-20 | GPT-6 / GitHub repository tools | TUM-ENG-001 | Removed synthetic journey results and Explore sample routes; disabled simulated passenger-report submission; added explicit FR/AR availability and non-emergency disclaimers. Status REVIEW pending local validation. | JourneyHomeScreen.tsx; TransitExplorerScreen.tsx; PassengerReportsScreen.tsx; messages.ts; static source verification only. |\n
